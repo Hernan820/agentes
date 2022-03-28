@@ -26,6 +26,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);
 
+Route::post('agente/cupo', [App\Http\Controllers\CupoController::class, 'create']);
+
+Route::get('agente/mostrar', [App\Http\Controllers\CupoController::class, 'show']);
+
+Route::get('registro/{id}', [App\Http\Controllers\CupoController::class, 'vistaregistro']);
+
 });
 
 
