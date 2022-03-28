@@ -12,6 +12,13 @@
             headerToolbar: {
                 right: "custom2 prev,next",
             },
+            customButtons: {
+              custom2: {
+                  text: "Crear Cupo",
+                  click: function () {
+                  },
+              },
+          },
         });
         calendar.render();
       });
