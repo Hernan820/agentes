@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('calendario.calendar');
     }
+
+    function vistausuarios(){
+        return view('auth.register');
+
+    }
 }
