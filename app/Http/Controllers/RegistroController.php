@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cupo;
+use App\Models\registro;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CupoController extends Controller
+class RegistroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,16 +23,9 @@ class CupoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $cupo = new cupo;
-        $cupo->start= $request->start;
-        $cupo->end= $request->start;
-        $cupo->title=$request->nombre;
-        $cupo->save();
-
-        return 1;
-
+        //
     }
 
     /**
@@ -42,43 +36,49 @@ class CupoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $registrousuario = new registro;
+        $registrousuario->hora_ini= $request->horaini; 
+        $registrousuario->hora_fin= $request->horafinal; 
+        $registrousuario->intervalo_ini= $request->horafinal; 
+        $registrousuario->intervalo_fin= $request->horafinal; 
+        $registrousuario->total_horas= $request->horafinal; 
+        $registrousuario->total_citas= $request->horafinal; 
+        $registrousuario->comentarios= $request->horafinal; 
+        $registrousuario->id_usuario= $request->horafinal; 
+        $registrousuario->save(); 
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\cupo  $cupo
+     * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function show(cupo $cupo)
+    public function show(registro $registro)
     {
-        $resultado = cupo::all();
-        return $resultado;   
-     }
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\cupo  $cupo
+     * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function vistaregistro($id)
+    public function edit(registro $registro)
     {
-        $cupo = cupo::find($id);
-
-
-        return view("registros.registroAgente", compact('cupo'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\cupo  $cupo
+     * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cupo $cupo)
+    public function update(Request $request, registro $registro)
     {
         //
     }
@@ -86,10 +86,10 @@ class CupoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\cupo  $cupo
+     * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cupo $cupo)
+    public function destroy(registro $registro)
     {
         //
     }

@@ -35,9 +35,6 @@ let formcupo = document.getElementById("formcupo");
               var eventCupo = info.event._def;
               location.href = principalUrl + "registro/" + eventCupo.publicId;
           },
-        
-
-
 
         });
         calendar.render();
