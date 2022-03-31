@@ -1,5 +1,5 @@
 
-let formregistro = document.getElementById("registroHora");
+let formregistro = document.getElementById("registroHorario");
 
     var formatoHora1 = document.getElementById("minutosini");
     var maskrecord = {
@@ -26,7 +26,10 @@ let formregistro = document.getElementById("registroHora");
     IMask(formatoHora, maskrecord);
 
 
-document.getElementById("registro").addEventListener("click", function () {  
+document.getElementById("registro").addEventListener("click", function () {
+    $('.oculto').val('');
+    $('#registroHorario').trigger("reset");
+    $("#CollapseExample1").collapse('hide');
     $("#modal_registro").modal("show");
 });
 
@@ -57,6 +60,9 @@ document.getElementById("guardar_registro").addEventListener("click", function (
 
     axios.post(principalUrl + "registro/registrohoras",datosregistro)
     .then((respuesta) => {
+        $('#registroHorario').trigger("reset");
+
+
         $("#modal_registro").modal("hide");
        respuesta.data
     })
@@ -252,10 +258,6 @@ function validaciondatos() {
     var comentarios = $("#comentarios").val();
     var intervalo = $("#intervalo_activo").val();
 
-    
-
-
-
     if(intervalo == "1"){
         if (
             horaini === "" ||
@@ -336,24 +338,92 @@ var usuario = $("#usuario_log").val();
 
                     if (id_user == usuario) {
                         return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro">Editar</button>'
+                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
                         );
                     } else {
-                        return (
-                            '<button type="button" class="btn btn-success" id="guardar_registro" enabled >Editar</button>'
-                        );
+                   
                     }
                 },
             },
-
-
         ],
       
     });
  
 });
 
+function editar(id){
 
+    $('.oculto').val('');
+    $('#registroHorario').trigger("reset");
+
+    axios.post(principalUrl + "registro/editaregistro/"+id)
+    .then((respuesta) => {
+
+        var t1 =moment(respuesta.data.hora_ini,"hh:mm:ss A").format('hh:mm:ss A');
+        var t2 =moment(respuesta.data.hora_fin,"hh:mm:ss A").format('hh:mm:ss A');
+
+        var arr = t1.split(':');
+        var arr2 = t2.split(':');
+
+        var arrt = arr[2].split(' ');
+        var arrt2 = arr2[2].split(' ');
+
+        if(respuesta.data.intervalo_ini != null && respuesta.data.intervalo_fin != null ){
+            var t3 =moment(respuesta.data.intervalo_ini,"hh:mm:ss A").format('hh:mm:ss A');
+            var t4 =moment(respuesta.data.intervalo_fin,"hh:mm:ss A").format('hh:mm:ss A');
+
+            var arr3 = t3.split(':');
+            var arr4 = t4.split(':');
+
+            var arrt3 = arr3[2].split(' ');
+            var arrt4 = arr4[2].split(' ');
+        }
+
+
+        var tiempototal = respuesta.data.total_horas.split(':');
+
+        formregistro.horaini.value = arr[0];
+        formregistro.minutosini.value = arr[1];
+        formregistro.horario1.value = arrt[1];
+        formregistro.horafin.value = arr2[0];
+        formregistro.minutosfin.value= arr2[1];
+        formregistro.horario2.value =arrt2[1];
+        $("#CollapseExample1").removeClass(" show");
+
+        if(respuesta.data.intervalo_ini != null && respuesta.data.intervalo_fin != null ){
+
+            formregistro.intervalo_horaini.value =arr3[0];
+            formregistro.intervalo_minini.value = arr3[1];
+            formregistro.horario_intervalo1.value = arrt3[1];
+            formregistro.intervalo_horafin.value = arr4[0];
+            formregistro.intervalo_minfin.value = arr4[1];
+            formregistro.horario_intervalo2.value = arrt4[1];
+
+            $("#intervalo_activo").val("1");
+            $("#CollapseExample1").addClass(" show");
+        }
+
+        formregistro.total_horas.value = tiempototal[0]+" Horas "+tiempototal[1]+" minutos";
+        formregistro.total_citas.value = respuesta.data.total_citas;
+        formregistro.comentarios.value = respuesta.data.comentarios;
+
+        formregistro.horainicio.value = respuesta.data.hora_ini;
+        formregistro.horafinal.value = respuesta.data.hora_fin;
+        formregistro.intervaloinicio.value = respuesta.data.intervalo_ini;
+        formregistro.intervalofinal.value = respuesta.data.intervalo_fin;
+        formregistro.total_horas_realizadas.value = respuesta.data.total_horas;
+
+
+        $("#editando").val("1");
+        $("#modal_registro").modal("show");
+          
+    }).catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+
+}
 
 
 

@@ -38,19 +38,36 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-        $registrousuario = new registro;
-        $registrousuario->hora_ini= $request->horainicio; 
-        $registrousuario->hora_fin= $request->horafinal; 
-        $registrousuario->intervalo_ini= $request->intervaloinicio; 
-        $registrousuario->intervalo_fin= $request->intervalofinal; 
-        $registrousuario->total_horas= $request->total_horas_realizadas; 
-        $registrousuario->total_citas= $request->total_citas; 
-        $registrousuario->comentarios= $request->comentarios; 
-        $registrousuario->id_usuario= auth()->user()->id;
-        $registrousuario->id_cupo = $request->cupo_id; 
-        $registrousuario->save(); 
 
-        return 1;
+
+        if($request->intervalo_activo == "1"){
+
+            $registrousuario = new registro;
+            $registrousuario->hora_ini= $request->horainicio; 
+            $registrousuario->hora_fin= $request->horafinal; 
+            $registrousuario->intervalo_ini= $request->intervaloinicio; 
+            $registrousuario->intervalo_fin= $request->intervalofinal; 
+            $registrousuario->total_horas= $request->total_horas_realizadas; 
+            $registrousuario->total_citas= $request->total_citas; 
+            $registrousuario->comentarios= $request->comentarios; 
+            $registrousuario->id_usuario= auth()->user()->id;
+            $registrousuario->id_cupo = $request->cupo_id; 
+            $registrousuario->save(); 
+            return 1;
+        }else {
+            $registrousuario = new registro;
+            $registrousuario->hora_ini= $request->horainicio; 
+            $registrousuario->hora_fin= $request->horafinal; 
+            $registrousuario->total_horas= $request->total_horas_realizadas; 
+            $registrousuario->total_citas= $request->total_citas; 
+            $registrousuario->comentarios= $request->comentarios; 
+            $registrousuario->id_usuario= auth()->user()->id;
+            $registrousuario->id_cupo = $request->cupo_id; 
+            $registrousuario->save(); 
+            return 1;
+        }
+
+
 
     }
 
@@ -76,9 +93,12 @@ class RegistroController extends Controller
      * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function edit(registro $registro)
+    public function edit($id)
     {
-        //
+        $registroedit = registro::find($id);
+
+        return response()->json($registroedit);
+
     }
 
     /**

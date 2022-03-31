@@ -36,6 +36,9 @@ Route::post('registro/registrohoras', [App\Http\Controllers\RegistroController::
 
 Route::get('registro/datos/{id}', [App\Http\Controllers\RegistroController::class, 'show']);
 
+Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroController::class, 'edit']);
+
+
 });
 
 

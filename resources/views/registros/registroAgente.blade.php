@@ -63,7 +63,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="registroHora">
+                <form action="" id="registroHorario">
 
                     {!! csrf_field() !!}
                     <div class="form-group">
@@ -254,13 +254,14 @@
                             aria-describedby="helpId" placeholder="" autocomplete="off">
                     </div>
 
-                    <input type="hidden" value="" id="horainicio" name="horainicio"></input>
-                    <input type="hidden" value="" id="horafinal" name="horafinal"></input>
-                    <input type="hidden" value="" id="intervaloinicio" name="intervaloinicio"></input>
-                    <input type="hidden" value="" id="intervalofinal" name="intervalofinal"></input>
-                    <input type="hidden" value="" id="total_horas_realizadas" name="total_horas_realizadas"></input>
-                    <input type="hidden" value="" id="intervalo_activo" name="intervalo_activo"></input>
-                    <input type="hidden" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
+                    <input type="hidden" class="oculto"value="" id="horainicio" name="horainicio"></input>
+                    <input type="hidden" class="oculto"value="" id="horafinal" name="horafinal"></input>
+                    <input type="hidden" class="oculto"value="" id="intervaloinicio" name="intervaloinicio"></input>
+                    <input type="hidden" class="oculto"value="" id="intervalofinal" name="intervalofinal"></input>
+                    <input type="hidden" class="oculto"value="" id="total_horas_realizadas" name="total_horas_realizadas"></input>
+                    <input type="hidden" class="oculto"value="" id="intervalo_activo" name="intervalo_activo"></input>
+                    <input type="hidden" class="oculto"value="" id="editando" name="editando"></input>
+                    <input type="hidden" class=""value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
 
                 </form>
             </div>
