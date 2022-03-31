@@ -32,8 +32,9 @@ Route::get('agente/mostrar', [App\Http\Controllers\CupoController::class, 'show'
 
 Route::get('registro/{id}', [App\Http\Controllers\CupoController::class, 'vistaregistro']);
 
-Route::get('registro/registroagente', [App\Http\Controllers\RegistroController::class, 'store']);
+Route::post('registro/registrohoras', [App\Http\Controllers\RegistroController::class, 'store']);
 
+Route::get('registro/datos/{id}', [App\Http\Controllers\RegistroController::class, 'show']);
 
 });
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\registro;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class RegistroController extends Controller
 {
@@ -37,15 +39,18 @@ class RegistroController extends Controller
     public function store(Request $request)
     {
         $registrousuario = new registro;
-        $registrousuario->hora_ini= $request->horaini; 
+        $registrousuario->hora_ini= $request->horainicio; 
         $registrousuario->hora_fin= $request->horafinal; 
-        $registrousuario->intervalo_ini= $request->horafinal; 
-        $registrousuario->intervalo_fin= $request->horafinal; 
-        $registrousuario->total_horas= $request->horafinal; 
-        $registrousuario->total_citas= $request->horafinal; 
-        $registrousuario->comentarios= $request->horafinal; 
-        $registrousuario->id_usuario= $request->horafinal; 
+        $registrousuario->intervalo_ini= $request->intervaloinicio; 
+        $registrousuario->intervalo_fin= $request->intervalofinal; 
+        $registrousuario->total_horas= $request->total_horas_realizadas; 
+        $registrousuario->total_citas= $request->total_citas; 
+        $registrousuario->comentarios= $request->comentarios; 
+        $registrousuario->id_usuario= auth()->user()->id;
+        $registrousuario->id_cupo = $request->cupo_id; 
         $registrousuario->save(); 
+
+        return 1;
 
     }
 
@@ -55,9 +60,14 @@ class RegistroController extends Controller
      * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function show(registro $registro)
+    public function show($id)
     {
-        //
+        $datos = registro::join("users","users.id","=","registros.id_usuario")
+        ->select("users.*","registros.*")
+        ->where("registros.id_cupo","=",$id)
+        ->get();
+
+        return response()->json($datos);
     }
 
     /**

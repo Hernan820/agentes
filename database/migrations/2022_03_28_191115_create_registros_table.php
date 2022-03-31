@@ -17,10 +17,15 @@ class CreateRegistrosTable extends Migration
             $table->id();
             $table->time("hora_ini"); 
             $table->time("hora_fin"); 
+            $table->time("intervalo_ini"); 
+            $table->time("intervalo_fin"); 
+            $table->time("total_horas");
             $table->text("total_citas");
             $table->text("comentarios");
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->unsignedBigInteger('id_cupo');
+            $table->foreign('id_cupo')->references('id')->on('cupos');
             $table->timestamps();
         });
     }
