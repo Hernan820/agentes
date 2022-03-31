@@ -38,15 +38,13 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        if($request->intervalo_activo == "1"){
-
             $registrousuario = new registro;
             $registrousuario->hora_ini= $request->horainicio; 
             $registrousuario->hora_fin= $request->horafinal; 
-            $registrousuario->intervalo_ini= $request->intervaloinicio; 
-            $registrousuario->intervalo_fin= $request->intervalofinal; 
+            if($request->intervalo_activo == "1"){
+                $registrousuario->intervalo_ini= $request->intervaloinicio; 
+                $registrousuario->intervalo_fin= $request->intervalofinal; 
+            }
             $registrousuario->total_horas= $request->total_horas_realizadas; 
             $registrousuario->total_citas= $request->total_citas; 
             $registrousuario->comentarios= $request->comentarios; 
@@ -54,18 +52,7 @@ class RegistroController extends Controller
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
             return 1;
-        }else {
-            $registrousuario = new registro;
-            $registrousuario->hora_ini= $request->horainicio; 
-            $registrousuario->hora_fin= $request->horafinal; 
-            $registrousuario->total_horas= $request->total_horas_realizadas; 
-            $registrousuario->total_citas= $request->total_citas; 
-            $registrousuario->comentarios= $request->comentarios; 
-            $registrousuario->id_usuario= auth()->user()->id;
-            $registrousuario->id_cupo = $request->cupo_id; 
-            $registrousuario->save(); 
-            return 1;
-        }
+       
 
 
 
@@ -108,9 +95,25 @@ class RegistroController extends Controller
      * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, registro $registro)
+    public function update(Request $request)
     {
-        //
+        $actilizar = registro::find($request->id_registro);
+
+        $actilizar->hora_ini= $request->horainicio; 
+        $actilizar->hora_fin= $request->horafinal; 
+
+        if($request->intervalo_activo == "1"){
+            $actilizar->intervalo_ini= $request->intervaloinicio; 
+            $actilizar->intervalo_fin= $request->intervalofinal;
+        }
+        $actilizar->total_horas= $request->total_horas_realizadas; 
+        $actilizar->total_citas= $request->total_citas; 
+        $actilizar->comentarios= $request->comentarios; 
+        $actilizar->id_usuario= auth()->user()->id;
+        $actilizar->id_cupo = $request->cupo_id; 
+        $actilizar->save(); 
+
+        return 1;
     }
 
     /**

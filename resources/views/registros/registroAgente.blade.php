@@ -14,6 +14,18 @@
 .todo input {
     width: 80%;
 }
+
+table {
+
+overflow-x:auto;
+}
+table td {
+word-wrap: break-word;
+max-width: 400px;
+}
+#registro_horas td {
+white-space:inherit;
+}
 </style>
 
 
@@ -72,7 +84,7 @@
                         <div class="todo" style="display: flex;justify-content: space-around;">
 
                             <div class="grupouno" style="display: flex;justify-content: space-around;">
-                                <select name="horaini" id="horaini" class="form-control col-md-3">
+                                <select name="horaini" id="horaini" class="form-control col-md-3" Onchange="conteo_horas()">
                                     <option value="00" selected>00</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
@@ -90,10 +102,10 @@
                                 <strong>:</strong>
                                 <input type="text" class="form-control col-md-2" required="" name="minutosini"
                                     id="minutosini" aria-describedby="helpId" value="00" placeholder="00"
-                                    autocomplete="off" style="width: inherit;">
+                                    autocomplete="off" style="width: inherit;" Onchange="conteo_horas()">
 
 
-                                <select name="horario1" id="horario1" class="form-control col-md-3">
+                                <select name="horario1" id="horario1" class="form-control col-md-3" Onchange="conteo_horas()">
                                     <option value="" selected selected disabled="true"></option>
                                     <option value="AM">AM</option>
                                     <option value="PM">PM</option>
@@ -106,7 +118,7 @@
 
                                 <div class="grupouno" style="display: flex;justify-content: space-around;">
                                     <select name="horafin" id="horafin" class="form-control col-md-3"
-                                        onchange="conteo_horas()">
+                                    Onchange="conteo_horas()">
                                         <option value="00" selected>00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -124,11 +136,11 @@
                                     <strong>:</strong>
                                     <input type="text" class="form-control col-md-2" required="" name="minutosfin"
                                         id="minutosfin" aria-describedby="helpId" placeholder="00" autocomplete="off"
-                                        style="width: inherit;" value="00" onchange="conteo_horas()">
+                                        style="width: inherit;" value="00" Onchange="conteo_horas()">
 
 
                                     <select name="horario2" id="horario2" class="form-control col-md-3"
-                                        onchange="conteo_horas()">
+                                    Onchange="conteo_horas()">
                                         <option value="" selected disabled="true"></option>
                                         <option value="AM">AM</option>
                                         <option value="PM">PM</option>
@@ -150,7 +162,7 @@
 
                                 <div class="grupouno" style="display: flex;justify-content: space-around;">
                                     <select name="intervalo_horaini" id="intervalo_horaini"
-                                        class="form-control col-md-3">
+                                        class="form-control col-md-3" Onchange="conteo_horas()">
                                         <option value="00" selected>00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -168,11 +180,11 @@
                                     <strong>:</strong>
                                     <input type="text" class="form-control col-md-2" required="" name="intervalo_minini"
                                         id="intervalo_minini" aria-describedby="helpId" placeholder="00"
-                                        autocomplete="off" style="width: inherit;" value="00">
+                                        autocomplete="off" style="width: inherit;" value="00" Onchange="conteo_horas()">
 
 
                                     <select name="horario_intervalo1" id="horario_intervalo1"
-                                        class="form-control col-md-3">
+                                        class="form-control col-md-3" Onchange="conteo_horas()">
                                         <option value="" selected disabled="true"></option>
                                         <option value="AM">AM</option>
                                         <option value="PM">PM</option>
@@ -185,7 +197,7 @@
 
                                     <div class="grupouno" style="display: flex;justify-content: space-around;">
                                         <select name="intervalo_horafin" id="intervalo_horafin"
-                                            class="form-control col-md-3" onchange="conteo_horas()">
+                                            class="form-control col-md-3" Onchange="conteo_horas()">
                                             <option value="00" selected>00</option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
@@ -204,11 +216,11 @@
                                         <input type="text" class="form-control col-md-2" required=""
                                             name="intervalo_minfin" id="intervalo_minfin" aria-describedby="helpId"
                                             placeholder="00" autocomplete="off" style="width: inherit;" value="00"
-                                            onchange="conteo_horas()">
+                                            Onchange="conteo_horas()">
 
 
                                         <select name="horario_intervalo2" id="horario_intervalo2"
-                                            class="form-control col-md-3" onchange="conteo_horas()">
+                                            class="form-control col-md-3" Onchange="conteo_horas()">
                                             <option value="" selected disabled="true"></option>
                                             <option value="AM">AM</option>
                                             <option value="PM">PM</option>
@@ -260,7 +272,7 @@
                     <input type="hidden" class="oculto"value="" id="intervalofinal" name="intervalofinal"></input>
                     <input type="hidden" class="oculto"value="" id="total_horas_realizadas" name="total_horas_realizadas"></input>
                     <input type="hidden" class="oculto"value="" id="intervalo_activo" name="intervalo_activo"></input>
-                    <input type="hidden" class="oculto"value="" id="editando" name="editando"></input>
+                    <input type="hidden" class="oculto"value="" id="id_registro" name="id_registro"></input>
                     <input type="hidden" class=""value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
 
                 </form>

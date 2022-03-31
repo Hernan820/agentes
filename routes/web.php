@@ -38,6 +38,8 @@ Route::get('registro/datos/{id}', [App\Http\Controllers\RegistroController::clas
 
 Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroController::class, 'edit']);
 
+Route::post('registro/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
+
 
 });
 

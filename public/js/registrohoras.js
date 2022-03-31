@@ -55,22 +55,41 @@ document.getElementById("guardar_registro").addEventListener("click", function (
     if (validaciondatos() == false) {
         return;
     }
-    
     var datosregistro = new FormData(formregistro);
 
-    axios.post(principalUrl + "registro/registrohoras",datosregistro)
-    .then((respuesta) => {
-        $('#registroHorario').trigger("reset");
+    var id_registro = $("#id_registro").val();
 
+    if(id_registro == ""){
+        axios.post(principalUrl + "registro/registrohoras",datosregistro)
+        .then((respuesta) => {
+            $('#registroHorario').trigger("reset");
+            $("#modal_registro").modal("hide");
+            $('#registro_horas').DataTable().ajax.reload(null, false);
+           respuesta.data
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
 
-        $("#modal_registro").modal("hide");
-       respuesta.data
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
+    }else if(id_registro != ""){
+
+        axios.post(principalUrl + "registro/actualizar",datosregistro)
+        .then((respuesta) => {
+            $('#registroHorario').trigger("reset");
+            $("#modal_registro").modal("hide");
+            $('#registro_horas').DataTable().ajax.reload(null, false);
+           respuesta.data
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+
+    }
+
 });
 
 
@@ -327,9 +346,12 @@ var usuario = $("#usuario_log").val();
         },
         columns: [
             { data: "name",width: "75px" },
-            { data: "total_horas",width: "75px" },
-            { data: "total_citas",width: "75px" },
-            { data: "comentarios",width: "75px" },
+            { data: "total_horas",width: "75px",
+            render: function (data, type, row) {
+                return (data+"  Horas");
+            }, },
+            { data: "total_citas",width: "5%" },
+            { data: "comentarios",width: "5%" },
             {
                 data: "id",
                 width: "100px",
@@ -413,8 +435,8 @@ function editar(id){
         formregistro.intervalofinal.value = respuesta.data.intervalo_fin;
         formregistro.total_horas_realizadas.value = respuesta.data.total_horas;
 
-
-        $("#editando").val("1");
+        formregistro.id_registro.value = respuesta.data.id;
+        
         $("#modal_registro").modal("show");
           
     }).catch((error) => {
