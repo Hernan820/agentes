@@ -65,8 +65,13 @@ document.getElementById("guardar_registro").addEventListener("click", function (
             $('#registroHorario').trigger("reset");
             $("#modal_registro").modal("hide");
             $('#registro_horas').DataTable().ajax.reload(null, false);
-           respuesta.data
-        })
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Datos guardados exitosamente!",
+                showConfirmButton: false,
+            });    
+            })
         .catch((error) => {
             if (error.response) {
                 console.log(error.response.data);
@@ -80,8 +85,12 @@ document.getElementById("guardar_registro").addEventListener("click", function (
             $('#registroHorario').trigger("reset");
             $("#modal_registro").modal("hide");
             $('#registro_horas').DataTable().ajax.reload(null, false);
-           respuesta.data
-        })
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Datos actalizados exitosamente!",
+                showConfirmButton: false,
+            });         })
         .catch((error) => {
             if (error.response) {
                 console.log(error.response.data);
@@ -345,16 +354,17 @@ var usuario = $("#usuario_log").val();
             dataSrc: "",
         },
         columns: [
-            { data: "name",width: "75px" },
-            { data: "total_horas",width: "75px",
+            { data: "name",width: "50px" },
+            { data: "total_horas",width: "50px",    
             render: function (data, type, row) {
                 return (data+"  Horas");
             }, },
-            { data: "total_citas",width: "5%" },
-            { data: "comentarios",width: "5%" },
+            { data: "total_citas",width: "50px" },
+            { data: "comentarios",width: "50px" },
             {
                 data: "id",
-                width: "100px",
+                width: "50px",
+                className: "text-center",
                 render: function (data, type, row) {
                     var id_user = row["id_usuario"];
 
@@ -368,6 +378,7 @@ var usuario = $("#usuario_log").val();
                 },
             },
         ],
+
       
     });
  

@@ -17,7 +17,7 @@
 
 table {
 
-overflow-x:auto;
+    table-layout: fixed;
 }
 table td {
 word-wrap: break-word;
@@ -25,6 +25,9 @@ max-width: 400px;
 }
 #registro_horas td {
 white-space:inherit;
+}
+table.display {
+    table-layout: fixed;          
 }
 </style>
 
@@ -45,7 +48,7 @@ white-space:inherit;
 
     <idv class="col-md-12 table-responsive">
         <table id="registro_horas" class="table table-striped table-bordered dt-responsive nowrap datatable"
-            class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
+            class="display" cellspacing="0" cellpadding="3" width="100%"  style="background-color: ">
             <thead>
                 <tr>
                     <th class="col-md-2">Nombre</th>
@@ -70,7 +73,7 @@ white-space:inherit;
                 <h5 class="modal-title">
                     Registro de horas de usuario
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -279,7 +282,7 @@ white-space:inherit;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="guardar_registro">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
