@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\registro;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,6 +31,31 @@ class HomeController extends Controller
 
     function vistausuarios(){
         return view('auth.register');
+
+    }
+
+    /*
+    *
+    *
+    */
+    function usuarios(Request $request){
+
+        $user= User::where("users.email","=",$request->email)
+        ->count();
+
+        if($user == 0){
+            $usuario= new User;
+            $usuario->name = $request-> name; 
+            $usuario->email = $request-> email;
+            $usuario->password = Hash::make($request->password);
+            $usuario->save();
+    
+            $usuario->assignRole($request['rol']);
+
+            return (response()->json(true));
+        }else{
+            return (response()->json(false));
+        }
 
     }
 }

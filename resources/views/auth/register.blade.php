@@ -1,19 +1,19 @@
 @extends('layouts.app')
 @section('content')
-<script src="{{ asset('js/users.js') }}" defer></script>
+<script src="{{ asset('js/usuarios.js') }}" defer></script>
 
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">User Registration</div>
+                <div class="card-header">Registro de Usuarios</div>
 
                 <div class="card-body">
-                    <form method="POST" id="formregistro" action="{{ route('register') }}">
+                    <form method="POST" id="formregistrousuarios" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
@@ -29,7 +29,7 @@
 
                         <div class="form-group row">
                             <label for="email"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                                class="col-md-4 col-form-label text-md-right">{{ __('Correo Electronico') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -45,22 +45,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="cars" class="col-md-4 col-form-label text-md-right">Role:</label>
+                            <label for="cars" class="col-md-4 col-form-label text-md-right">Roles:</label>
 
                             <div class="col-md-6">
                                 <select name="rol" id="rol" class="form-control @error('email') is-invalid @enderror">
                                     <option value="" selected>Roles</option>
-                                    <option value="admin_checklist">Administrator</option>
-                                    <option value="consultor">Consultant</option>
-                                    <option value="loan_officer">Loan_officer</option>
-                                    <option value="super_user">Super_user</option>
+                                    <option value="administrador">Administrator</option>
+                                    <option value="agente">Agente&nbsp;</option>>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="password"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
@@ -77,7 +75,7 @@
 
                         <div class="form-group row">
                             <label for="password-confirm"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" name="password_confirm" type="password"
@@ -90,11 +88,9 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4" id="botones">
-                                <button type="button" id="btnusuario" class="btn btn-primary">
-                                    Register
+                                <button type="button" id="guardarusuario" class="btn btn-primary">
+                                    Registrar
                                 </button>
-                                <input type="button" value="New" id="btnNuevo" onclick="limpiarForm()"
-                                    style="display:none;" class="btn btn-primary" name="btnNuevo" />
                             </div>
                         </div>
 

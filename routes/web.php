@@ -40,6 +40,8 @@ Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroControl
 
 Route::post('registro/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 
+Route::post('registro/usuarios', [App\Http\Controllers\HomeController::class, 'usuarios']);
+
 
 });
 
