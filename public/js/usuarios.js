@@ -186,7 +186,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                                     showConfirmButton: false,
                                     timer: 1200,
                                 });
-                                location.reload();
+                                tablaagentes(); 
                             })
                             .catch((error) => {
                                 if (error.response) {

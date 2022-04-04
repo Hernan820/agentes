@@ -52,6 +52,7 @@ Route::post('registro/editarusuarios/{id}', [App\Http\Controllers\HomeController
 
 Route::post('registro/actualizarusuario', [App\Http\Controllers\HomeController::class, 'actualizarusuario']);
 
+Route::post('registro/eliminarUsuario/{id}', [App\Http\Controllers\HomeController::class, 'eliminarusuario']);
 
 
 });

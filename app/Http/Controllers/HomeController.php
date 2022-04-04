@@ -49,7 +49,7 @@ class HomeController extends Controller
             $usuario->name = $request-> name; 
             $usuario->email = $request-> email;
             $usuario->password = Hash::make($request->password);
-            $usuario->email = 1;
+            $usuario->estado_user = 1;
             $usuario->save();
     
             $usuario->assignRole($request['rol']);
@@ -68,7 +68,8 @@ class HomeController extends Controller
 
         $listaUsuarios = DB::table('users')->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
         ->join("roles", "roles.id" ,"=","model_has_roles.role_id")
-        ->select('users.*',"users.name as nombre","users.id as iduser","roles.*") 
+        ->select('users.*',"users.name as nombre","users.id as iduser","roles.*")
+        ->where("users.estado_user","=",1) 
        ->get();
         return $listaUsuarios;
     }
@@ -115,5 +116,16 @@ class HomeController extends Controller
        $User->save();
 
        return 1;
+    }
+                /*
+    *
+    *
+    */
+    function eliminarusuario($id){
+
+        $eliminacionusuaio = User::find($id);
+        $eliminacionusuaio->estado_user = 0 ;
+        $eliminacionusuaio->save();
+        return 1;
     }
 }
