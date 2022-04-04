@@ -29,6 +29,8 @@ Route::post('agente/cupo', [App\Http\Controllers\CupoController::class, 'create'
 
 Route::get('agente/mostrar', [App\Http\Controllers\CupoController::class, 'show']);
 
+Route::post('agente/mostrarcupos', [App\Http\Controllers\CupoController::class, 'show']);
+
 //VISTA DE MANTENIMIENTO DE REGISTRO DE HORAS
 
 Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);

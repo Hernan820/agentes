@@ -96,10 +96,14 @@
                             @if(@Auth::user()->hasRole('administrador'))
 
                             <li class="has-sub">
-                                <a href="{{ asset('usuarios') }}">
+                                <a  href="#modalProd">
                                     </i>
                                     <span class="bot-line"></span>USUARIOS</a>
-
+                            </li>
+                            <li class="has-sub">
+                                <a href="#Mantcupos" class="modalmantenimiento">
+                                    </i>
+                                    <span class="bot-line"></span>CUPOS</a>
                             </li>
                             @endif
                             @endif
@@ -179,6 +183,51 @@
     </div>
 
 
+    <!-- Modal mantenimiento cupos -->
+    <div class="modal fade" id="Mantcupos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog " id="modalcup" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Mantenimineto de cupos
+                    </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formcupo">
+
+                        {!! csrf_field() !!}
+                        <div class="row">
+
+                        <div class="table-responsive">
+                                <div class="col-md-12 table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">OFICINA</th>
+                                                <th scope="col">ESTADO</th>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="mostrarcupos" scope="row">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="guardarcupo">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
