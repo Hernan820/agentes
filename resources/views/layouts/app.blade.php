@@ -93,12 +93,15 @@
 
                             @else
                             @if (Route::has('login'))
+                            @if(@Auth::user()->hasRole('administrador'))
+
                             <li class="has-sub">
                                 <a href="{{ asset('usuarios') }}">
                                     </i>
                                     <span class="bot-line"></span>USUARIOS</a>
 
                             </li>
+                            @endif
                             @endif
                             @endguest
                         </ul>

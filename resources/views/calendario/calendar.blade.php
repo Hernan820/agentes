@@ -2,7 +2,19 @@
 @section('content')
 <script src="{{ asset('js/calendario.js') }}" defer></script>
 
-
+@if(@Auth::user()->hasRole('administrador'))
+   <style>
+    .fc-custom2-button{
+        display:show !important;
+    }
+    </style>
+@else
+<style>
+    .fc-custom2-button{
+        display:none !important;
+    }
+    </style>
+@endif
 
 <div class="container  col-md-9">
     <div class="cards">
