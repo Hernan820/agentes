@@ -36,21 +36,16 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             });
     }else{
 
-        axios.post(principalUrl + "registro/actualizarusuario/"+idusuario, datosUsuario)
+        axios.post(principalUrl + "registro/actualizarusuario", datosUsuario)
         .then((respuesta) => {
-            if(respuesta.data == true){
-                $('#formregistrousuarios').trigger("reset");
+            $('#formregistrousuarios').trigger("reset");
+            limpiarForm();
+            tablaagentes(); 
+            if(respuesta.data == 1){
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Usuario guardado exitosamente!",
-                    showConfirmButton: false,
-                });
-            }else if(respuesta.data == false){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Este usuario ya existe",
+                    title: "Usuario actualizado exitosamente!",
                     showConfirmButton: false,
                 });
             }
@@ -112,7 +107,12 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
 
 
     $(document).ready(function () {
-      
+        tablaagentes(); 
+        });
+
+        function tablaagentes(){
+            $("#insertardatos").html("");
+
             axios.post(principalUrl + "registro/datosusuarios")
             .then((respuesta) => {
                 respuesta.data.forEach(function (element) {
@@ -134,7 +134,9 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                     console.log(error.response.data);
                 }
             });
-        });
+        }
+
+
 
         function accionesUsuarios(option, id) {
 
@@ -175,7 +177,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios
-                            .post(principalUrl + "registro/eliminarusuario/" + id)
+                            .post(principalUrl + "registro/eliminarUsuario/" + id)
                             .then((respuesta) => {
                                 Swal.fire({
                                     position: "top-end",
@@ -200,6 +202,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
 
         function limpiarForm() {
             $("#formregistrousuarios").trigger("reset");
+            $("#id_user").val("");
             document.getElementById("password").readOnly = false;
             document.getElementById("password-confirm").readOnly = false;
             document.getElementById("guardarusuario").innerText = "Registrar";

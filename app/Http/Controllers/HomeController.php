@@ -84,7 +84,6 @@ class HomeController extends Controller
         ->where('model_id',"=",$id) 
         ->where(function ($query) {
             $query->where("roles.name", "=","administrador")
-                  ->orwhere("roles.name", "=","usuario")
                   ->orwhere("roles.name", "=","agente");
         })
         ->get()
@@ -96,8 +95,25 @@ class HomeController extends Controller
     *
     *
     */
-    function actualizarusuario($id){
+    function actualizarusuario(Request $request){
 
+        $role = DB::table('roles') ->join('model_has_roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->select('roles.id', 'roles.name', 'model_has_roles.model_id') 
+       ->where('model_id',"=",$request->id_user) 
+       ->get()
+       ->first();
 
+       $User= User::find($request->id_user);
+       $User ->name = $request-> name;
+       $User ->email = $request-> email;
+
+        if($request->rol != $role){
+            $User->roles()->detach();
+            $User->assignRole($request->rol ); 
+        }
+
+       $User->save();
+
+       return 1;
     }
 }
