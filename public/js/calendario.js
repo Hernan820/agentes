@@ -18,11 +18,8 @@ let formcupo = document.getElementById("formcupo");
               custom2: {
                   text: "Crear Cupo",
                   click: function () {
-
+                    $('#formcupo').trigger("reset");
                     $("#modal_cupo").modal("show");
-
-                    
-
                   },
               },
           },
@@ -41,14 +38,15 @@ let formcupo = document.getElementById("formcupo");
       });
 
       document.getElementById("guardarcupo").addEventListener("click", function () {
-
-        var datoscupo = new FormData(formcupo);
-
-
+        if (validarmodal() == false) {
+          return;
+       }
+        var datoscupo = new FormData(formcupo);  
+              
         axios.post(principalUrl + "agente/cupo", datoscupo)
         .then((respuesta) => {
-          respuesta.data
-
+          $("#modal_registro").modal("hide");
+          location.reload();
         })
         .catch((error) => {
             if (error.response) {
@@ -56,4 +54,19 @@ let formcupo = document.getElementById("formcupo");
             }
         });
       });
+
+      function validarmodal(){
+        var valido = true;
+        var fechainicio = $("#start").val();
+        var fechafinal = $("#end").val();
+
+        if (
+          fechainicio === "" ||
+          fechafinal === "" 
+      ) {
+          Swal.fire("¡Error debe completar todos los datos!");
+          valido = false;
+      }
+        return valido;
+      }
 

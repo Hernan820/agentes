@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\cupo;
+use Carbon\CarbonPeriod;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class CupoController extends Controller
@@ -24,14 +27,15 @@ class CupoController extends Controller
      */
     public function create(Request $request)
     {
-        $cupo = new cupo;
-        $cupo->start= $request->start;
-        $cupo->end= $request->start;
-        $cupo->title=$request->nombre;
-        $cupo->save();
-
+          $period = CarbonPeriod::create($request->start, $request->end);
+        foreach ($period as $date) {   
+            $cupo = new cupo;
+            $cupo->start= $date;
+            $cupo->end= $date;
+            $cupo->title="Día De Trabajo";
+            $cupo->save();  
+        }
         return 1;
-
     }
 
     /**
@@ -66,8 +70,6 @@ class CupoController extends Controller
     public function vistaregistro($id)
     {
         $cupo = cupo::find($id);
-
-
         return view("registros.registroAgente", compact('cupo'));
     }
 

@@ -29,9 +29,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    Crear Cupo
+                    Crear Cupos por rango
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group " id="controlfecha">
-                                <label for="start">Fecha</label>
+                                <label for="start">Fecha de inicio</label>
                                 <div id="control" style="display:flex;justify-content: space-around;">
                                     <input type="date" class="form-control" min="" name="start" id="start"
                                         aria-describedby="helpId" placeholder="">
@@ -51,8 +51,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nombre">Nombre de cupo </label>
-                                <input type="text" class="form-control" required="" name="nombre" id="nombre"
+                                <label for="nombre">Fecha final</label>
+                                <input type="date" class="form-control" required="" name="end" id="end"
                                     aria-describedby="helpId" placeholder="nombre" autocomplete="off">
                             </div>
 
@@ -63,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="guardarcupo">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
