@@ -6,6 +6,10 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
     }
     var datosUsuario = new FormData(formregistro);
 
+    var idusuario =$("#id_user").val();
+
+    if(idusuario ==""){
+
         axios.post(principalUrl + "registro/usuarios", datosUsuario)
             .then((respuesta) => {
                 if(respuesta.data == true){
@@ -30,6 +34,35 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                     console.log(error.response.data);
                 }
             });
+    }else{
+
+        axios.post(principalUrl + "registro/actualizarusuario/"+idusuario, datosUsuario)
+        .then((respuesta) => {
+            if(respuesta.data == true){
+                $('#formregistrousuarios').trigger("reset");
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Usuario guardado exitosamente!",
+                    showConfirmButton: false,
+                });
+            }else if(respuesta.data == false){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Este usuario ya existe",
+                    showConfirmButton: false,
+                });
+            }
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+
+
+    }    
     });
 
 
@@ -76,3 +109,100 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
         }
         return valido;
     }
+
+
+    $(document).ready(function () {
+      
+            axios.post(principalUrl + "registro/datosusuarios")
+            .then((respuesta) => {
+                respuesta.data.forEach(function (element) {
+                    $("#insertardatos").append(
+                        "<tr><td>" +
+                            element.nombre +
+                            "</td><td>" +
+                            element.email +
+                            "</td><td>" +
+                            element.name +
+                            "</td><td><select id='usuario_accion' onchange='accionesUsuarios(this," +
+                            element.iduser +
+                            ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Editar</option><option value='2'>Eliminar</option></selec></td></tr>"
+                    );
+                });
+            })
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+        });
+
+        function accionesUsuarios(option, id) {
+
+            var opt = $(option).val();
+            if (opt == 1) {
+                $('#formregistrousuarios').trigger("reset");
+                axios.post(principalUrl + "registro/editarusuarios/" + id)
+                    .then((respuesta) => {
+                        formregistro.name.value = respuesta.data.datosusuario.name;
+                        formregistro.email.value = respuesta.data.datosusuario.email;
+                        formregistro.rol.value = respuesta.data.rol.name;
+                        formregistro.password.value = respuesta.data.datosusuario.password;
+        
+                        formregistro.password_confirm.value =
+                            respuesta.data.datosusuario.password;
+                        document.getElementById("password").readOnly = true;
+                        document.getElementById("password-confirm").readOnly = true;
+        
+                        document.getElementById("guardarusuario").innerText = "Actualizar";
+                        $("#btnNuevo").show();
+                        formregistro.id_user.value = respuesta.data.datosusuario.id;
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } else if (opt == 2) {
+                Swal.fire({
+                    title: "Eliminar",
+                    text: "¿Estas seguro de eliminar usuario?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Continuar",
+                    cancelButtonText: "Cancelar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios
+                            .post(principalUrl + "registro/eliminarusuario/" + id)
+                            .then((respuesta) => {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "Usuario eliminado",
+                                    showConfirmButton: false,
+                                    timer: 1200,
+                                });
+                                location.reload();
+                            })
+                            .catch((error) => {
+                                if (error.response) {
+                                    console.log(error.response.data);
+                                }
+                            });
+                    } else {
+                    }
+                });
+            }
+            $(option).prop("selectedIndex", 0);
+        }
+
+        function limpiarForm() {
+            $("#formregistrousuarios").trigger("reset");
+            document.getElementById("password").readOnly = false;
+            document.getElementById("password-confirm").readOnly = false;
+            document.getElementById("guardarusuario").innerText = "Registrar";
+            $("#btnNuevo").hide();
+        }
+        

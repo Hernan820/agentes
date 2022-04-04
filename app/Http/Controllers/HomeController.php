@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\registro;
 use App\Models\User;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,7 @@ class HomeController extends Controller
             $usuario->name = $request-> name; 
             $usuario->email = $request-> email;
             $usuario->password = Hash::make($request->password);
+            $usuario->email = 1;
             $usuario->save();
     
             $usuario->assignRole($request['rol']);
@@ -56,6 +58,46 @@ class HomeController extends Controller
         }else{
             return (response()->json(false));
         }
+
+    }
+    /*
+    *
+    *
+    */
+    function mostrarusuarios(){
+
+        $listaUsuarios = DB::table('users')->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+        ->join("roles", "roles.id" ,"=","model_has_roles.role_id")
+        ->select('users.*',"users.name as nombre","users.id as iduser","roles.*") 
+       ->get();
+        return $listaUsuarios;
+    }
+        /*
+    *
+    *
+    */
+    function editarusuario($id){
+        
+        $datosusuario= User::find($id);
+        $rol = DB::table('roles') ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
+         ->select('roles.id', 'roles.name', 'model_has_roles.model_id') 
+        ->where('model_id',"=",$id) 
+        ->where(function ($query) {
+            $query->where("roles.name", "=","administrador")
+                  ->orwhere("roles.name", "=","usuario")
+                  ->orwhere("roles.name", "=","agente");
+        })
+        ->get()
+        ->first();
+        
+        return response()->json(['datosusuario' => $datosusuario, 'rol' => $rol],200);
+    }
+            /*
+    *
+    *
+    */
+    function actualizarusuario($id){
+
 
     }
 }

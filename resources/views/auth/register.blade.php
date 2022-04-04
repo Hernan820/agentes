@@ -91,6 +91,8 @@
                                 <button type="button" id="guardarusuario" class="btn btn-primary">
                                     Registrar
                                 </button>
+                                <input type="button" value="Nuevo" id="btnNuevo" onclick="limpiarForm()"
+                                    style="display:none;" class="btn btn-primary" name="btnNuevo" />
                             </div>
                         </div>
 
@@ -102,16 +104,16 @@
 
     <div class="table-responsive">
         <div class="col-md-12 table-responsive">
-            <table id="usuarios" class="table table-striped table-bordered dt-responsive nowrap datatable">
+            <table id="datos" class="table table-striped table-bordered dt-responsive nowrap datatable table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col"></th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo Electronico</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
-                <tbody id="insertarUsusarios" scope="row">
+                <tbody id="insertardatos" scope="row">
                 </tbody>
             </table>
         </div>

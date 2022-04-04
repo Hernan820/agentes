@@ -23,14 +23,15 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);
+//RUTAS DE CUPO
 
 Route::post('agente/cupo', [App\Http\Controllers\CupoController::class, 'create']);
 
 Route::get('agente/mostrar', [App\Http\Controllers\CupoController::class, 'show']);
 
-Route::get('registro/{id}', [App\Http\Controllers\CupoController::class, 'vistaregistro']);
+//VISTA DE MANTENIMIENTO DE REGISTRO DE HORAS
+
+Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);
 
 Route::post('registro/registrohoras', [App\Http\Controllers\RegistroController::class, 'store']);
 
@@ -40,7 +41,16 @@ Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroControl
 
 Route::post('registro/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 
+// RUTAS DE MANTENIMIENTO DE USUARIOS 
+Route::get('registro/{id}', [App\Http\Controllers\CupoController::class, 'vistaregistro']);
+
 Route::post('registro/usuarios', [App\Http\Controllers\HomeController::class, 'usuarios']);
+
+Route::post('registro/datosusuarios', [App\Http\Controllers\HomeController::class, 'mostrarusuarios']);
+
+Route::post('registro/editarusuarios/{id}', [App\Http\Controllers\HomeController::class, 'editarusuario']);
+
+Route::post('registro/actualizarusuario/{id}', [App\Http\Controllers\HomeController::class, 'actualizarusuario']);
 
 
 });
