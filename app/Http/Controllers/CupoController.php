@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\cupo;
+use App\Models\registro;
+
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
 
@@ -91,8 +93,21 @@ class CupoController extends Controller
      * @param  \App\Models\cupo  $cupo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cupo $cupo)
+    public function destroy($id)
     {
-        //
+        $consultaDatos = registro::
+        where("registros.id_cupo","=",$id)
+        ->count();
+
+
+        if($consultaDatos == 0)
+        {
+            $cupo =cupo::find($id);
+            $cupo->delete();
+
+            return (response()->json(true));
+        }else{
+            return response()->json(false);
+        }
     }
 }

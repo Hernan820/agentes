@@ -31,6 +31,8 @@ Route::get('agente/mostrar', [App\Http\Controllers\CupoController::class, 'show'
 
 Route::post('agente/mostrarcupos', [App\Http\Controllers\CupoController::class, 'show']);
 
+Route::post('agente/eliminar/{id}', [App\Http\Controllers\CupoController::class, 'destroy']);
+
 //VISTA DE MANTENIMIENTO DE REGISTRO DE HORAS
 
 Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);

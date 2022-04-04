@@ -13,7 +13,7 @@ $('.modalmantenimiento').click(function(){
                             moment(element.start).format("D / MMMM / YYYY") +
                             "</td><td><select id='cupo_accion' onchange='accionesCupos(this," +
                             element.id +
-                            ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Editar</option><option value='2'>Eliminar</option><option value='3'>Cerrar cupo</option><option value='4'>Abrir cupo</option></selec></td></tr>"
+                            ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Eliminar</option></selec></td></tr>"
                     );
                 });
               })
@@ -27,6 +27,55 @@ $('.modalmantenimiento').click(function(){
 });
 
 
+function accionesCupos(option, id) {
+    var opt = $(option).val();
+    if (opt == "1") {
+        $("#mant_cupos").trigger("reset");
+
+        Swal.fire({
+            title: "Eliminar Cupo",
+            text: "¿Estas seguro de eliminar el cupo?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axios.post(principalUrl + "agente/eliminar/" + id)
+                    .then((respuesta) => {
+                        if (respuesta.data) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Cupo eliminado",
+                                showConfirmButton: false,
+                                timer: 1000,
+                            });
+                            location.reload();
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "Este cupo tiene registros",
+                                showConfirmButton: false,
+                                timer: 1000,
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                        }
+                    });
+            } 
+        });
+    } 
+    $(option).prop("selectedIndex", 0);
+
+}
 
 
  
