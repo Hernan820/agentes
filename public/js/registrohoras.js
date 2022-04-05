@@ -458,7 +458,9 @@ $('#intervalo').attr('disabled', true);
                             '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
                         );
                     } else {
-                   
+                        return (
+                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" disabled >Editar</button>'
+                        );
                     }
                 },
             },

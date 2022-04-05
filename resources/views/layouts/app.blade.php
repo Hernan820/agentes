@@ -94,9 +94,13 @@
                             @else
                             @if (Route::has('login'))
                             @if(@Auth::user()->hasRole('administrador'))
-
                             <li class="has-sub">
-                                <a  href="#modalProd">
+                                <a  href="{{ asset('vistareporte') }}">
+                                    </i>
+                                    <span class="bot-line"></span>REPORTE</a>
+                            </li>
+                            <li class="has-sub">
+                                <a  href="{{ asset('usuarios') }}">
                                     </i>
                                     <span class="bot-line"></span>USUARIOS</a>
                             </li>
