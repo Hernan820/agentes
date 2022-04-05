@@ -423,6 +423,8 @@ function limpiarcampos(){
 $(document).ready(function () {
 var idcupo = $("#id_cupo").val();
 var usuario = $("#usuario_log").val();
+var rol = $("#rol").val();
+
 
 $('#intervalo').attr('disabled', true);
 
@@ -453,15 +455,22 @@ $('#intervalo').attr('disabled', true);
                 render: function (data, type, row) {
                     var id_user = row["id_usuario"];
 
-                    if (id_user == usuario) {
+                    if(rol == "administrador"){
                         return (
                             '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
                         );
-                    } else {
-                        return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" disabled >Editar</button>'
-                        );
+                    }else if(rol == "agente"){
+                        if (id_user == usuario) {
+                            return (
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                            );
+                        } else {
+                            return (
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" disabled >Editar</button>'
+                            );
+                        }
                     }
+
                 },
             },
         ],

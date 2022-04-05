@@ -31,11 +31,15 @@ table.display {
 }
 </style>
 
+@if(@Auth::user()->hasRole('administrador'))
+    <input type="hidden" name="rol" id="rol" value="administrador" />/>
+    @elseif (@Auth::user()->hasRole('agente'))
+    <input type="hidden" name="rol" id="rol" value="agente" />
+    @endif
+
 
 <input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo"></input>
 <input type="hidden" name="usuario_log" id="usuario_log" value="{{ auth()->user()->id }}" />
-
-
 
 <div class="col-md-12" style="background-color: ">
     <div class="jumbotron col-md-12 col d-flex justify-content-between ">
