@@ -88,7 +88,8 @@ table.display {
 
                             <div class="grupouno" style="display: flex;justify-content: space-around;">
                                 <select name="horaini" id="horaini" class="form-control col-md-3" Onchange="conteo_horas()">
-                                    <option value="00" selected>00</option>
+                                    <option value="" disabled selected></option>
+                                    <option value="00">00</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
                                     <option value="03">03</option>
@@ -104,7 +105,7 @@ table.display {
                                 </select>
                                 <strong>:</strong>
                                 <input type="text" class="form-control col-md-2" required="" name="minutosini"
-                                    id="minutosini" aria-describedby="helpId" value="00" placeholder="00"
+                                    id="minutosini" aria-describedby="helpId" value="" placeholder="00"
                                     autocomplete="off" style="width: inherit;" Onchange="conteo_horas()">
 
 
@@ -122,8 +123,9 @@ table.display {
                                 <div class="grupouno" style="display: flex;justify-content: space-around;">
                                     <select name="horafin" id="horafin" class="form-control col-md-3"
                                     Onchange="conteo_horas()">
-                                        <option value="00" selected>00</option>
-                                        <option value="01">01</option>
+                                    <option value="" disabled selected></option>
+                                       <option value="00">00</option>
+                                       <option value="01">01</option>
                                         <option value="02">02</option>
                                         <option value="03">03</option>
                                         <option value="04">04</option>
@@ -139,7 +141,7 @@ table.display {
                                     <strong>:</strong>
                                     <input type="text" class="form-control col-md-2" required="" name="minutosfin"
                                         id="minutosfin" aria-describedby="helpId" placeholder="00" autocomplete="off"
-                                        style="width: inherit;" value="00" Onchange="conteo_horas()">
+                                        style="width: inherit;" value="" Onchange="conteo_horas()">
 
 
                                     <select name="horario2" id="horario2" class="form-control col-md-3"
@@ -166,7 +168,8 @@ table.display {
                                 <div class="grupouno" style="display: flex;justify-content: space-around;">
                                     <select name="intervalo_horaini" id="intervalo_horaini"
                                         class="form-control col-md-3" Onchange="conteo_horas()">
-                                        <option value="00" selected>00</option>
+                                        <option value="" disabled selected></option>
+                                         <option value="00">00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
                                         <option value="03">03</option>
@@ -183,7 +186,7 @@ table.display {
                                     <strong>:</strong>
                                     <input type="text" class="form-control col-md-2" required="" name="intervalo_minini"
                                         id="intervalo_minini" aria-describedby="helpId" placeholder="00"
-                                        autocomplete="off" style="width: inherit;" value="00" Onchange="conteo_horas()">
+                                        autocomplete="off" style="width: inherit;" value="" Onchange="conteo_horas()">
 
 
                                     <select name="horario_intervalo1" id="horario_intervalo1"
@@ -201,7 +204,8 @@ table.display {
                                     <div class="grupouno" style="display: flex;justify-content: space-around;">
                                         <select name="intervalo_horafin" id="intervalo_horafin"
                                             class="form-control col-md-3" Onchange="conteo_horas()">
-                                            <option value="00" selected>00</option>
+                                            <option value="" disabled selected></option>
+                                            <option value="00">00</option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
                                             <option value="03">03</option>
@@ -218,7 +222,7 @@ table.display {
                                         <strong>:</strong>
                                         <input type="text" class="form-control col-md-2" required=""
                                             name="intervalo_minfin" id="intervalo_minfin" aria-describedby="helpId"
-                                            placeholder="00" autocomplete="off" style="width: inherit;" value="00"
+                                            placeholder="00" autocomplete="off" style="width: inherit;" value=""
                                             Onchange="conteo_horas()">
 
 
@@ -258,8 +262,8 @@ table.display {
 
                     <div class="form-group">
                         <label for="total_citas">Agregue el total de citas </label>
-                        <input type="text" class="form-control col-md-9 " required="" name="total_citas"
-                            id="total_citas" aria-describedby="helpId" placeholder="" autocomplete="off" enabled>
+                        <input type="number" class="form-control col-md-9 " required="" name="total_citas"
+                            id="total_citas" aria-describedby="helpId" placeholder="" autocomplete="off" min="0">
                     </div>
 
 
