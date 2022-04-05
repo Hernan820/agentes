@@ -33,8 +33,8 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected function credentials(\Illuminate\Http\Request $request)
     {
-        $this->middleware('guest')->except('logout');
+            return ['email' => $request->{$this->username()}, 'password' => $request->password, 'estado_user' => 1];
     }
 }
