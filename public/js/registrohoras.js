@@ -308,7 +308,7 @@ function calcular_hora(h1,h2,h3,h4){
 
        //calculando la cantidad de horas realizadas
 
-   if( h1 != "00:00:00" && h2 != "00:00:00" && h3 == "" && h4 == ""){
+   if( h1 != "00:00:00" && h2 != "00:00:00" && h1 != undefined && h2 != undefined  && h3 == "" && h4 == ""){
 
           var horaprocesada = moment.duration(moment(horareal2, "HH:mm:ss a").diff(moment(horareal1, "HH:mm:ss a")));
        if(horaprocesada.hours() >= 0){
@@ -317,7 +317,8 @@ function calcular_hora(h1,h2,h3,h4){
            $("#total_horas").val(horaprocesada.hours()+" Horas "+horaprocesada.minutes()+" Minutos");
        }
 
-       }else if(h1 != "00:00:00" && h2 != "00:00:00" && h3 != "" && h4 != "") {
+       }else if(h1 != "00:00:00" && h2 != "00:00:00" && h1 != undefined && h2 != undefined
+         && h3 != "" && h4 != "" && h3 != undefined && h4 != undefined) {
         
         var horaprocesada1 = moment.duration(moment(horareal2, "HH:mm:ss a").diff(moment(horareal1, "HH:mm:ss a")));
 
