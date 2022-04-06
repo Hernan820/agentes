@@ -13,6 +13,8 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
         axios.post(principalUrl + "registro/usuarios", datosUsuario)
             .then((respuesta) => {
                 if(respuesta.data == true){
+                    tablaagentes(); 
+
                     $('#formregistrousuarios').trigger("reset");
                     Swal.fire({
                         position: "top-end",
@@ -21,6 +23,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                         showConfirmButton: false,
                     });
                 }else if(respuesta.data == false){
+                    tablaagentes(); 
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
