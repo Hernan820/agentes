@@ -1,7 +1,7 @@
 var principalUrl = "http://localhost/agentes/public/";
 
 $('.modalmantenimiento').click(function(){
-        if(window.location.href.indexOf('#Mantcupos') != -1) {
+        if(window.location.href.indexOf('#Mantcupos2') != -1) {
             $("#mostrarcupos").html("");
 
             axios.post(principalUrl + "agente/mostrarcupos")

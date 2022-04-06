@@ -29,7 +29,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    Crear Cupos por rango
+                    Crear cupos por rango
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group " id="controlfecha">
-                                <label for="start">Fecha de inicio</label>
+                                <label for="start">Fecha inicio</label>
                                 <div id="control" style="display:flex;justify-content: space-around;">
                                     <input type="date" class="form-control" min="" name="start" id="start"
                                         aria-describedby="helpId" placeholder="">
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label for="nombre">Fecha final</label>
                                 <input type="date" class="form-control" required="" name="end" id="end"
-                                    aria-describedby="helpId" placeholder="nombre" autocomplete="off">
+                                    aria-describedby="helpId" placeholder="" autocomplete="off">
                             </div>
 
                         </div>

@@ -105,7 +105,7 @@
                                     <span class="bot-line"></span>USUARIOS</a>
                             </li>
                             <li class="has-sub">
-                                <a href="#Mantcupos" class="modalmantenimiento">
+                                <a href="{{ asset('#Mantcupos2') }}" class="modalmantenimiento">
                                     </i>
                                     <span class="bot-line"></span>CUPOS</a>
                             </li>

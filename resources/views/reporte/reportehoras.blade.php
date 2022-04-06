@@ -7,13 +7,13 @@
         <div class="card-body text-aline" style="justify-content: center">
             <form class="form-inline" id="formFechas">
                 <div class="form-group mb-2">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha inicio</label>
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha Inicio</label>
                     <input type="date"  class="form-control" 
                         value="" id="fechainicio" name= "fechainicio">
                 </div>
 
                 <div class="form-group mx-sm-3 mb-2">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha final</label>
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha Final</label>
                     <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="">
                 </div>
                 <button type="button" class="btn  btn-success mb-2" id="btnReporte" Onchange="reportehoras()" >Reporte Agentes</button>
@@ -29,8 +29,8 @@
             <thead>
                 <tr>
                     <th class="col-md-2">Nombre</th>
-                    <th class="col-md-2">Fecha inicio</th>
-                    <th class="col-md-2">Fecha final</th>
+                    <th class="col-md-2">Fecha Inicio</th>
+                    <th class="col-md-2">Fecha Final</th>
                     <th class="col-md-2">Total Horas</th>
                     <th class="col-md-2">Total Citas</th>
                 </tr>

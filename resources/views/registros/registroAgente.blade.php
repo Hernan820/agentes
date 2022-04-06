@@ -32,7 +32,7 @@ table.display {
 </style>
 
 @if(@Auth::user()->hasRole('administrador'))
-    <input type="hidden" name="rol" id="rol" value="administrador" />/>
+    <input type="hidden" name="rol" id="rol" value="administrador"/>
     @elseif (@Auth::user()->hasRole('agente'))
     <input type="hidden" name="rol" id="rol" value="agente" />
     @endif

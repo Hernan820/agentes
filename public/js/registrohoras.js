@@ -446,7 +446,10 @@ $('#intervalo').attr('disabled', true);
             render: function (data, type, row) {
                 return (data+"  Horas");
             }, },
-            { data: "total_citas",width: "50px" },
+            { data: "total_citas",width: "50px",
+            render: function (data, type, row) {
+                return (data+"    Citas");
+            }, },
             { data: "comentarios",width: "50px" },
             {
                 data: "id",
@@ -544,6 +547,7 @@ function editar(id){
 
         formregistro.id_registro.value = respuesta.data.id;
         
+        $('#intervalo').attr('disabled', false);
         $("#modal_registro").modal("show");
           
     }).catch((error) => {
