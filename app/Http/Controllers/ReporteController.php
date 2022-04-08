@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use DB;
 
 use Illuminate\Http\Request;
@@ -22,9 +23,13 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function idusuarios()
     {
-        //
+        $idusuario = User::select("users.id")
+        ->where("users.estado_user","=",1)
+        ->get() ;
+
+       return response()->json($idusuario);
     }
 
     /**
@@ -33,18 +38,25 @@ class ReporteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function mostrarReporte(Request $request)
+    public function mostrarReporte(Request $request, $id)
     {
-        $sql = "SELECT users.name, '$request->fechainicio' as fecha_inicio, '$request->fechafinal' as fecha_final ,SEC_TO_TIME(SUM(TIME_TO_SEC(total_horas))) AS horas, 
-        SUM(registros.total_citas) as citas , 
-        (SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(total_horas)))  FROM registros INNER JOIN cupos on cupos.id = registros.id_cupo WHERE cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal') AS total_tiempo,
-         (SELECT SUM(total_citas) FROM registros INNER JOIN cupos on cupos.id = registros.id_cupo WHERE cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal' ) AS total_citas 
-         FROM registros
-          INNER JOIN cupos on cupos.id = registros.id_cupo 
-          INNER JOIN users on users.id = registros.id_usuario 
-          WHERE cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal' AND users.estado_user = 1 GROUP BY users.name;";
 
-        $reportehoras = DB::select($sql);
+        $consulta = "SELECT
+        users.name,cupos.start, registros.hora_ini,registros.hora_fin,registros.intervalo_ini,registros.intervalo_fin,
+        registros.total_horas,registros.total_citas,
+        (SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS hours FROM registros 
+         INNER JOIN cupos on cupos.id = registros.id_cupo
+         WHERE registros.id_usuario = $id AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal') AS horasTotal,
+        (SELECT SUM(registros.total_citas) FROM registros
+         INNER JOIN cupos on cupos.id = registros.id_cupo
+         WHERE registros.id_usuario = $id AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal') AS citasTotal
+        FROM registros 
+        INNER JOIN cupos on cupos.id = registros.id_cupo 
+        INNER JOIN users on users.id = registros.id_usuario 
+        where cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'  AND users.id = $id ORDER BY cupos.start ASC ;";
+
+
+        $reportehoras = DB::select($consulta);
         return response()->json($reportehoras);
     }
 
@@ -66,9 +78,20 @@ class ReporteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function total(Request $request)
     {
-        //
+        $sql = "SELECT
+        SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS totalhoras,
+        SUM(registros.total_citas) AS totalcitas
+        FROM registros 
+        INNER JOIN cupos on cupos.id = registros.id_cupo 
+        where cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'  AND registros.id_usuario  IN(SELECT users.id FROM users WHERE users.estado_user = 1) ;";
+    
+       $total_reporte = DB::select($sql);
+
+       return response()->json($total_reporte);
+
+
     }
 
     /**

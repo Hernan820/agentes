@@ -62,9 +62,21 @@ Route::post('registro/eliminarUsuario/{id}', [App\Http\Controllers\HomeControlle
 
 Route::get('vistareporte', [App\Http\Controllers\ReporteController::class, 'show']);
 
-Route::post('registro/reporte', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
+Route::post('registro/reporte/{id}', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
+
+Route::post('registro/idusuario', [App\Http\Controllers\ReporteController::class, 'idusuarios']);
+
+
+Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 'total']);
+
 
 
 });
 
+/*
 
+Route::get('/route', function() { Artisan::call('optimize'); });
+
+Route::get('/route', function() { Artisan::call('route:clear'); });
+
+*/

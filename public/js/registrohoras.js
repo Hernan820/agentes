@@ -156,7 +156,7 @@ function conteo_horas(){
     var hora_completa2 = hora2 +":"+ minutos2+":00"+" "+horario2 ;
     horafinal =  moment(hora_completa2,"h:mm:ss A").format("HH:mm:ss");
 
-    if(horafinal < horalimpia){
+    if(horafinal <= horalimpia){
          $("#horario2").val("");
           $("#horafin").val("");
           $("#minutosfin").val("");
@@ -164,7 +164,7 @@ function conteo_horas(){
          Swal.fire({
             position: "top-end",
             icon: "info",
-            title: "La hora final no puede ser menor a la hora inicial!",
+            title: "La hora final no puede ser menor o igual a la hora inicial!",
             showConfirmButton: false,
         }); 
      }
@@ -174,7 +174,7 @@ function conteo_horas(){
     var hora_completa2 = hora2 +":"+ minutos2+":00";
     var horafinal =hora_completa2;
 
-    if(horafinal < horalimpia){
+    if(horafinal <= horalimpia){
         $("#horario2").val("");
         $("#horafin").val("");
         $("#minutosfin").val("");
@@ -182,7 +182,7 @@ function conteo_horas(){
                 Swal.fire({
            position: "top-end",
            icon: "info",
-           title: "La hora final no puede ser menor a la hora inicial!",
+           title: "La hora final no puede ser menor o igual a la hora inicial!",
            showConfirmButton: false,
        }); 
    }
@@ -235,7 +235,7 @@ function conteo_horas(){
         if(horario4 == "PM"){
             var hora44_completa = hora_intervalo2 +":"+ min_intervalo2+":00"+" "+horario4 ;
             var horafin_intervalo =  moment(hora44_completa,"h:mm:ss A").format("HH:mm:ss");
-        if(horafin_intervalo< horaini_intervalo){
+        if(horafin_intervalo <= horaini_intervalo){
              $("#intervalo_horafin").val("");
              $("#intervalo_minfin").val("");
              $("#horario_intervalo2").val("");
@@ -250,7 +250,7 @@ function conteo_horas(){
            }else if(horario4 == "AM"){
             var hora44_completa = hora_intervalo2 +":"+ min_intervalo2+":00";
             var horafin_intervalo = hora44_completa;
-            if(horafin_intervalo< horaini_intervalo){
+            if(horafin_intervalo <= horaini_intervalo){
                 $("#intervalo_horafin").val("");
                 $("#intervalo_minfin").val("");
                 $("#horario_intervalo2").val("");

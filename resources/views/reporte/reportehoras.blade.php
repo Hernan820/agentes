@@ -16,7 +16,7 @@
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha Final</label>
                     <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="">
                 </div>
-                <button type="button" class="btn  btn-success mb-2" id="btnReporte" Onchange="reportehoras()" >Reporte Agentes</button>
+                <button type="button" class="btn  btn-success mb-2" id="btnReporte"  >Reporte Agentes</button>
             </form>
         </div>
     </div>
@@ -29,10 +29,10 @@
             <thead>
                 <tr>
                     <th class="col-md-2">Nombre</th>
-                    <th class="col-md-2">Fecha Inicio</th>
-                    <th class="col-md-2">Fecha Final</th>
-                    <th class="col-md-2">Total Horas</th>
-                    <th class="col-md-2">Total Citas</th>
+                    <th class="col-md-2">Fecha</th>
+                    <th class="col-md-2">Hora inicio  /  Hora fin</th>
+                    <th class="col-md-2"> Horas</th>
+                    <th class="col-md-2"> Citas</th>
                 </tr>
             </thead>
             <tbody id="insertadatoshoras" scope="row">
