@@ -75,8 +75,11 @@ Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 't
 
 /*
 
-Route::get('/route', function() { Artisan::call('optimize'); });
+Route::get('/route1', function() { Artisan::call('optimize'); });
 
-Route::get('/route', function() { Artisan::call('route:clear'); });
+Route::get('/route2', function() { Artisan::call('route:clear'); });
+
+Route::get('/route3', function() { Artisan::call('view:clear'); });
+
 
 */

@@ -7,6 +7,7 @@ document.getElementById("btnReporte").addEventListener("click", function () {
 
     var datosfechas = new FormData(fromfechas);
     $("#insertadatoshoras").html("");
+    $('#btnReporte').attr('disabled', true);
 
         var primero = new Promise((resolve, reject) => {
             axios.post(principalUrl + "registro/idusuario", datosfechas)
@@ -95,7 +96,8 @@ document.getElementById("btnReporte").addEventListener("click", function () {
                         resp.data[0].totalcitas +
                         "</td></tr>");
                         $("#formFechas").trigger("reset");
-    
+                        $('#btnReporte').attr('disabled', false);
+
             })
             .catch((error) => {
             if (error.response) {
