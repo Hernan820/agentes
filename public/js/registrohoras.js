@@ -425,9 +425,9 @@ var idcupo = $("#id_cupo").val();
 var usuario = $("#usuario_log").val();
 var rol = $("#rol").val();
 
-
 $('#intervalo').attr('disabled', true);
 
+   if(rol == "administrador"){
 
     $("#registro_horas").DataTable({
         language: {
@@ -445,12 +445,15 @@ $('#intervalo').attr('disabled', true);
             { data: "total_horas",width: "50px",    
             render: function (data, type, row) {
                 return (data+"  Horas");
-            }, },
+            }, 
+        },
             { data: "total_citas",width: "50px",
             render: function (data, type, row) {
+
                 return (data+"    Citas");
+
             }, },
-            { data: "comentarios",width: "50px" },
+            { data: "comentarios",width: "50px"},
             {
                 data: "id",
                 width: "50px",
@@ -469,8 +472,70 @@ $('#intervalo').attr('disabled', true);
                             );
                         } else {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" disabled >Editar</button>'
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
                             );
+                        }
+                    }
+
+                },
+            },
+        ], 
+    });
+
+   }else if( rol == "agente"){
+
+    $("#registro_horas").DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+        },
+        lengthChange: false,
+        pageLength: 20,
+        bInfo: false,
+        ajax: {
+            url: principalUrl + "registro/datosusuario/" + idcupo+"/"+ usuario,
+            dataSrc: "",
+        },
+        columns: [
+            { data: "name",width: "50px",
+            render: function (data, type, row) {
+                return (data);
+            }, 
+        },
+            { data: "total_horas",width: "50px",    
+            render: function (data, type, row) {
+                return (data+"  Horas");
+            }, 
+        },
+            { data: "total_citas",width: "50px",
+            render: function (data, type, row) {
+                return (data+"    Citas");
+            }, },
+            { data: "comentarios",width: "50px",
+        
+            render: function (data, type, row) {
+                return (data);
+            },
+        
+        
+        },
+            {
+                data: "id",
+                width: "50px",
+                className: "text-center",
+                render: function (data, type, row) {
+                    var id_user = row["id_usuario"];
+
+                    if(rol == "administrador"){
+                        return (
+                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                        );
+                    }else if(rol == "agente"){
+                        if (id_user == usuario) {
+                            return (
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                            );
+                        } else {
+                            return ("");
                         }
                     }
 
@@ -480,6 +545,10 @@ $('#intervalo').attr('disabled', true);
 
       
     });
+   }
+
+
+
  
 });
 

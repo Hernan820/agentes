@@ -39,7 +39,9 @@ Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuari
 
 Route::post('registro/registrohoras', [App\Http\Controllers\RegistroController::class, 'store']);
 
-Route::get('registro/datos/{id}', [App\Http\Controllers\RegistroController::class, 'show']);
+Route::get('registro/datos/{id}', [App\Http\Controllers\RegistroController::class, 'todosregistros']);
+
+Route::get('registro/datosusuario/{id}/{id_u}', [App\Http\Controllers\RegistroController::class, 'show']);
 
 Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroController::class, 'edit']);
 

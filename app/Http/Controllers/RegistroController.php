@@ -64,13 +64,26 @@ class RegistroController extends Controller
      * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$id_u)
     {
+            $datosusuario =registro::join("users","users.id","=","registros.id_usuario")
+            ->select("users.*","registros.*")
+            ->where("registros.id_cupo","=",$id)
+            ->where("users.id","=",$id_u)
+            ->get();
+    
+            return response()->json($datosusuario);
+    
+        
+
+    }
+
+    function todosregistros($id){
+
         $datos = registro::join("users","users.id","=","registros.id_usuario")
         ->select("users.*","registros.*")
         ->where("registros.id_cupo","=",$id)
         ->get();
-
         return response()->json($datos);
     }
 
@@ -109,7 +122,6 @@ class RegistroController extends Controller
         $actilizar->total_horas= $request->total_horas_realizadas; 
         $actilizar->total_citas= $request->total_citas; 
         $actilizar->comentarios= $request->comentarios; 
-        $actilizar->id_usuario= auth()->user()->id;
         $actilizar->id_cupo = $request->cupo_id; 
         $actilizar->save(); 
 

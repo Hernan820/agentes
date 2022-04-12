@@ -59,7 +59,6 @@ class ReporteController extends Controller
         $reportehoras = DB::select($consulta);
         return response()->json($reportehoras);
     }
-    php artisan view:clear
     /**
      * Display the specified resource.
      *
