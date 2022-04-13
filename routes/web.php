@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Exports\RegistroExports;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,7 +72,18 @@ Route::post('registro/idusuario', [App\Http\Controllers\ReporteController::class
 
 Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 'total']);
 
+// GENERA EXCEL
 
+Route::get('/excel', function () {
+
+  //  $fecha1 = '2022-03-01';
+//$fecha2 = '2022-04-15';
+
+//return (new RegistroExports)->metodouser($fecha1,$fecha2)->download('registros.xlsx');
+
+return (new RegistroExports(2022-03-01,2022-04-15))->download('invoices.xlsx');
+
+});
 
 });
 

@@ -18,6 +18,14 @@ class ReporteController extends Controller
         //
     }
 
+    public function export($id)
+    {
+        ob_end_clean();
+        ob_start();
+
+        return Excel::download(new CitaExport($id), 'Registros.xlsx');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
