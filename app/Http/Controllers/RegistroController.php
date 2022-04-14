@@ -38,17 +38,21 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
+
+
             $registrousuario = new registro;
-            $registrousuario->hora_ini= $request->horainicio; 
-            $registrousuario->hora_fin= $request->horafinal; 
-            if($request->intervalo_activo == "1"){
-                $registrousuario->intervalo_ini= $request->intervaloinicio; 
-                $registrousuario->intervalo_fin= $request->intervalofinal; 
-            }
-            $registrousuario->total_horas= $request->total_horas_realizadas; 
+
+            $registrousuario->horasiniciales= $request->horasiniciales; 
+            $registrousuario->horasfinales= $request->horasfinales; 
+  
+            $registrousuario->total_horas= $request->TotaDeHoras;
+
             $registrousuario->total_citas= $request->total_citas; 
+
             $registrousuario->comentarios= $request->comentarios; 
+
             $registrousuario->id_usuario= auth()->user()->id;
+            
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
             return 1;
