@@ -120,9 +120,9 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="text" class="form-control col-md-3 horas" required=""
+                                            <input type="number" class="form-control col-md-3 horas minutitos" required=""
                                                 name="minutosini[]" id="minutosini" aria-describedby="helpId" value=""
-                                                placeholder="00" autocomplete="off" style="width:100%"
+                                                placeholder="00" autocomplete="off" min="0" max="59" style="width:100%"
                                                >
 
 
@@ -159,10 +159,10 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="text" class="form-control col-md-3 horas" required=""
+                                            <input type="number" class="form-control col-md-3 horas" required=""
                                                 name="minutosini2[]" id="minutosini" aria-describedby="helpId" value=""
                                                 placeholder="00" autocomplete="off" style="width:100%"
-                                               >
+                                                min="0" max="59">
 
 
                                             <select name="horarioini2[]" id="horario1" class="form-control col-md-3 horas"
@@ -206,19 +206,10 @@ table.display {
                     </div>
 
                     <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
-
                     <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
-
-
                     <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
-
-
-
-                    <input type="hidden" class="oculto" value="" id="intervalofinal" name="intervalofinal"></input>
-                    <input type="hidden" class="oculto" value="" id="total_horas_realizadas" name="total_horas_realizadas"></input>
-                    <input type="hidden" class="oculto" value="" id="intervalo_activo" name="intervalo_activo"></input>
                     <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
-                    <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
+                     <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
 
                 </form>
             </div>

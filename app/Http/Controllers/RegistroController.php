@@ -52,7 +52,7 @@ class RegistroController extends Controller
             $registrousuario->comentarios= $request->comentarios; 
 
             $registrousuario->id_usuario= auth()->user()->id;
-            
+
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
             return 1;
@@ -116,20 +116,17 @@ class RegistroController extends Controller
     {
         $actilizar = registro::find($request->id_registro);
 
-        $actilizar->hora_ini= $request->horainicio; 
-        $actilizar->hora_fin= $request->horafinal; 
+        $actilizar->horasiniciales= $request->horasiniciales; 
+        $actilizar->horasfinales= $request->horasfinales; 
 
-        if($request->intervalo_activo == "1"){
-            $actilizar->intervalo_ini= $request->intervaloinicio; 
-            $actilizar->intervalo_fin= $request->intervalofinal;
-        }
-        $actilizar->total_horas= $request->total_horas_realizadas; 
+        $actilizar->total_horas= $request->TotaDeHoras;
         $actilizar->total_citas= $request->total_citas; 
         $actilizar->comentarios= $request->comentarios; 
-        $actilizar->id_cupo = $request->cupo_id; 
         $actilizar->save(); 
 
         return 1;
+
+   
     }
 
     /**

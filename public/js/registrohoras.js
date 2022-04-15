@@ -1,8 +1,11 @@
-const numSus = 3;
-
+//controla el numero de intervalos
+const numSus = 4;
 let formregistro = document.getElementById("registroHorario");
 
-   /* var formatoHora1 = document.getElementById("minutosini");
+
+
+/*
+    var formatoHora1 = document.getElementById(".minutitos");
     var maskrecord = {
         mask: "00",
     }; 
@@ -515,12 +518,90 @@ function editar(id){
 
     axios.post(principalUrl + "registro/editaregistro/"+id)
     .then((respuesta) => {
+        $('#tabla tr').slice(2).remove();
 
-        var t1 =moment(respuesta.data.hora_ini,"hh:mm:ss A").format('hh:mm:ss A');
+        //$('.elimina').attr('disabled', false);
+
+        var horasiniciales = respuesta.data.horasiniciales.split(",");
+
+        var horasfinales = respuesta.data.horasfinales.split(",");
+
+        var filas=0;
+        horasiniciales.forEach(function (element) {
+            if(filas >= 1){
+                    $('#tabla tbody tr:eq(0)').clone().appendTo('#tabla');
+                    $(`#tabla tbody tr.fila-fija:eq(${filas})`).addClass(' dinamico');
+                    $(`#tabla tbody .masmenos:eq(${filas})`).addClass('elimina');
+                    $(`#tabla tbody .masmenos:eq(${filas})`).val("elimina");
+            }
+
+            if(filas >= numSus){
+                $('#btnagregar').attr('disabled', true);
+                $("#btnagregar").attr('disabled','disabled');
+            }else{
+                $('#btnagregar').attr('disabled', false);
+
+            }
+            
+            filas=filas+1;
+        });
+
+        var contador =0;
+        horasiniciales.forEach(function (element) {
+            var horas = $("form select[name='horaini[]']");
+            var minutos = $("form input[name='minutosini[]']");
+            var horarios = $("form select[name='horarioini[]']");
+            if(element != ""){
+                var horario = moment(element,'HH:mm:ss').format('hh:mm A').split(" ");
+                var hora = horario[0].split(":");
+
+                horas.eq(contador).val(hora[0]) ;
+                minutos.eq(contador).val(hora[1]) ;
+                horarios.eq(contador).val(horario[1]) ;
+    
+                contador=contador+1;
+            }
+        });
+
+
+        var contadorf =0;
+        horasfinales.forEach(function (element) {
+            var horas2 = $("form select[name='horaini2[]']");
+            var minutos2 = $("form input[name='minutosini2[]']");
+            var horarios2 = $("form select[name='horarioini2[]']");
+            if(element != ""){
+                var horario = moment(element,'HH:mm:ss').format('hh:mm A').split(" ");
+                var hora = horario[0].split(":");
+
+                horas2.eq(contadorf).val(hora[0]) ;
+                minutos2.eq(contadorf).val(hora[1]) ;
+                horarios2.eq(contadorf).val(horario[1]) ;
+    
+                contadorf=contadorf+1;
+            }
+        });
+
+        var totalh = respuesta.data.total_horas.split(":");
+
+        formregistro.total_horas.value = totalh[0]+" Horas "+totalh[1]+" Minutos";
+        formregistro.total_citas.value = respuesta.data.total_citas;
+        formregistro.comentarios.value = respuesta.data.comentarios;
+
+
+        formregistro.horasiniciales.value = respuesta.data.horasiniciales;
+        formregistro.horasfinales.value = respuesta.data.horasfinales;
+        formregistro.TotaDeHoras.value = respuesta.data.total_horas;
+        formregistro.id_registro.value = respuesta.data.id;
+
+
+
+//*************************************88888888
+   /*     var t1 =moment(respuesta.data.hora_ini,"hh:mm:ss A").format('hh:mm:ss A');
         var t2 =moment(respuesta.data.hora_fin,"hh:mm:ss A").format('hh:mm:ss A');
 
         var arr = t1.split(':');
         var arr2 = t2.split(':');
+
 
         var arrt = arr[2].split(' ');
         var arrt2 = arr2[2].split(' ');
@@ -572,7 +653,7 @@ function editar(id){
 
         formregistro.id_registro.value = respuesta.data.id;
         
-        $('#intervalo').attr('disabled', false);
+        $('#intervalo').attr('disabled', false);  */
         $("#modal_registro").modal("show");
           
     }).catch((error) => {
@@ -612,6 +693,11 @@ $(document).on('click', '.elimina',function() {
 
 function hora(){
 
+   
+      $('body').on('click', '.minutitos', function(){
+        $(this).mask("(999) 999-9999");
+      });
+
 
     $("#horasiniciales").val("");
     $("#horasfinales").val("");
@@ -633,11 +719,29 @@ function hora(){
         var minuto = minutos.eq(i).val() ;
         var horario = horarios.eq(i).val() ;
 
-        
         var hora2 = horas2.eq(i).val() ;
         var minuto2 = minutos2.eq(i).val() ;
         var horario2 = horarios2.eq(i).val() ;
 
+        if(minuto > 59){
+            minutos.eq(i).val("")
+            Swal.fire({
+                position: "top-end",
+                icon: "info",
+                title: "Los minutos no pueden ser mayor a 59 min!",
+                showConfirmButton: false,
+            }); 
+        }
+
+        if(minuto2 > 59){
+            minutos2.eq(i).val("")
+            Swal.fire({
+                position: "top-end",
+                icon: "info",
+                title: "Los minutos no pueden ser mayor a 59 min!",
+                showConfirmButton: false,
+            }); 
+        }
        
         var horaprocesada = moment.duration(moment(hora2+":"+minuto2+":00 "+horario2, "HH:mm:ss a").diff(moment(hora+":"+minuto+":00 "+horario, "HH:mm:ss a")));
       var totalrango = moment(horaprocesada.hours()+":"+horaprocesada.minutes()+":00","H:mm:ss").format("HH:mm:ss");
@@ -647,7 +751,6 @@ function hora(){
      var horasfinales =   moment(hora2+":"+minuto2+":00 "+horario2,"h:mm:ss A").format("HH:mm:ss");
 
      if(hora2 != null  && horario2 != null){
-
         if(horasfinales < horasiniciales){
              horas2.eq(i).val("") ;
             minutos2.eq(i).val("") ;
@@ -660,19 +763,27 @@ function hora(){
             }); 
             return;
         }
-
      }
 
      if(hora2 != null  && horario2 != null){
         sumatodashoras.add(totalrango);
 
-        $("#horasiniciales").val(function(i, currVal) {
-           return currVal + horasiniciales+",";
-        });
+        if($("#horasiniciales").val() == ""){
+            $("#horasiniciales").val(horasiniciales);
+        }else {
+            $("#horasiniciales").val(function(i, currVal) {
+                return currVal +","+ horasiniciales;
+             });
+        }
 
-        $("#horasfinales").val(function(i, currVal) {
-           return currVal + horasfinales+",";
-        });
+        if($("#horasfinales").val() == ""){
+            $("#horasfinales").val(horasfinales)
+        }else{
+            $("#horasfinales").val(function(i, currVal) {
+                return currVal +"," +horasfinales;
+             });
+        }
+
      }
      
      if(i >= 1){
@@ -742,6 +853,16 @@ function validaciondatos() {
         }
     });
 
+    
+    minutos.each(function(i) {
+        if( $(this).val() > 59){
+            $(this).val("")
+            Swal.fire("¡Los minutos no pueden ser mayor a 59 min!");
+            valido = false;
+        }
+    });
+    
+
 
     horarios.each(function(i) {
         if( $(this).val() == null){
@@ -757,7 +878,13 @@ function validaciondatos() {
         }
     });
 
-
+    minutos2.each(function(i) {
+        if( $(this).val() > 59){
+            $(this).val("")
+            Swal.fire("¡Los minutos no pueden ser mayor a 59 min!");
+            valido = false;
+        }
+    });
 
     horarios2.each(function(i) {
         if( $(this).val() == null){
@@ -769,4 +896,3 @@ function validaciondatos() {
 
     return valido;
 }
-  
