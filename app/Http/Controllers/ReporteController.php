@@ -50,7 +50,7 @@ class ReporteController extends Controller
     {
 
         $consulta = "SELECT
-        users.name,cupos.start, registros.hora_ini,registros.hora_fin,registros.intervalo_ini,registros.intervalo_fin,
+        users.name,cupos.start, registros.horasiniciales,registros.horasfinales,registros.intervalo_ini,registros.intervalo_fin,
         registros.total_horas,registros.total_citas,
         (SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS hours FROM registros 
          INNER JOIN cupos on cupos.id = registros.id_cupo
