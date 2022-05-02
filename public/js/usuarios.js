@@ -121,13 +121,20 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             axios.post(principalUrl + "registro/datosusuarios")
             .then((respuesta) => {
                 respuesta.data.forEach(function (element) {
+                    if(element.nombre_paises == null){
+                        var pais = "";
+                    }else{
+                        var pais = element.nombre_paises;
+                    }
                     $("#insertardatos").append(
                         "<tr><td>" +
-                            element.nombre +
+                            element.name +
                             "</td><td>" +
                             element.email +
-                            "</td><td>" +
-                            element.name +
+                            "</td><td>" 
+                            +pais+
+                            "</td><td>"+
+                            element.rol +
                             "</td><td><select id='usuario_accion' onchange='accionesUsuarios(this," +
                             element.iduser +
                             ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Editar</option><option value='2'>Eliminar</option></selec></td></tr>"

@@ -128,6 +128,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Correo Electronico</th>
+                        <th scope="col">Pais</th>
                         <th scope="col">Roles</th>
                         <th scope="col">Opciones</th>
                     </tr>

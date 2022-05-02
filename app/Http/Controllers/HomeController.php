@@ -69,11 +69,13 @@ class HomeController extends Controller
     */
     function mostrarusuarios(){
 
-        $listaUsuarios = DB::table('users')->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
-        ->join("roles", "roles.id" ,"=","model_has_roles.role_id")
-        ->select('users.*',"users.name as nombre","users.id as iduser","roles.*")
-        ->where("users.estado_user","=",1) 
-       ->get();
+        $sql = 'SELECT users.*,paises.*,users.id as iduser,users.email, (CASE WHEN roles.name = "administrador" THEN "administrador" ELSE (CASE WHEN roles.name = "usuario" THEN "confirmacion de citas" ELSE (CASE WHEN roles.name = "agente" THEN "agente" END)  END) END) AS rol FROM `users` 
+        LEFT JOIN model_has_roles on model_has_roles.model_id = users.id
+        LEFT JOIN roles ON roles.id = model_has_roles.role_id
+        LEFT JOIN paises on paises.id = users.id_pais
+         WHERE users.estado_user = 1 AND roles.id IN(1,2)';
+
+        $listaUsuarios = DB::select($sql);
         return $listaUsuarios;
     }
         /*
