@@ -152,17 +152,19 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                     .then((respuesta) => {
                         formregistro.name.value = respuesta.data.datosusuario.name;
                         formregistro.email.value = respuesta.data.datosusuario.email;
+                        
+                        formregistro.paises.value = respuesta.data.datosusuario.idpais;
+
                         formregistro.rol.value = respuesta.data.rol.name;
                         formregistro.password.value = respuesta.data.datosusuario.password;
         
-                        formregistro.password_confirm.value =
-                            respuesta.data.datosusuario.password;
+                        formregistro.password_confirm.value = respuesta.data.datosusuario.password;
                         document.getElementById("password").readOnly = true;
                         document.getElementById("password-confirm").readOnly = true;
         
                         document.getElementById("guardarusuario").innerText = "Actualizar";
                         $("#btnNuevo").show();
-                        formregistro.id_user.value = respuesta.data.datosusuario.id;
+                        formregistro.id_user.value = respuesta.data.datosusuario.idusuario;
                         $("#contra").show();
 
                     })

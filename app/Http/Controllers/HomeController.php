@@ -82,7 +82,14 @@ class HomeController extends Controller
     */
     function editarusuario($id){
         
-        $datosusuario= User::find($id);
+        $datosusuario= User::leftjoin('paises','paises.id','=','users.id_pais')
+        ->select('users.*','users.id as idusuario','paises.*','paises.id as idpais') 
+        ->where('users.id',"=",$id) 
+        ->get()
+        ->first();
+
+
+        
         $rol = DB::table('roles') ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
          ->select('roles.id', 'roles.name', 'model_has_roles.model_id') 
         ->where('model_id',"=",$id) 
@@ -110,6 +117,7 @@ class HomeController extends Controller
        $User= User::find($request->id_user);
        $User ->name = $request-> name;
        $User ->email = $request-> email;
+       $User ->id_pais = $request-> paises;
 
        if($request->cambiar_contra != ""){
         $User->password = Hash::make($request->password);
