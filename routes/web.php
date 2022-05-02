@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 use App\Exports\RegistroExports;
 date_default_timezone_set("America/New_York");
 
@@ -76,10 +76,9 @@ Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 't
 
 // GENERA EXCEL
 
-Route::get('/excel', function () {
+Route::get('registro/excel/{fech1}/{fech2}', function ($fecha1,$fecha2) {
 
-
-return (new RegistroExports("2022-04-03","2022-04-15"))->download('invoices.xlsx');
+return (new RegistroExports($fecha1,$fecha2))->download('invoices.xlsx');
 
 });
 

@@ -43,7 +43,18 @@ public function metodouser( $fecha1, $fecha2)
     {
         $sheets = [];
 
-         $usuarios = User::all();
+        $usuarios = User::join("registros","registros.id_usuario","=","users.id")
+        ->join("cupos","cupos.id","=","registros.id_cupo")
+        ->select( DB::raw("users.id") , DB::raw("users.name"))
+         ->where("users.estado_user","!=","0")
+         ->where("cupos.start",">=",$this->fecha1)
+         ->where("cupos.start","<=",$this->fecha2)
+         ->groupBy('users.name','users.id')
+         ->get();
+
+       //  foreach(range(1,3) as $id) {
+       //     $sheets[] = new UserRegister($this->fecha1,$this->fecha2, $id);
+       // }
 
         foreach($usuarios as $user) {
             $sheets[] = new UserRegister($this->fecha1,$this->fecha2, $user->id,$user->name);

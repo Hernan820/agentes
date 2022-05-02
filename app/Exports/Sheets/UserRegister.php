@@ -34,25 +34,23 @@ class UserRegister implements  FromQuery,WithTitle
     public function query()
     {
 
-
         return registro::query()->leftJoin("cupos","cupos.id","=","registros.id_cupo")
         ->leftJoin('users','registros.id_usuario','=','users.id')
 
         ->select(DB::raw('users.id ,users.name, date_format(cupos.start, "%d-%m-%Y") as fecha  ,registros.horasiniciales,registros.horasfinales , registros.total_horas as HORAS, registros.total_citas AS CITAS ,
         "sumashoras->",
-        (SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) FROM registros INNER JOIN users ON users.id = registros.id_usuario INNER JOIN cupos on cupos.id = registros.id_cupo WHERE users.id = '.$this->id.' AND cupos.start >= "'.$this->fecha1.'" AND cupos.start <= "'.$this->fecha2.'" ) AS SUMA,
+        (SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) FROM registros INNER JOIN users ON users.id = registros.id_usuario INNER JOIN cupos on cupos.id = registros.id_cupo WHERE users.id = '.$this->id.' AND cupos.start >= "'.$this->fecha1.'" AND cupos.start <= "'.$this->fecha2.'"  AND users.estado_user != "0") AS SUMA,
          "sumascitas->",
-        (SELECT SUM(registros.total_citas) FROM registros INNER JOIN users ON users.id = registros.id_usuario INNER JOIN cupos on cupos.id = registros.id_cupo WHERE users.id = '.$this->id.' AND cupos.start >= "'.$this->fecha1.'" AND cupos.start <= "'.$this->fecha2.'") AS SUMACITA'
+        (SELECT SUM(registros.total_citas) FROM registros INNER JOIN users ON users.id = registros.id_usuario INNER JOIN cupos on cupos.id = registros.id_cupo WHERE users.id = '.$this->id.' AND cupos.start >= "'.$this->fecha1.'" AND cupos.start <= "'.$this->fecha2.'" AND users.estado_user != "0") AS SUMACITA'
         ) 
-        
         )
 
-        ->where("cupos.start",">",$this->fecha1)
-        ->where("cupos.start","<",$this->fecha2)
-        ->where("users.id","=",$this->id)
+        ->where("cupos.start",">=",$this->fecha1)
+        ->where("cupos.start","<=",$this->fecha2)
+       // ->where("users.id","=",$this->id)
+        ->where("registros.id_usuario","=",$this->id)
+        ->where("users.estado_user","=","1")
         ->orderBy('cupos.start', 'DESC');
-        
-
     }
 
     /**

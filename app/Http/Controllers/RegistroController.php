@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Models\registro;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,28 +38,17 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-
-
             $registrousuario = new registro;
-
             $registrousuario->horasiniciales= $request->horasiniciales; 
             $registrousuario->horasfinales= $request->horasfinales; 
-  
             $registrousuario->total_horas= $request->TotaDeHoras;
-
             $registrousuario->total_citas= $request->total_citas; 
-
             $registrousuario->comentarios= $request->comentarios; 
-
             $registrousuario->id_usuario= auth()->user()->id;
-
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
-            return 1;
-       
-
-
-
+ 
+             return 1;
     }
 
     /**
@@ -75,15 +64,10 @@ class RegistroController extends Controller
             ->where("registros.id_cupo","=",$id)
             ->where("users.id","=",$id_u)
             ->get();
-    
             return response()->json($datosusuario);
-    
-        
-
     }
 
     function todosregistros($id){
-
         $datos = registro::join("users","users.id","=","registros.id_usuario")
         ->select("users.*","registros.*")
         ->where("registros.id_cupo","=",$id)

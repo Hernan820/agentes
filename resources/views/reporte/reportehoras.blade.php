@@ -7,7 +7,7 @@
         <div class="card-body text-aline" style="justify-content: center">
             <form class="form-inline" id="formFechas">
                 <div class="form-group mb-2">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha Inicio</label>
+                 <label class="mr-sm-2" for="inlineFormCustomSelect">Fecha Inicio</label>
                     <input type="date"  class="form-control" 
                         value="" id="fechainicio" name= "fechainicio">
                 </div>
@@ -17,6 +17,9 @@
                     <input type="date" class="form-control" id="fechafinal" name="fechafinal" placeholder="">
                 </div>
                 <button type="button" class="btn  btn-success mb-2" id="btnReporte"  >Reporte Agentes</button>
+                </br>
+                <button type="button" class="btn  btn-success mb-2" id="excel" style="margin: auto;" >Excel</button>
+
             </form>
         </div>
     </div>
