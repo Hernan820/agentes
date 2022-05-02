@@ -108,6 +108,10 @@ class HomeController extends Controller
        $User ->name = $request-> name;
        $User ->email = $request-> email;
 
+       if($request->cambiar_contra != ""){
+        $User->password = Hash::make($request->password);
+       }
+
         if($request->rol != $role){
             $User->roles()->detach();
             $User->assignRole($request->rol ); 
@@ -115,7 +119,7 @@ class HomeController extends Controller
 
        $User->save();
 
-       return 1;
+       return $request->cambiar_contra;
     }
                 /*
     *

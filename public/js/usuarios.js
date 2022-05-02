@@ -94,7 +94,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             Swal.fire("¡Error formato de correo no correcto!");
             valido = false;
         }
-        
+
         if (
             nombre === "" ||
             correo === "" ||
@@ -111,6 +111,8 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
 
     $(document).ready(function () {
         tablaagentes(); 
+        $("#name").focus();
+        $("#contra").hide();
         });
 
         function tablaagentes(){
@@ -161,6 +163,8 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                         document.getElementById("guardarusuario").innerText = "Actualizar";
                         $("#btnNuevo").show();
                         formregistro.id_user.value = respuesta.data.datosusuario.id;
+                        $("#contra").show();
+
                     })
                     .catch((error) => {
                         if (error.response) {
@@ -209,6 +213,45 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             document.getElementById("password").readOnly = false;
             document.getElementById("password-confirm").readOnly = false;
             document.getElementById("guardarusuario").innerText = "Registrar";
+            $("#name").focus();
             $("#btnNuevo").hide();
+            $("#contra").hide();
+
         }
         
+
+        
+$('#cambiar_contra').on('change', function() {
+    if ($(this).is(':checked') ) {
+        document.getElementById("password").readOnly = false;
+        document.getElementById("password-confirm").readOnly = false;
+        $("#password").val("");
+        $("#password-confirm").val("");
+        $("#password").focus();
+
+    } else {
+        document.getElementById("password").readOnly = true;
+        document.getElementById("password-confirm").readOnly = true; 
+        $("#password").val("**********");
+        $("#password-confirm").val("**********");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
