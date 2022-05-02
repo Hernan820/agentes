@@ -237,7 +237,23 @@ $('#cambiar_contra').on('change', function() {
     }
 });
 
+$(document).ready(function () {
+    $("#paises").trigger("reset");
+    axios.post(principalUrl + "registro/paises")
+        .then((respuesta) => {
 
+            $("#paises").append("<option disabled selected >Paises</option>"); 
+
+            respuesta.data.forEach(function (element) {
+                $("#paises").append("<option value="+element.id+">"+element.nombre_paises+"</option>"); 
+            });
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+});
 
 
 

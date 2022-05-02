@@ -63,6 +63,9 @@ Route::post('registro/actualizarusuario', [App\Http\Controllers\HomeController::
 
 Route::post('registro/eliminarUsuario/{id}', [App\Http\Controllers\HomeController::class, 'eliminarusuario']);
 
+Route::post('registro/paises', [App\Http\Controllers\HomeController::class, 'paises']);
+
+
 //RUTAS DE REPORTE DE HORAS DE AGENTE
 
 Route::get('vistareporte', [App\Http\Controllers\ReporteController::class, 'show']);
@@ -84,13 +87,17 @@ return (new RegistroExports($fecha1,$fecha2))->download('invoices.xlsx');
 
 });
 
-/*
 
+
+
+
+
+
+
+/*
 Route::get('/route1', function() { Artisan::call('optimize'); });
 
 Route::get('/route2', function() { Artisan::call('route:clear'); });
 
 Route::get('/route3', function() { Artisan::call('view:clear'); });
-
-
 */

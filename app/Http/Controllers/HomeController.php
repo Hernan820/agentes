@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\paises;
 use App\Models\registro;
 use App\Models\User;
 use DB;
@@ -48,6 +49,8 @@ class HomeController extends Controller
             $usuario= new User;
             $usuario->name = $request-> name; 
             $usuario->email = $request-> email;
+            $usuario ->id_pais = $request-> paises;
+
             $usuario->password = Hash::make($request->password);
             $usuario->estado_user = 1;
             $usuario->save();
@@ -132,4 +135,9 @@ class HomeController extends Controller
         $eliminacionusuaio->save();
         return 1;
     }
+
+    function paises(){
+        $paises = paises::all();
+        return (response()->json($paises));
+        }
 }

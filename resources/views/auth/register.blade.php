@@ -56,6 +56,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="cars" class="col-md-4 col-form-label text-md-right">Pais</label>
+
+                            <div class="col-md-6">
+                                <select name="paises" id="paises" class="form-control @error('email') is-invalid @enderror">
+                                    
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group" id="contra" style="padding-left: 16.25rem;">
                             <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="cambiar_contra" name="cambiar_contra">
