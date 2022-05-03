@@ -2,6 +2,30 @@
 const numSus = 4;
 let formregistro = document.getElementById("registroHorario");
 
+$(document).ready(function () {
+    mostrarboton();
+});
+
+function mostrarboton(){
+    var idu = $("#usuario_log").val();
+    var cupo = $("#id_cupo").val();
+    
+    axios.get(principalUrl + "registro/conteoregistros/"+ idu+"/"+cupo)
+    .then((respuesta) => {
+
+        if(respuesta.data > 0){
+            $("#registro").hide();
+        }
+        
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
+
+
 
 document.getElementById("registro").addEventListener("click", function () {
 
@@ -12,7 +36,7 @@ document.getElementById("registro").addEventListener("click", function () {
         $('#btnagregar').attr('disabled', false);
         $('#tabla tr').slice(2).remove();
 
-
+  
 });
 
 
@@ -36,7 +60,8 @@ document.getElementById("guardar_registro").addEventListener("click", function (
                 icon: "success",
                 title: "Datos guardados exitosamente!",
                 showConfirmButton: false,
-            });    
+            });  
+            mostrarboton();  
             })
         .catch((error) => {
             if (error.response) {

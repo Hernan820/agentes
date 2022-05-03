@@ -50,6 +50,9 @@ Route::post('registro/editaregistro/{id}', [App\Http\Controllers\RegistroControl
 
 Route::post('registro/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 
+Route::get('registro/conteoregistros/{id}/{idcup}', [App\Http\Controllers\RegistroController::class, 'conteo']);
+
+
 // RUTAS DE MANTENIMIENTO DE USUARIOS 
 Route::get('registro/{id}', [App\Http\Controllers\CupoController::class, 'vistaregistro']);
 

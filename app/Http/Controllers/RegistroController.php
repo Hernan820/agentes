@@ -25,9 +25,11 @@ class RegistroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function conteo($id,$idcup)
     {
-        //
+        $conteouser = registro:: where("id_usuario","=",$id )->where("id_cupo","=",$idcup )->count();
+
+        return response()->json($conteouser);
     }
 
     /**
