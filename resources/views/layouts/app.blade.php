@@ -95,12 +95,12 @@
                             @if (Route::has('login'))
                             @if(@Auth::user()->hasRole('administrador'))
                             <li class="has-sub">
-                                <a  href="{{ asset('vistareporte') }}">
+                                <a href="{{ asset('vistareporte') }}">
                                     </i>
                                     <span class="bot-line"></span>REPORTE</a>
                             </li>
                             <li class="has-sub">
-                                <a  href="{{ asset('usuarios') }}">
+                                <a href="{{ asset('usuarios') }}">
                                     </i>
                                     <span class="bot-line"></span>USUARIOS</a>
                             </li>
@@ -112,6 +112,23 @@
                             @endif
                             @endif
                             @endguest
+
+                            <!-- *************************************************** boton de mis horas -->
+                            @guest
+                            @else
+                            @if (Route::has('login'))
+                            @if(@Auth::user()->hasRole('agente'))
+                            <li class="has-sub">
+                                <a data-target="#" data-toggle="modal" class="MainNavText" id="modalmishoras" href="#">
+                                    </i>
+                                    <span class="bot-line"></span>MIS HORAS</a>
+                            </li>
+
+                            @endif
+                            @endif
+                            @endguest
+                            <!-- *************************************************** -->
+
                         </ul>
                     </div>
                     <div class="header__tool">
@@ -206,7 +223,7 @@
                         {!! csrf_field() !!}
                         <div class="row">
 
-                        <div class="table-responsive">
+                            <div class="table-responsive">
                                 <div class="col-md-12 table-responsive">
                                     <table class="table table-striped table-sm">
                                         <thead>
@@ -233,7 +250,72 @@
         </div>
     </div>
 
+    <!-- Modal reporte de mis horas -->
+    <div class="modal fade" id="mishoras" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog " id="modalcup" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Reporte de mis horas
+                    </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="horasusuario">
 
+                        {!! csrf_field() !!}
+                        
+                        @if(Auth::check())
+                            <script>
+                                var userID = "{{auth()->user()->id}}";
+                            </script>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="nombre">Fecha inicial &nbsp;&nbsp;&nbsp; Fecha final</label>
+                            <div style="display: flex;justify-content: space-around;">
+
+                                <input type="date" class="form-control " required="" name="fecha_ini" id="fecha_ini"
+                                    aria-describedby="helpId" placeholder="escribe los nombres " required=""
+                                    autocomplete="off">
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                <input type="date" class="form-control " required="" name="fecha_fin" id="fecha_fin"
+                                    aria-describedby="helpId" placeholder="escribe los nombres " required=""
+                                    autocomplete="off">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                        <button type="button" class="btn btn-success" id="calcular"  >Calcular</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombre">Total de Horas</label>
+                            <input type="text" class="form-control " required="" name="totalhoras" id="totalhoras"
+                                aria-describedby="helpId" placeholder=" " required=""
+                                autocomplete="off"  disabled="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombre">Total de citas</label>
+                            <input type="text" class="form-control " required="" name="totalcitas" id="totalcitas"
+                                aria-describedby="helpId" placeholder=" " required=""
+                                autocomplete="off" disabled="true">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

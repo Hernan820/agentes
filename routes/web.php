@@ -77,8 +77,10 @@ Route::post('registro/reporte/{id}', [App\Http\Controllers\ReporteController::cl
 
 Route::post('registro/idusuario', [App\Http\Controllers\ReporteController::class, 'idusuarios']);
 
-
 Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 'total']);
+
+//muestra total de horas de cada agente
+Route::post('registro/horasusuario/{funo}/{fdos}/{id}', [App\Http\Controllers\ReporteController::class, 'totalusuario']);
 
 // GENERA EXCEL
 

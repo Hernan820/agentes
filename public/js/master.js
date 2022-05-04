@@ -77,5 +77,32 @@ function accionesCupos(option, id) {
 
 }
 
+$('#modalmishoras').on('click', function() {
+    $("#horasusuario").trigger("reset");
+    $('#mishoras').modal('show');
+});
 
- 
+$('#calcular').on('click', function() {
+
+    var id = userID;
+    var ini = $('#fecha_ini').val();
+    var fin = $('#fecha_fin').val();
+
+if( ini == "" || fin == "" ){
+     Swal.fire("¡Debe ingresar una cantidad de citas!");  return;
+}
+$('#totalhoras').val("")
+$('#totalcitas').val("")
+    axios.post(principalUrl + "registro/horasusuario/"+ini+"/"+fin+"/"+id)
+    .then((respuesta) => {
+            var horas = respuesta.data[0].totalhoras.split(':');
+        $('#totalhoras').val(respuesta.data[0].name+" total horas: "+ horas[0]+" minutos: "+horas[1])
+        $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas)
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+});
+

@@ -119,8 +119,21 @@ class ReporteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function totalusuario($fecha1,$fecha2,$id){
+
+        $sql = "SELECT users.name,
+        SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS totalhoras,
+        SUM(registros.total_citas) AS totalcitas
+        FROM registros 
+        INNER JOIN users on users.id = registros.id_usuario  
+        INNER JOIN cupos on cupos.id = registros.id_cupo
+        where cupos.start BETWEEN '$fecha1' AND '$fecha2' 
+        AND registros.id_usuario = $id
+        GROUP BY users.name;";
+    
+       $total_usuario = DB::select($sql);
+
+       return response()->json($total_usuario);
+        
     }
 }
