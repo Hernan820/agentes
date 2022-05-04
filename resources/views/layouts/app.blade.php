@@ -229,9 +229,8 @@
                                     <table class="table table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th scope="col">OFICINA</th>
-                                                <th scope="col">ESTADO</th>
-                                                <td></td>
+                                                <th scope="col">FECHA</th>
+                                                <th scope="col">OPCION</th>
                                             </tr>
                                         </thead>
                                         <tbody id="mostrarcupos" scope="row">

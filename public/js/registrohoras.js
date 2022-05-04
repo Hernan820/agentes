@@ -7,39 +7,35 @@ $(document).ready(function () {
 });
 
 function mostrarboton(){
-    var idu = $("#usuario_log").val();
-    var cupo = $("#id_cupo").val();
-    
-    axios.get(principalUrl + "registro/conteoregistros/"+ idu+"/"+cupo)
-    .then((respuesta) => {
-
-        if(respuesta.data > 0){
-            $("#registro").hide();
-        }
+    var rol = $("#rol").val();
+    if(rol == "administrador"){
+        $("#registro").show();
+    }else{
+        var idu = $("#usuario_log").val();
+        var cupo = $("#id_cupo").val();
         
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
+        axios.get(principalUrl + "registro/conteoregistros/"+ idu+"/"+cupo)
+        .then((respuesta) => {
+            if(respuesta.data > 0){
+                $("#registro").hide();
+            }
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+    }
 }
 
-
-
 document.getElementById("registro").addEventListener("click", function () {
-
         $('.oculto').val('');
         $('#registroHorario').trigger("reset");
         $("#CollapseExample1").collapse('hide');
         $("#modal_registro").modal("show");
         $('#btnagregar').attr('disabled', false);
         $('#tabla tr').slice(2).remove();
-
-  
 });
-
-
 
 document.getElementById("guardar_registro").addEventListener("click", function () {
 
@@ -91,12 +87,6 @@ document.getElementById("guardar_registro").addEventListener("click", function (
     }
 
 });
-
-
-
-
-
-
 
 function limpiarcampos(){
 
@@ -423,7 +413,7 @@ function hora(){
      var horasfinales =   moment(hora2+":"+minuto2+":00 "+horario2,"h:mm:ss A").format("HH:mm:ss");
 
      if(hora2 != null  && horario2 != null){
-        if(horasfinales < horasiniciales){
+        if(horasfinales <= horasiniciales){
              horas2.eq(i).val("") ;
             minutos2.eq(i).val("") ;
             horarios2.eq(i).val("") ;

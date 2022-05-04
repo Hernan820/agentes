@@ -94,9 +94,14 @@ $('#totalhoras').val("")
 $('#totalcitas').val("")
     axios.post(principalUrl + "registro/horasusuario/"+ini+"/"+fin+"/"+id)
     .then((respuesta) => {
+        if(respuesta.data.length != 0){
             var horas = respuesta.data[0].totalhoras.split(':');
-        $('#totalhoras').val(respuesta.data[0].name+" total horas: "+ horas[0]+" minutos: "+horas[1])
-        $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas)
+        $('#totalhoras').val(respuesta.data[0].name+" total horas: "+ horas[0]+" minutos: "+horas[1]);
+        $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas);
+        }else{
+            $('#totalhoras').val("No tiene registros");
+            $('#totalcitas').val("No tiene registros");    
+        }
     })
     .catch((error) => {
         if (error.response) {
