@@ -105,7 +105,7 @@
                                     <span class="bot-line"></span>USUARIOS</a>
                             </li>
                             <li class="has-sub">
-                                <a href="{{ asset('#Mantcupos2') }}" class="modalmantenimiento">
+                                <a data-target="#" data-toggle="modal" class="MainNavText" id="modalmantenimiento" href="#">
                                     </i>
                                     <span class="bot-line"></span>CUPOS</a>
                             </li>
@@ -113,7 +113,7 @@
                             @endif
                             @endguest
 
-                            <!-- *************************************************** boton de mis horas -->
+                            <!-- *************************************************** boton de mis horas  -->
                             @guest
                             @else
                             @if (Route::has('login'))
@@ -123,10 +123,11 @@
                                     </i>
                                     <span class="bot-line"></span>MIS HORAS</a>
                             </li>
-
                             @endif
                             @endif
                             @endguest
+
+                           
                             <!-- *************************************************** -->
 
                         </ul>
