@@ -1,28 +1,29 @@
 var principalUrl = "http://localhost/agentes/public/";
 
+$('.modalmantenimiento').click(function(){
+        if(window.location.href.indexOf('#Mantcupos2') != -1) {
+            $("#mostrarcupos").html("");
 
-$('#modalmantenimiento').on('click', function() {
-    $("#mostrarcupos").html("");
-
-    axios.post(principalUrl + "agente/mostrarcupos")
-    .then((respuesta) => {
-        respuesta.data.forEach(function (element) {
-            moment.locale("es");
-            $("#mostrarcupos").append(
-                "<tr><td>" +
-                    moment(element.start).format("D / MMMM / YYYY") +
-                    "</td><td><select id='cupo_accion' onchange='accionesCupos(this," +
-                    element.id +
-                    ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Eliminar</option></selec></td></tr>"
-            );
-        });
-      })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
+            axios.post(principalUrl + "agente/mostrarcupos")
+            .then((respuesta) => {
+                respuesta.data.forEach(function (element) {
+                    moment.locale("es");
+                    $("#mostrarcupos").append(
+                        "<tr><td>" +
+                            moment(element.start).format("D / MMMM / YYYY") +
+                            "</td><td><select id='cupo_accion' onchange='accionesCupos(this," +
+                            element.id +
+                            ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Eliminar</option></selec></td></tr>"
+                    );
+                });
+              })
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+          $('#Mantcupos').modal('show');
         }
-    });
-  $('#Mantcupos').modal('show');
 });
 
 
@@ -76,37 +77,5 @@ function accionesCupos(option, id) {
 
 }
 
-$('#modalmishoras').on('click', function() {
-    $("#horasusuario").trigger("reset");
-    $('#mishoras').modal('show');
-});
 
-$('#calcular').on('click', function() {
-
-    var id = userID;
-    var ini = $('#fecha_ini').val();
-    var fin = $('#fecha_fin').val();
-
-if( ini == "" || fin == "" ){
-     Swal.fire("¡Debe ingresar una cantidad de citas!");  return;
-}
-$('#totalhoras').val("")
-$('#totalcitas').val("")
-    axios.post(principalUrl + "registro/horasusuario/"+ini+"/"+fin+"/"+id)
-    .then((respuesta) => {
-        if(respuesta.data.length != 0){
-            var horas = respuesta.data[0].totalhoras.split(':');
-        $('#totalhoras').val(respuesta.data[0].name+" total horas: "+ horas[0]+" minutos: "+horas[1]);
-        $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas);
-        }else{
-            $('#totalhoras').val("No tiene registros");
-            $('#totalcitas').val("No tiene registros");    
-        }
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-});
-
+ 

@@ -20,8 +20,8 @@ class UsuarioSeeder extends Seeder
     public function run()
     {
 
-     $administrador = Role::create(['name' => 'administrador']);
-     $agente = Role::create(['name' => 'agente']);
+    // $administrador = Role::create(['name' => 'administrador']);
+    // $agente = Role::create(['name' => 'agente']);
 
    $user = User::create([
          'name' => 'admin',
