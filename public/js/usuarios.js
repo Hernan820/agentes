@@ -94,7 +94,7 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             Swal.fire("¡Error formato de correo no correcto!");
             valido = false;
         }
-        
+
         if (
             nombre === "" ||
             correo === "" ||
@@ -111,6 +111,8 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
 
     $(document).ready(function () {
         tablaagentes(); 
+        $("#name").focus();
+        $("#contra").hide();
         });
 
         function tablaagentes(){
@@ -119,13 +121,20 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             axios.post(principalUrl + "registro/datosusuarios")
             .then((respuesta) => {
                 respuesta.data.forEach(function (element) {
+                    if(element.nombre_paises == null){
+                        var pais = "";
+                    }else{
+                        var pais = element.nombre_paises;
+                    }
                     $("#insertardatos").append(
                         "<tr><td>" +
-                            element.nombre +
+                            element.name +
                             "</td><td>" +
                             element.email +
-                            "</td><td>" +
-                            element.name +
+                            "</td><td>" 
+                            +pais+
+                            "</td><td>"+
+                            element.rol +
                             "</td><td><select id='usuario_accion' onchange='accionesUsuarios(this," +
                             element.iduser +
                             ")' class='form-control opciones'><option selected='selected' disabled selected>Acciones</option><option value='1'>Editar</option><option value='2'>Eliminar</option></selec></td></tr>"
@@ -150,17 +159,21 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
                     .then((respuesta) => {
                         formregistro.name.value = respuesta.data.datosusuario.name;
                         formregistro.email.value = respuesta.data.datosusuario.email;
+                        
+                        formregistro.paises.value = respuesta.data.datosusuario.idpais;
+
                         formregistro.rol.value = respuesta.data.rol.name;
                         formregistro.password.value = respuesta.data.datosusuario.password;
         
-                        formregistro.password_confirm.value =
-                            respuesta.data.datosusuario.password;
+                        formregistro.password_confirm.value = respuesta.data.datosusuario.password;
                         document.getElementById("password").readOnly = true;
                         document.getElementById("password-confirm").readOnly = true;
         
                         document.getElementById("guardarusuario").innerText = "Actualizar";
                         $("#btnNuevo").show();
-                        formregistro.id_user.value = respuesta.data.datosusuario.id;
+                        formregistro.id_user.value = respuesta.data.datosusuario.idusuario;
+                        $("#contra").show();
+
                     })
                     .catch((error) => {
                         if (error.response) {
@@ -209,6 +222,61 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
             document.getElementById("password").readOnly = false;
             document.getElementById("password-confirm").readOnly = false;
             document.getElementById("guardarusuario").innerText = "Registrar";
+            $("#name").focus();
             $("#btnNuevo").hide();
+            $("#contra").hide();
+
         }
         
+
+        
+$('#cambiar_contra').on('change', function() {
+    if ($(this).is(':checked') ) {
+        document.getElementById("password").readOnly = false;
+        document.getElementById("password-confirm").readOnly = false;
+        $("#password").val("");
+        $("#password-confirm").val("");
+        $("#password").focus();
+
+    } else {
+        document.getElementById("password").readOnly = true;
+        document.getElementById("password-confirm").readOnly = true; 
+        $("#password").val("**********");
+        $("#password-confirm").val("**********");
+    }
+});
+
+$(document).ready(function () {
+    $("#paises").trigger("reset");
+    axios.post(principalUrl + "registro/paises")
+        .then((respuesta) => {
+
+            $("#paises").append("<option disabled selected >Paises</option>"); 
+
+            respuesta.data.forEach(function (element) {
+                $("#paises").append("<option value="+element.id+">"+element.nombre_paises+"</option>"); 
+            });
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
