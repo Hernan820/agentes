@@ -1,7 +1,7 @@
 <?php
+namespace Database\Seeders;
 
 use Faker\Factory as Faker;
-namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
