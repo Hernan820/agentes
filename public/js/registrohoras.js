@@ -18,6 +18,8 @@ function mostrarboton(){
         .then((respuesta) => {
             if(respuesta.data > 0){
                 $("#registro").hide();
+            }else{
+                $("#registro").show();
             }
         })
         .catch((error) => {
@@ -41,6 +43,8 @@ document.getElementById("guardar_registro").addEventListener("click", function (
 
     if (validaciondatos() == false) {return;}
 
+    $('#guardar_registro').attr('disabled', true);
+
     var datosregistro = new FormData(formregistro);
     var id_registro = $("#id_registro").val();
 
@@ -48,16 +52,27 @@ document.getElementById("guardar_registro").addEventListener("click", function (
         
         axios.post(principalUrl + "registro/registrohoras",datosregistro)
         .then((respuesta) => {
-            $('#registroHorario').trigger("reset");
-            $("#modal_registro").modal("hide");
-            $('#registro_horas').DataTable().ajax.reload(null, false);
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Datos guardados exitosamente!",
-                showConfirmButton: false,
-            });  
-            mostrarboton();  
+            if(respuesta.data == 1){
+                $('#registroHorario').trigger("reset");
+                $("#modal_registro").modal("hide");
+                $('#registro_horas').DataTable().ajax.reload(null, false);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Datos guardados exitosamente!",
+                    showConfirmButton: false,
+                });  
+                mostrarboton();  
+            }else{
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Ya existe un registro!",
+                    showConfirmButton: false,
+                });  
+            }
+            $('#guardar_registro').attr('disabled', false);
+
             })
         .catch((error) => {
             if (error.response) {
@@ -77,7 +92,10 @@ document.getElementById("guardar_registro").addEventListener("click", function (
                 icon: "success",
                 title: "Datos actalizados exitosamente!",
                 showConfirmButton: false,
-            });         })
+            });       
+            $('#guardar_registro').attr('disabled', false);
+
+        })
         .catch((error) => {
             if (error.response) {
                 console.log(error.response.data);
@@ -143,13 +161,13 @@ $('#intervalo').attr('disabled', true);
 
                     if(rol == "administrador"){
                         return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                         );
                     }else if(rol == "agente"){
                         if (id_user == usuario) {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
-                            );
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                                );
                         } else {
                             return (
                                 '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
@@ -207,13 +225,13 @@ $('#intervalo').attr('disabled', true);
 
                     if(rol == "administrador"){
                         return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                         );
                     }else if(rol == "agente"){
                         if (id_user == usuario) {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
-                            );
+                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                                );
                         } else {
                             return ("");
                         }
@@ -557,4 +575,41 @@ function validaciondatos() {
 
 
     return valido;
+}
+
+function eliminar(id){
+
+    Swal.fire({
+        title: "Eliminar",
+        text: "¿Estas seguro de eliminar el registro?",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Continuar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+    
+            axios.put(principalUrl + "registro/"+id)
+            .then((respuesta) => {
+        
+                if(respuesta.data == 1){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "¡Registro eliminado exitosamente!",
+                        showConfirmButton: false,
+                    }); 
+                }
+                mostrarboton();
+                $('#registro_horas').DataTable().ajax.reload(null, false);
+               
+            }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
+        } else {
+        }
+    });
 }

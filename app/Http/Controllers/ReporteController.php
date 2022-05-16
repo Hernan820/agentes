@@ -128,7 +128,7 @@ class ReporteController extends Controller
         INNER JOIN users on users.id = registros.id_usuario  
         INNER JOIN cupos on cupos.id = registros.id_cupo
         where cupos.start BETWEEN '$fecha1' AND '$fecha2' 
-        AND registros.id_usuario = $id
+        AND registros.id_usuario = $id  AND registros.estado_registro IS NULL
         GROUP BY users.name;";
     
        $total_usuario = DB::select($sql);

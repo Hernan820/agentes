@@ -27,7 +27,9 @@ class RegistroController extends Controller
      */
     public function conteo($id,$idcup)
     {
-        $conteouser = registro:: where("id_usuario","=",$id )->where("id_cupo","=",$idcup )->count();
+        $conteouser = registro:: where("id_usuario","=",$id )->where("id_cupo","=",$idcup )
+        ->where("registros.estado_registro","=",null)
+        ->count();
 
         return response()->json($conteouser);
     }
@@ -40,6 +42,13 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
+
+        $conteoregistro = registro:: where("id_usuario","=",auth()->user()->id )->where("id_cupo","=",$request->cupo_id )
+        ->where("registros.estado_registro","=",null)
+        ->count();
+
+
+        if($conteoregistro == 0){
             $registrousuario = new registro;
             $registrousuario->horasiniciales= $request->horasiniciales; 
             $registrousuario->horasfinales= $request->horasfinales; 
@@ -49,8 +58,11 @@ class RegistroController extends Controller
             $registrousuario->id_usuario= auth()->user()->id;
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
- 
+
              return 1;
+        }else {
+            return 2;
+        }
     }
 
     /**
@@ -65,6 +77,9 @@ class RegistroController extends Controller
             ->select("users.*","registros.*")
             ->where("registros.id_cupo","=",$id)
             ->where("users.id","=",$id_u)
+            ->where(function ($query) {
+                $query->where("registros.estado_registro","=",null);
+            })
             ->get();
             return response()->json($datosusuario);
     }
@@ -73,6 +88,7 @@ class RegistroController extends Controller
         $datos = registro::join("users","users.id","=","registros.id_usuario")
         ->select("users.*","registros.*")
         ->where("registros.id_cupo","=",$id)
+        ->where("registros.estado_registro","=",null)
         ->get();
         return response()->json($datos);
     }
@@ -121,8 +137,13 @@ class RegistroController extends Controller
      * @param  \App\Models\registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(registro $registro)
+    public function eliminar($id)
     {
-        //
+
+    $registro = registro::find($id);
+    $registro->estado_registro = 0;
+    $registro->save();
+
+    return 1 ;
     }
 }
