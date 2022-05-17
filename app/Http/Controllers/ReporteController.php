@@ -46,9 +46,9 @@ class ReporteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function mostrarReporte(Request $request, $id)
+    public function mostrarReporte(Request $request)
     {
-
+/*
         $consulta = "SELECT
         users.name,cupos.start, registros.horasiniciales,registros.horasfinales,registros.intervalo_ini,registros.intervalo_fin,
         registros.total_horas,registros.total_citas,
@@ -62,10 +62,28 @@ class ReporteController extends Controller
         INNER JOIN cupos on cupos.id = registros.id_cupo 
         INNER JOIN users on users.id = registros.id_usuario 
         where cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'  AND users.id = $id ORDER BY cupos.start ASC ;";
+*/
 
+        $consulta1 ="SELECT users.id, users.name, cupos.start, registros.horasiniciales , registros.horasfinales, registros.total_horas, registros.total_citas  FROM `registros`
+        INNER JOIN users on users.id = registros.id_usuario
+        INNER JOIN cupos on cupos.id = registros.id_cupo
+        WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'
+        AND registros.estado_registro is null";
 
-        $reportehoras = DB::select($consulta);
-        return response()->json($reportehoras);
+        $reportehoras = DB::select($consulta1);
+
+        $consulta2 = "SELECT users.id , users.name,SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS hours ,
+        SUM(registros.total_citas) as citas
+        FROM registros
+        INNER JOIN users on users.id = registros.id_usuario
+        INNER JOIN cupos on cupos.id = registros.id_cupo
+         WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '2022-05-01' AND '2022-05-25' AND registros.estado_registro is null
+        GROUP BY users.id , users.name";
+
+         $totales = DB::select($consulta2);
+
+         return response()->json(['reportehoras' => $reportehoras, 'totales' => $totales],200);
+
     }
     /**
      * Display the specified resource.

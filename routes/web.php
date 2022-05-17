@@ -75,9 +75,12 @@ Route::post('registro/paises', [App\Http\Controllers\HomeController::class, 'pai
 
 Route::get('vistareporte', [App\Http\Controllers\ReporteController::class, 'show']);
 
-Route::post('registro/reporte/{id}', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
+//Route::post('registro/reporte/{id}', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
 
-Route::post('registro/idusuario', [App\Http\Controllers\ReporteController::class, 'idusuarios']);
+//Route::post('registro/idusuario', [App\Http\Controllers\ReporteController::class, 'idusuarios']);
+
+Route::post('registro/reportehoras', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
+
 
 Route::post('registro/total', [App\Http\Controllers\ReporteController::class, 'total']);
 
