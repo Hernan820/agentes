@@ -76,6 +76,10 @@ $(document).ready(function () {
                                     $("#insertadatoshoras").append(
                                         "<tr class='reporte'><td><b>TOTAL</td><td><b>********************</td><td><b>*******************</td><td><b>"+respuesta.data.totalfinal[0].hours+" Horas</td><td><b>"+respuesta.data.totalfinal[0].citas+"  Citas</td></tr>"
                                     );
+                                }else{
+                                    $("#insertadatoshoras").append(
+                                        "<tr class='reporte'><td>No hay registros</td><td>No hay registros</td><td>No hay registros</td><td>No hay registros</td><td>No hay registros</td></tr>"
+                                    );
                                 }
 
                                 $('#excel').hide();

@@ -47,7 +47,7 @@ class UserRegister implements  FromQuery,WithTitle
 
         ->where("cupos.start",">=",$this->fecha1)
         ->where("cupos.start","<=",$this->fecha2)
-       // ->where("users.id","=",$this->id)
+        ->where("registros.estado_registro","=",null)
         ->where("registros.id_usuario","=",$this->id)
         ->where("users.estado_user","=","1")
         ->orderBy('cupos.start', 'DESC');
