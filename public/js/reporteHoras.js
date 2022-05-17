@@ -15,7 +15,7 @@ $(document).ready(function () {
     
         var datosfechas = new FormData(fromfechas);
         $("#insertadatoshoras").html("");
-      //  $('#btnReporte').attr('disabled', true);
+        $('#btnReporte').attr('disabled', true);
     
     
     
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
                                         if( element.id != respuesta.data.totales[to].id){
                                             $("#insertadatoshoras").append(
-                                                "<tr class='reporte'><td><b>TOTAL</td><td><b>"+respuesta.data.totales[to].name+"</td><td><b"+respuesta.data.totales[to].name+"td><td><b>" +
+                                                "<tr class='reporte'><td><b>TOTAL</td><td><b>"+respuesta.data.totales[to].name+"</td><td><b>------------------------<b></td><td><b>" +
                                                     respuesta.data.totales[to].hours +
                                                     " Horas</td><td><b>" +
                                                     respuesta.data.totales[to].citas +
@@ -37,13 +37,6 @@ $(document).ready(function () {
                                             );
                                             to++;
                                         }
-
- 
-
-
-
-
-
 
                                         var h2 =0;
                                       var horas1 =  element.horasiniciales.split(",");
@@ -71,7 +64,7 @@ $(document).ready(function () {
 
                                                        if(i == respuesta.data.reportehoras.length - 1){
                                                         $("#insertadatoshoras").append(
-                                                            "<tr class='reporte'><td><b>TOTAL</td><td><b>"+respuesta.data.totales[to].name+"</td><td><b"+respuesta.data.totales[to].name+"td><td><b>" +
+                                                            "<tr class='reporte'><td><b>TOTAL</td><td><b>"+respuesta.data.totales[to].name+"</td><td><b>------------------------<b></td><td><b>" +
                                                                 respuesta.data.totales[to].hours +
                                                                 " Horas</td><td><b>" +
                                                                 respuesta.data.totales[to].citas +
@@ -81,12 +74,15 @@ $(document).ready(function () {
                                     });
             
                                     $("#insertadatoshoras").append(
-                                        "<tr class='reporte'><td><b>TOTAL</td><td><b>-----------------</td><td><b>-----------------</td><td><b>RTETRETR Horas</td><td><b>ERTRETCitas</td></tr>"
+                                        "<tr class='reporte'><td><b>TOTAL</td><td><b>********************</td><td><b>*******************</td><td><b>"+respuesta.data.totalfinal[0].hours+" Horas</td><td><b>"+respuesta.data.totalfinal[0].citas+"  Citas</td></tr>"
                                     );
-                                }else{
                                 }
-    
-                               
+
+                                $('#excel').hide();
+
+                                $('#excel').show('show');
+                                $('#btnReporte').attr('disabled', false);
+
                             })
                             .catch((error) => {
                                 if (error.response) {
@@ -95,13 +91,6 @@ $(document).ready(function () {
                             });
     });
         
-
-
-
-
-
-
-
 
 function validacionfechas() {
     var valido = true;

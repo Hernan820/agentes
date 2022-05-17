@@ -77,12 +77,23 @@ class ReporteController extends Controller
         FROM registros
         INNER JOIN users on users.id = registros.id_usuario
         INNER JOIN cupos on cupos.id = registros.id_cupo
-         WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '2022-05-01' AND '2022-05-25' AND registros.estado_registro is null
+         WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal' AND registros.estado_registro is null
         GROUP BY users.id , users.name";
 
          $totales = DB::select($consulta2);
+         
+         $consulta3 = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS hours ,
+         SUM(registros.total_citas) as citas
+         FROM registros
+         INNER JOIN users on users.id = registros.id_usuario
+          INNER JOIN cupos on cupos.id = registros.id_cupo
+         WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) 
+         AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal' AND registros.estado_registro is null";
 
-         return response()->json(['reportehoras' => $reportehoras, 'totales' => $totales],200);
+         $totalfinal = DB::select($consulta3);
+
+
+         return response()->json(['reportehoras' => $reportehoras, 'totales' => $totales, 'totalfinal' => $totalfinal],200);
 
     }
     /**
