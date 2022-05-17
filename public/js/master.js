@@ -89,7 +89,7 @@ $('#calcular').on('click', function() {
     var fin = $('#fecha_fin').val();
 
 if( ini == "" || fin == "" ){
-     Swal.fire("¡Debe ingresar una cantidad de citas!");  return;
+     Swal.fire("¡Debe un rango de fechas!");  return;
 }
 $('#totalhoras').val("")
 $('#totalcitas').val("")
@@ -101,7 +101,7 @@ $('#totalcitas').val("")
         $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas);
         }else{
             $('#totalhoras').val("No tiene registros");
-            $('#totalcitas').val("No tiene registros");    
+            $('#totalcitas').val("No tiene registros"); 
         }
     })
     .catch((error) => {

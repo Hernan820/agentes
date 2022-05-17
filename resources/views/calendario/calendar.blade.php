@@ -62,7 +62,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="guardarcupo">Guardar</button>
+                <button type="button" class="btn btn-success" id="guardarcupo">Crear</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
