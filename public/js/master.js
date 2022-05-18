@@ -89,7 +89,7 @@ $('#calcular').on('click', function() {
     var fin = $('#fecha_fin').val();
 
 if( ini == "" || fin == "" ){
-     Swal.fire("¡Debe un rango de fechas!");  return;
+     Swal.fire("¡Debe agregar un rango de fechas!");  return;
 }
 $('#totalhoras').val("")
 $('#totalcitas').val("")

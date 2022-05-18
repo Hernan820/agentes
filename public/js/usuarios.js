@@ -76,6 +76,8 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
         var nombre = $("#name").val();
         var correo = $("#email").val();
         var rol = $("#rol").val();
+
+        var pais = $("#paises").val();
         var password = $("#password").val();
         var passwordconfirm = $("#password-confirm").val();
     
@@ -92,6 +94,11 @@ document.getElementById("guardarusuario").addEventListener("click", function () 
 
         if (validateEmail(correo) == false) {
             Swal.fire("¡Error formato de correo no correcto!");
+            valido = false;
+        }
+
+        if(pais === null){
+            Swal.fire("¡Error elegir un pais!");
             valido = false;
         }
 
@@ -251,7 +258,7 @@ $(document).ready(function () {
     axios.post(principalUrl + "registro/paises")
         .then((respuesta) => {
 
-            $("#paises").append("<option disabled selected >Paises</option>"); 
+            $("#paises").append("<option value='' disabled selected >Paises</option>"); 
 
             respuesta.data.forEach(function (element) {
                 $("#paises").append("<option value="+element.id+">"+element.nombre_paises+"</option>"); 
