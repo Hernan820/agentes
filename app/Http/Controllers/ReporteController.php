@@ -150,15 +150,16 @@ class ReporteController extends Controller
      */
     public function totalusuario($fecha1,$fecha2,$id){
 
-        $sql = "SELECT users.name,
+        $sql = "SELECT users.name, users.email , paises.nombre_paises,'$fecha1' as fechauno,'$fecha2' as fechados,
         SEC_TO_TIME(SUM(TIME_TO_SEC(registros.total_horas))) AS totalhoras,
         SUM(registros.total_citas) AS totalcitas
         FROM registros 
         INNER JOIN users on users.id = registros.id_usuario  
         INNER JOIN cupos on cupos.id = registros.id_cupo
+        INNER JOIN paises on paises.id = users.id_pais
         where cupos.start BETWEEN '$fecha1' AND '$fecha2' 
         AND registros.id_usuario = $id  AND registros.estado_registro IS NULL
-        GROUP BY users.name;";
+        GROUP BY users.name, users.email,paises.nombre_paises;";
     
        $total_usuario = DB::select($sql);
 

@@ -308,6 +308,13 @@
                                 autocomplete="off" disabled="true">
                         </div>
 
+                        <div class="form-group">
+                                <label for="textmishoras">Mis horas </label>
+                                <textarea name="textmishoras" rows="5" required="" id="textmishoras"
+                                    style="white-space: pre-wrap;" class="form-control descripcion" cols="50"
+                                    autocomplete="off"></textarea>
+                            </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">

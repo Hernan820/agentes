@@ -79,6 +79,7 @@ function accionesCupos(option, id) {
 
 $('#modalmishoras').on('click', function() {
     $("#horasusuario").trigger("reset");
+    $('#textmishoras').html("");
     $('#mishoras').modal('show');
 });
 
@@ -93,12 +94,19 @@ if( ini == "" || fin == "" ){
 }
 $('#totalhoras').val("")
 $('#totalcitas').val("")
+$('#textmishoras').html("");
+
     axios.post(principalUrl + "registro/horasusuario/"+ini+"/"+fin+"/"+id)
     .then((respuesta) => {
+        moment.locale("es");
+
         if(respuesta.data.length != 0){
             var horas = respuesta.data[0].totalhoras.split(':');
         $('#totalhoras').val(respuesta.data[0].name+" total horas: "+ horas[0]+" minutos: "+horas[1]);
         $('#totalcitas').val(respuesta.data[0].name+" total citas: "+respuesta.data[0].totalcitas);
+
+        $('#textmishoras').html("Nombre: "+respuesta.data[0].name+"\nEmail: "+respuesta.data[0].email+"\nFecha: "+ moment(respuesta.data[0].fechauno).format("dddd DD [de] MMMM [del] YYYY")+" --- "+moment(respuesta.data[0].fechados).format("dddd DD [de] MMMM [del] YYYY")+"\nUn total de "+horas[0]+" horas y "+horas[1]+" minutos"+"\nTotal de citas: "+ respuesta.data[0].totalcitas);
+
         }else{
             $('#totalhoras').val("No tiene registros");
             $('#totalcitas').val("No tiene registros"); 
