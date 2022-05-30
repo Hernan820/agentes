@@ -54,13 +54,23 @@ $(document).ready(function () {
                                                     element.total_citas +
                                                     "</td></tr>"
                                             );
-                                                
-                                                
+                                
                                             horas1.forEach(function (horai) {
+                                                if(horai == "0" && horas2[h2] == "0"){
+                                                    let td = $('#insertadatoshoras tr').eq(num).find('td').eq(2);
+                                                    td.html("Este dia es OFF"); 
+                                                 //   td.css("color", "#33ECFF");
+                                                
+                                                }else{
                                                     let td = $('#insertadatoshoras tr').eq(num).find('td').eq(2);
                                                     td.html(td.html()+moment(horai,'HH:mm:ss').format('hh:mm A')+" / "+moment(horas2[h2],'HH:mm:ss').format('hh:mm A')+"<br/>"); 
+                                                }
+
                                                 h2++;
                                                        })
+
+
+
 
                                                        if(i == respuesta.data.reportehoras.length - 1){
                                                         $("#insertadatoshoras").append(
