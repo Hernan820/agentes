@@ -89,6 +89,8 @@ table.display {
                 <form action="" id="registroHorario">
 
                     {!! csrf_field() !!}
+
+
                     <div class="form-group">
                         <table class="table table-striped  table-responsive-lg table-sm" id="tabla">
                             <thead>
@@ -100,9 +102,9 @@ table.display {
                             </thead>
                             <tbody id="fila1" >
                                 <tr class="fila-fija" id="fila1" >
-                                    <td width="100%">
+                                    <td width="">
                                         <div style="display: flex;justify-content: space-around;">
-                                            <select name="horaini[]" id="horaini" class="form-control col-md-3 horas"
+                                            <select name="horaini[]" id="horaini" class="form-control col-md-3 horas entrada"
                                                 >
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
@@ -120,13 +122,12 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="number" class="form-control col-md-3 horas minutitos" required=""
+                                            <input type="number" class="form-control col-md-3 horas minutitos entrada" required=""
                                                 name="minutosini[]" id="minutosini" aria-describedby="helpId" value=""
                                                 placeholder="00" autocomplete="off" min="0" max="59" style="width:100%"
                                                >
 
-
-                                            <select name="horarioini[]" id="horario1" class="form-control col-md-3 horas"
+                                            <select name="horarioini[]" id="horario1" class="form-control col-md-3 horas entrada"
                                             >
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
@@ -141,7 +142,7 @@ table.display {
                                         <div style="display: flex;justify-content: space-around;">
 
 
-                                            <select name="horaini2[]" id="horaini" class="form-control col-md-3 horas"
+                                            <select name="horaini2[]" id="horaini2" class="form-control col-md-3 horas entrada"
                                                 >
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
@@ -159,13 +160,13 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="number" class="form-control col-md-3 horas" required=""
-                                                name="minutosini2[]" id="minutosini" aria-describedby="helpId" value=""
+                                            <input type="number" class="form-control col-md-3 horas entrada" required=""
+                                                name="minutosini2[]" id="minutosini2" aria-describedby="helpId" value=""
                                                 placeholder="00" autocomplete="off" style="width:100%"
                                                 min="0" max="59">
 
 
-                                            <select name="horarioini2[]" id="horario1" class="form-control col-md-3 horas"
+                                            <select name="horarioini2[]" id="horario2" class="form-control col-md-3 horas entrada"
                                                >
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
@@ -173,10 +174,13 @@ table.display {
                                             </select>
 
                                         </div>
+
+
+
                                     </td>
                                     </td>
                                     <td width="" id="agregar" class="">
-                                        <input type="button" id="btnagregar" class="btn btn-success masmenos"
+                                        <input type="button" id="btnagregar" class="btn btn-success masmenos entrada"
                                             value="agregar intervalo" >
                                         </td>
                                 </tr>
@@ -194,15 +198,23 @@ table.display {
 
                     <div class="form-group">
                         <label for="total_citas">Agregue el total de citas </label>
-                        <input type="number" class="form-control col-md-9 " required="" name="total_citas"
-                            id="total_citas" aria-describedby="helpId" placeholder="" autocomplete="off" min="0">
+                        <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
+                            id="total_citas" aria-describedby="helpId" value="" placeholder="" autocomplete="off" min="0">
                     </div>
 
 
                     <div class="form-group">
                         <label for="comentarios">Comentarios </label>
-                        <input type="text" class="form-control col-md-9" required="" name="comentarios" id="comentarios"
+                        <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios" id="comentarios"
                             aria-describedby="helpId" placeholder="" autocomplete="off">
+                    </div>
+
+                    <div class="form-check col-md-3" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;
+">
+                    <input class="form-check-input" type="checkbox" value="1" id="diaoff">
+                    <label class="form-check-label" for="defaultCheck1">
+                    DIA OFF
+                    </label>
                     </div>
 
                     <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>

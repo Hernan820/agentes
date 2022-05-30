@@ -35,6 +35,8 @@ document.getElementById("registro").addEventListener("click", function () {
         $('#registroHorario').trigger("reset");
         $("#CollapseExample1").collapse('hide');
         $("#modal_registro").modal("show");
+        $('.entrada').attr('readonly', false)
+
         $('#btnagregar').attr('disabled', false);
         $('#tabla tr').slice(2).remove();
 });
@@ -47,6 +49,9 @@ document.getElementById("guardar_registro").addEventListener("click", function (
 
     var datosregistro = new FormData(formregistro);
     var id_registro = $("#id_registro").val();
+
+    console.log($("#total_citas").val())
+    console.log($("#comentarios").val())
 
     if(id_registro == ""){
         
@@ -259,10 +264,20 @@ function editar(id){
     .then((respuesta) => {
         $('#tabla tr').slice(2).remove();
 
-        //$('.elimina').attr('disabled', false);
+        if(respuesta.data.comentarios == "Este dia es OFF"){
 
+            $("#diaoff").prop("checked", true);
+            $('.entrada').attr('readonly', true)
+            $('#btnagregar').attr('disabled', true);
+            $("#total_horas").val("00 Horas 00 Minutos")
+            $("#total_citas").val("0")
+            $("#comentarios").val("Este dia es OFF")
+            $("#TotaDeHoras").val("00:00:00")
+            $("#horasfinales").val("0")
+            $("#horasiniciales").val("0");
+            $('.horas').val('')
+        }else{
         var horasiniciales = respuesta.data.horasiniciales.split(",");
-
         var horasfinales = respuesta.data.horasfinales.split(",");
 
         var filas=0;
@@ -279,9 +294,7 @@ function editar(id){
                 $("#btnagregar").attr('disabled','disabled');
             }else{
                 $('#btnagregar').attr('disabled', false);
-
             }
-            
             filas=filas+1;
         });
 
@@ -325,14 +338,11 @@ function editar(id){
         formregistro.total_horas.value = totalh[0]+" Horas "+totalh[1]+" Minutos";
         formregistro.total_citas.value = respuesta.data.total_citas;
         formregistro.comentarios.value = respuesta.data.comentarios;
-
-
         formregistro.horasiniciales.value = respuesta.data.horasiniciales;
         formregistro.horasfinales.value = respuesta.data.horasfinales;
         formregistro.TotaDeHoras.value = respuesta.data.total_horas;
+    }
         formregistro.id_registro.value = respuesta.data.id;
-
-
 
         $("#modal_registro").modal("show");
           
@@ -526,6 +536,8 @@ function validaciondatos() {
     valido = false;
    }
 
+   if( !$('#diaoff').is(':checked') ) {
+
     horas.each(function(i) {
         if( $(this).val() == null){
             Swal.fire("¡Debe completar todas las horas!");
@@ -542,7 +554,7 @@ function validaciondatos() {
         }
     });
     
-
+   
 
     horarios.each(function(i) {
         if( $(this).val() == null){
@@ -572,7 +584,7 @@ function validaciondatos() {
             valido = false;
         }
     });
-
+   }
 
     return valido;
 }
@@ -613,3 +625,52 @@ function eliminar(id){
         }
     });
 }
+
+
+
+
+$('#diaoff').on('click', function() {
+  
+    if( $('#diaoff').is(':checked') ) {
+
+Swal.fire({
+        title: "Eliminar",
+        text: "¿Quieres agregar tu registro en estado OFF ?",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SI",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $("#total_horas").val("00 Horas 00 Minutos")
+            $("#total_citas").val("0")
+            $("#comentarios").val("Este dia es OFF")
+           $('.entrada').attr('readonly', true)
+           $('#btnagregar').attr('disabled', true);
+            $("#TotaDeHoras").val("00:00:00")
+            $("#horasfinales").val("0")
+            $("#horasiniciales").val("0");
+            $('.horas').val('')
+        } else {
+            $("#diaoff").prop("checked", false);
+
+        }
+    });
+    }else if(!$('#diaoff').is(':checked')){
+
+        $('.entrada').attr('readonly', false)
+        $('#btnagregar').attr('disabled', false);
+
+        $("#total_horas").val("")
+        $("#total_citas").val("")
+        $("#comentarios").val("")
+
+
+        $("#TotaDeHoras").val("")
+        $("#horasfinales").val("")
+        $("#horasiniciales").val("");
+
+    }
+
+});

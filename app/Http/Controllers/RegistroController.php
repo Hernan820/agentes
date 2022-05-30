@@ -53,13 +53,13 @@ class RegistroController extends Controller
             $registrousuario->horasiniciales= $request->horasiniciales; 
             $registrousuario->horasfinales= $request->horasfinales; 
             $registrousuario->total_horas= $request->TotaDeHoras;
-            $registrousuario->total_citas= $request->total_citas; 
+            $registrousuario->total_citas=$request->total_citas; 
             $registrousuario->comentarios= $request->comentarios; 
             $registrousuario->id_usuario= auth()->user()->id;
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
 
-             return 1;
+             return 1 ;
         }else {
             return 2;
         }
