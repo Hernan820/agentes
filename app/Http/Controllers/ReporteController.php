@@ -67,8 +67,9 @@ class ReporteController extends Controller
         $consulta1 ="SELECT users.id, users.name, cupos.start, registros.horasiniciales , registros.horasfinales, registros.total_horas, registros.total_citas  FROM `registros`
         INNER JOIN users on users.id = registros.id_usuario
         INNER JOIN cupos on cupos.id = registros.id_cupo
-        WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'
-        AND registros.estado_registro is null";
+        WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1  ORDER BY users.id DESC) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'
+        AND registros.estado_registro is null
+        ORDER BY users.id DESC";
 
         $reportehoras = DB::select($consulta1);
 
@@ -78,7 +79,8 @@ class ReporteController extends Controller
         INNER JOIN users on users.id = registros.id_usuario
         INNER JOIN cupos on cupos.id = registros.id_cupo
          WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal' AND registros.estado_registro is null
-        GROUP BY users.id , users.name";
+        GROUP BY users.id , users.name
+        ORDER BY users.id DESC";
 
          $totales = DB::select($consulta2);
          
