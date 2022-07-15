@@ -168,4 +168,18 @@ class ReporteController extends Controller
        return response()->json($total_usuario);
         
     }
+
+    function acceso($id){
+
+
+
+
+
+
+
+    }
+
+
+
+
 }

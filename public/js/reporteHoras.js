@@ -141,3 +141,60 @@ document.getElementById("excel").addEventListener("click", function () {
 
 
 });
+
+
+
+
+document.getElementById("desactivar").addEventListener("click", function () {
+
+    
+
+});
+
+     
+$('#').on('change', function() {
+
+
+    if ($(this).is(':checked') ) {
+
+        Swal.fire({
+            title: "Desactivar Usuarios",
+            text: "¿Estas seguro de desactivar los accesos a todos los agentes ?",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+        
+                axios.put(principalUrl + "registro/acceso/"+1)
+                .then((respuesta) => {
+            
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Acceso de agentes desactivado exitosamente!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+
+
+                }).catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+            } else {
+            }
+        });
+       
+
+    } else {
+
+
+
+    }
+
+
+});
