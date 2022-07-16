@@ -71,8 +71,15 @@ class CupoController extends Controller
      */
     public function vistaregistro($id)
     {
-        $cupo = cupo::find($id);
-        return view("registros.registroAgente", compact('cupo'));
+
+        if(auth()->user()->acceso == 1){
+            $cupo = cupo::find($id);
+            return view("registros.registroAgente", compact('cupo'));
+        }else{
+            return view('errors.404');
+        }
+
+     
     }
 
     /**

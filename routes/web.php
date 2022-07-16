@@ -77,6 +77,8 @@ Route::get('vistareporte', [App\Http\Controllers\ReporteController::class, 'show
 
 Route::get('registro/acceso/{id}', [App\Http\Controllers\ReporteController::class, 'acceso']);
 
+Route::post('registro/accesoagentes', [App\Http\Controllers\ReporteController::class, 'accesoagentes']);
+
 
 //Route::post('registro/reporte/{id}', [App\Http\Controllers\ReporteController::class, 'mostrarReporte']);
 

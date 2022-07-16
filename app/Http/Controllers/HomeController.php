@@ -28,7 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('calendario.calendar');
+        if(auth()->user()->acceso == 1){
+            return view('calendario.calendar');
+        }else{
+            return view('errors.404');
+        }
     }
 
     function vistausuarios(){
@@ -50,9 +54,9 @@ class HomeController extends Controller
             $usuario->name = $request-> name; 
             $usuario->email = $request-> email;
             $usuario ->id_pais = $request-> paises;
-
             $usuario->password = Hash::make($request->password);
             $usuario->estado_user = 1;
+            $usuario->acceso	 = 1;
             $usuario->save();
     
             $usuario->assignRole($request['rol']);

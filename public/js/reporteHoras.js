@@ -5,6 +5,20 @@ $(document).ready(function () {
     $('#excel').hide('hide');
 
 
+    axios.post(principalUrl + "registro/accesoagentes")
+    .then((respuesta) => {
+
+        if(respuesta.data.acceso == 0){
+            $('#desactivar').prop('checked', true);
+        }else{
+            $('#desactivar').prop('checked', false);
+        }
+    }).catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+
   // $('#excel').css("display", "none");
 });
 
@@ -152,7 +166,7 @@ document.getElementById("desactivar").addEventListener("click", function () {
 });
 
      
-$('#').on('change', function() {
+$('#desactivar').on('change', function() {
 
 
     if ($(this).is(':checked') ) {
@@ -168,15 +182,15 @@ $('#').on('change', function() {
         }).then((result) => {
             if (result.isConfirmed) {
         
-                axios.put(principalUrl + "registro/acceso/"+1)
+                axios.get(principalUrl + "registro/acceso/"+0)
                 .then((respuesta) => {
             
                     Swal.fire({
                         position: "top-end",
-                        icon: "error",
+                        icon: "success",
                         title: "Acceso de agentes desactivado exitosamente!",
                         showConfirmButton: false,
-                        timer: 1000,
+                        
                     });
 
 
@@ -186,13 +200,47 @@ $('#').on('change', function() {
                     }
                 });
             } else {
+                $('#desactivar').prop('checked', false);
+
             }
         });
        
 
     } else {
 
+        Swal.fire({
+            title: "Activar Usuarios",
+            text: "¿Estas seguro de activar los accesos a todos los agentes ?",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+        
+                axios.get(principalUrl + "registro/acceso/"+1)
+                .then((respuesta) => {
+            
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Acceso de agentes activados exitosamente!",
+                        showConfirmButton: false,
+                        
+                    });
 
+
+                }).catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+            } else {
+                $('#desactivar').prop('checked', true);
+
+            }
+        });
 
     }
 

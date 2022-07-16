@@ -171,15 +171,25 @@ class ReporteController extends Controller
 
     function acceso($id){
 
+        $sql = "UPDATE users 
+        INNER JOIN model_has_roles ON users.id = model_has_roles.model_id  
+        SET users.acceso =$id
+        WHERE model_has_roles.role_id = 2;";
+    
+       $total_usuario = DB::select($sql);
 
-
-
-
-
-
+       return 1 ;
     }
 
+    function accesoagentes(){
 
+        $acceso= User::join('model_has_roles','model_has_roles.model_id','=','users.id')
+                 ->select("users.acceso")
+                 ->where("model_has_roles.role_id","=",2)
+                 ->first();
 
+     return response()->json($acceso);
+
+    }
 
 }
