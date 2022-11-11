@@ -9,6 +9,7 @@ use Carbon\CarbonPeriod;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
+use DB;
 
 class CupoController extends Controller
 {
@@ -35,6 +36,7 @@ class CupoController extends Controller
             $cupo->start= $date;
             $cupo->end= $date;
             $cupo->title="Día De Trabajo";
+            $cupo->vista=1;
             $cupo->save();  
         }
         return 1;
@@ -48,7 +50,16 @@ class CupoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $period = CarbonPeriod::create($request->start, $request->end);
+        foreach ($period as $date) {   
+            $cupo = new cupo;
+            $cupo->start= $date;
+            $cupo->end= $date;
+            $cupo->title="Horario dia";
+            $cupo->vista=2;
+            $cupo->save();  
+        }
+        return 1;
     }
 
     /**
@@ -59,7 +70,8 @@ class CupoController extends Controller
      */
     public function show(cupo $cupo)
     {
-        $resultado = cupo::all();
+       $sql =  "SELECT * FROM `cupos` WHERE cupos.vista = 1;";
+       $resultado = DB::select($sql);
         return $resultado;   
      }
 
@@ -116,5 +128,21 @@ class CupoController extends Controller
         }else{
             return response()->json(false);
         }
+    }
+/*
+
+
+*/
+    public function cuposhorario(){
+        $sql =  "SELECT * FROM `cupos` WHERE cupos.vista = 2;";
+        $resultado = DB::select($sql);
+         return $resultado;  
+
+    }
+
+    public function vistahorarios($id)
+    {
+            $cupo = cupo::find($id);
+            return view("registros.registroAgente", compact('cupo'));  
     }
 }

@@ -95,6 +95,11 @@
                             @if (Route::has('login'))
                             @if(@Auth::user()->hasRole('administrador'))
                             <li class="has-sub">
+                                <a href="{{ asset('vistahorarios') }}">
+                                    </i>
+                                    <span class="bot-line"></span>HORARIOS</a>
+                            </li>
+                            <li class="has-sub">
                                 <a href="{{ asset('vistareporte') }}">
                                     </i>
                                     <span class="bot-line"></span>REPORTE</a>

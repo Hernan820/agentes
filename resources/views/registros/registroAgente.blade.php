@@ -4,6 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="{{ asset('js/registrohoras.js') }}" defer></script>
+<script src="{{ asset('js/registrohorario.js') }}" defer></script>
+
 <script src="https://unpkg.com/imask"></script>
 
 <style>
@@ -43,6 +45,9 @@ table.display {
 
 
 <input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo"></input>
+<input type="hidden" value="{{$cupo->vista}}" id="vista" name="id_cupo"></input>
+
+
 <input type="hidden" name="usuario_log" id="usuario_log" value="{{ auth()->user()->id }}" />
 
 <div class="col-md-12" style="background-color: ">
@@ -53,6 +58,7 @@ table.display {
     </div>
 
 
+    @if($cupo->vista == 1)
 
     <idv class="col-md-12 table-responsive">
         <table id="registro_horas" class="table table-striped table-bordered dt-responsive nowrap datatable"
@@ -67,7 +73,25 @@ table.display {
                 </tr>
             </thead>
         </table>
-</div>
+    </div>
+    @elseif ($cupo->vista == 2)
+
+    <idv class="col-md-12 table-responsive">
+        <table id="registro_horario" class="table table-striped table-bordered dt-responsive nowrap datatable"
+            class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Usuario</th>
+                    <th class="col-md-2">Horario</th>
+                    <th class="col-md-2">Total Horas</th>
+                    <th class="col-md-3">Comentario</th>
+                    <th class="col-md-3">Opciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    @endif
+
 </div>
 
 
@@ -100,12 +124,12 @@ table.display {
                                     <th class="col-md-3"></th>
                                 </tr>
                             </thead>
-                            <tbody id="fila1" >
-                                <tr class="fila-fija" id="fila1" >
+                            <tbody id="fila1">
+                                <tr class="fila-fija" id="fila1">
                                     <td width="">
                                         <div style="display: flex;justify-content: space-around;">
-                                            <select name="horaini[]" id="horaini" class="form-control col-md-3 horas entrada"
-                                                >
+                                            <select name="horaini[]" id="horaini"
+                                                class="form-control col-md-3 horas entrada">
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
                                                 <option value="01">01</option>
@@ -122,13 +146,13 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="number" class="form-control col-md-3 horas minutitos entrada" required=""
-                                                name="minutosini[]" id="minutosini" aria-describedby="helpId" value=""
-                                                placeholder="00" autocomplete="off" min="0" max="59" style="width:100%"
-                                               >
+                                            <input type="number" class="form-control col-md-3 horas minutitos entrada"
+                                                required="" name="minutosini[]" id="minutosini"
+                                                aria-describedby="helpId" value="" placeholder="00" autocomplete="off"
+                                                min="0" max="59" style="width:100%">
 
-                                            <select name="horarioini[]" id="horario1" class="form-control col-md-3 horas entrada"
-                                            >
+                                            <select name="horarioini[]" id="horario1"
+                                                class="form-control col-md-3 horas entrada">
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
                                                 <option value="PM">PM</option>
@@ -142,8 +166,8 @@ table.display {
                                         <div style="display: flex;justify-content: space-around;">
 
 
-                                            <select name="horaini2[]" id="horaini2" class="form-control col-md-3 horas entrada"
-                                                >
+                                            <select name="horaini2[]" id="horaini2"
+                                                class="form-control col-md-3 horas entrada">
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
                                                 <option value="01">01</option>
@@ -162,12 +186,11 @@ table.display {
 
                                             <input type="number" class="form-control col-md-3 horas entrada" required=""
                                                 name="minutosini2[]" id="minutosini2" aria-describedby="helpId" value=""
-                                                placeholder="00" autocomplete="off" style="width:100%"
-                                                min="0" max="59">
+                                                placeholder="00" autocomplete="off" style="width:100%" min="0" max="59">
 
 
-                                            <select name="horarioini2[]" id="horario2" class="form-control col-md-3 horas entrada"
-                                               >
+                                            <select name="horarioini2[]" id="horario2"
+                                                class="form-control col-md-3 horas entrada">
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
                                                 <option value="PM">PM</option>
@@ -181,8 +204,8 @@ table.display {
                                     </td>
                                     <td width="" id="agregar" class="">
                                         <input type="button" id="btnagregar" class="btn btn-success masmenos entrada"
-                                            value="agregar intervalo" >
-                                        </td>
+                                            value="agregar intervalo">
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -199,29 +222,30 @@ table.display {
                     <div class="form-group">
                         <label for="total_citas">Agregue el total de citas </label>
                         <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
-                            id="total_citas" aria-describedby="helpId" value="" placeholder="" autocomplete="off" min="0">
+                            id="total_citas" aria-describedby="helpId" value="" placeholder="" autocomplete="off"
+                            min="0">
                     </div>
 
 
                     <div class="form-group">
                         <label for="comentarios">Comentarios </label>
-                        <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios" id="comentarios"
-                            aria-describedby="helpId" placeholder="" autocomplete="off">
+                        <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
+                            id="comentarios" aria-describedby="helpId" placeholder="" autocomplete="off">
                     </div>
 
                     <div class="form-check col-md-3" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;
 ">
-                    <input class="form-check-input" type="checkbox" value="1" id="diaoff">
-                    <label class="form-check-label" for="defaultCheck1">
-                    DIA OFF
-                    </label>
+                        <input class="form-check-input" type="checkbox" value="1" id="diaoff">
+                        <label class="form-check-label" for="defaultCheck1">
+                            DIA OFF
+                        </label>
                     </div>
 
                     <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
                     <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
                     <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
                     <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
-                     <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
+                    <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
 
                 </form>
             </div>
