@@ -114,6 +114,15 @@ Route::post('horario/cupo', [App\Http\Controllers\CupoController::class, 'store'
 Route::get('horario/mostrar/{id}', [App\Http\Controllers\CupoController::class, 'vistahorarios']);
 
 
+Route::get('hoarios/usuario/{id}', [App\Http\Controllers\RegistrohoariosController::class, '']);
+
+#lista de usuarios para agregar su usuario
+Route::get('horario/usuario/{id}', [App\Http\Controllers\RegistrohoariosController::class, 'listausuarios']);
+#guarda horario de usuario
+Route::post('horario/guardar', [App\Http\Controllers\RegistrohoariosController::class, '']);
+
+Route::post('hoarios/agentes', [App\Http\Controllers\RegistrohoariosController::class, 'show']);
+
 
 });
 
