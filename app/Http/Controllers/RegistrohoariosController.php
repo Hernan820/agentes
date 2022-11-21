@@ -37,6 +37,28 @@ class RegistrohoariosController extends Controller
      */
     public function store(Request $request)
     {
+        $array = [1,2,3,4,5,6,7];
+
+        foreach($array as $numero){
+            $fecha ="fechadia".$numero;
+            $horasini ="horas_iniciales_dia".$numero;
+            $horasfin ="horas_finales_dia".$numero;
+            $totalh ="total_horasdia".$numero;
+
+            if($request-> $horasini != ""){
+
+            $horariousuario = new registrohoarios;
+            $horariousuario->fecha_horario = $request-> $fecha ;
+            $horariousuario->horasiniciales = $request-> $horasini;
+            $horariousuario->horasfinales = $request->$horasfin ;
+            $horariousuario->total_horas = $request->$totalh ;
+            $horariousuario->estado_horario = 1 ;
+            $horariousuario->id_usuario = $request->usuarios ;
+            $horariousuario->save();
+        }
+
+         }
+         return 1;
     }
 
     /**

@@ -123,6 +123,11 @@ Route::post('horario/guardar', [App\Http\Controllers\RegistrohoariosController::
 
 Route::post('hoarios/agentes', [App\Http\Controllers\RegistrohoariosController::class, 'show']);
 
+//Guarda horario de ususario
+
+Route::post('horarios/guarda', [App\Http\Controllers\RegistrohoariosController::class, 'store']);
+
+
 
 });
 

@@ -55,25 +55,22 @@ rango(function() {
 });
 </script>
 
-
-
 <div class="container">
     <div class="col-12 text-center">
         <div class="f-3">
             <h1>
-
                 <strong>
                     CALENDARIO DE HORARIOS
                 </strong>
-            </h1>
-            <button type="button" class="btn btn-primary" id="horariodeusuario" data-toggle="modal"
-                data-target="#modal_cupo_horario">
+            <button type="button" class="btn btn-primary float-right " id="horariodeusuario" >
                 crear horario
             </button>
+            </h1>
+
         </div>
     </div>
 </div>
-
+<br><br><br>
 
 <div class="container  col-md-9 bg-blue">
     <div class="cards" style="    background: papayawhip;">
@@ -91,22 +88,6 @@ rango(function() {
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
                 </tr>
             </tbody>
         </table>
@@ -124,7 +105,7 @@ rango(function() {
                 <h5 class="modal-title">
                     Crear cupos por rango
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -298,7 +279,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar1" class="horas1">
                                                         <input type="button" id="btnagregar1"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -430,7 +411,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar2" class="">
                                                         <input type="button" id="btnagregar2"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -562,7 +543,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar3" class="">
                                                         <input type="button" id="btnagregar3"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -693,7 +674,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar4" class="">
                                                         <input type="button" id="btnagregar4"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -824,7 +805,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar5" class="">
                                                         <input type="button" id="btnagregar5"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -955,7 +936,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar6" class="">
                                                         <input type="button" id="btnagregar6"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -1086,7 +1067,7 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar7" class="">
                                                         <input type="button" id="btnagregar7"
-                                                            class="btn btn-success masmenos entrada"
+                                                            class="btn btn-success masmenos "
                                                             value="agregar intervalo">
                                                     </td>
                                                 </tr>
@@ -1115,7 +1096,7 @@ rango(function() {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="guardarhorariousuario">Agregar horario</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

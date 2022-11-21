@@ -1,8 +1,15 @@
+let formhorarioprimero = document.getElementById("formdia1");
+let formhorario2 = document.getElementById("formdia2");
+let formhorario3 = document.getElementById("formdia3");
+let formhorario4 = document.getElementById("formdia4");
+let formhorario5 = document.getElementById("formdia5");
+let formhorario6 = document.getElementById("formdia6");
+let formhorario7 = document.getElementById("formdia7");
+
 //controla el numero de intervalos
 const numf = 4;
 
 $(document).ready(function () {
-
   $('#tablahorarios').hide();
 });
 
@@ -67,42 +74,9 @@ var fechados= f2[2]+"-"+f2[0]+"-"+f2[1];
 }
 
 
-$('#crearhorario').on('click', function() {
-    var fechas = $("#rango_fechas").val().split(" - ");
-    fechashorario(fechas[0],fechas[1]);
-});
 
 
-$('#horariodeusuario').on('click', function() {
-  $('#usuarios').empty();
-  $("#rango_fechas").val("");
-
-  axios.post(principalUrl + "hoarios/agentes")
-    .then((respuesta) => {
-  
-      $("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
-  
-      respuesta.data.forEach(function (element) {   
-  
-      $("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
-         })
-  
-      $('#modal_cupo_horario').show();
-  
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
-});
-
-
-
-
-// LOGICA DE FORMULARIO DEL DIA 1
-
-
+// FUNCIONES
 
 function hora(id,muestrahoras,hini,hfin,htotal){
 
@@ -252,6 +226,69 @@ function btnelimina(btn){
 }
 
 
+//EJECUTAN BOTONES
+
+
+$('#horariodeusuario').on('click', function() {
+
+  $('#usuarios').empty();
+  $("#rango_fechas").val("");
+  limpiamodal();
+
+  axios.post(principalUrl + "hoarios/agentes")
+    .then((respuesta) => {
+      $("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
+      respuesta.data.forEach(function (element) {   
+      $("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
+         })
+      $('#modal_cupo_horario').modal('show');
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+
+});
+
+
+function limpiamodal(){
+  var array1 = [1,2,3,4,5,6,7];
+  $('.entrada').val('');
+  $("input[type=checkbox]").prop("checked", false);
+  $('.entrada').attr('readonly', false)
+ 
+  array1.forEach(function (numero) {
+    $('#tabladia'+numero+' tr').slice(2).remove();
+    $('#btnagregar'+numero).attr('disabled', false);
+    $('.horas'+numero).attr('readonly', false);
+    $('.horas'+numero).attr('disabled', false); 
+    $("#fechadia"+numero).val('')
+    $("#horas_iniciales_dia"+numero).val('')
+    $("#horas_finales_dia"+numero).val('')
+    $("#total_horasdia"+numero).val('')
+    $("#totalhorasdia"+numero).val('')
+  });
+  $('#tablahorarios').hide();
+}
+
+
+
+$('#crearhorario').on('click', function() {
+
+  if($("#rango_fechas").val() == ""){
+    Swal.fire("¡Debe agregar un rango de fechas!");
+    return;
+  }
+   if($("#usuarios").val() == null){
+    Swal.fire("¡Debe agregar un usuario!");
+    return;
+  }
+  console.log($("#usuarios").val());
+  var fechas = $("#rango_fechas").val().split(" - ");
+  fechashorario(fechas[0],fechas[1]);
+});
+
 
 
 $('.offdia').on('click', function() {
@@ -310,10 +347,64 @@ Swal.fire({
 
 });
 
+document.getElementById("guardarhorariousuario").addEventListener("click", function () {
+
+    var array1 = [1,2,3,4,5,6,7];
+
+    var horarios = new FormData();
+
+    array1.forEach(function (numero) {
+      horarios.append("fechadia"+numero, $("#fechadia"+numero).val());
+      horarios.append("horas_iniciales_dia"+numero, $("#horas_iniciales_dia"+numero).val());
+      horarios.append("horas_finales_dia"+numero, $("#horas_finales_dia"+numero).val());
+      horarios.append("total_horasdia"+numero, $("#total_horasdia"+numero).val());
+
+  });
+  horarios.append("usuarios", $("#usuarios").val());
+
+  var nombreususario = $("#usuarios").text();
+  var nombre = $('select[id="usuarios"] option:selected').text();
+
+  Swal.fire({
+    title: "HORARIOS",
+    text: "¿Estas seguro de guardar los horarios de "+nombre+" ?",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "SI",
+    cancelButtonText: "Cancelar",
+}).then((result) => {
+    if (result.isConfirmed) {
+
+
+      axios.post(principalUrl + "horarios/guarda",horarios)
+      .then((respuesta) => {
+
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Horarios guardados!",
+          showConfirmButton: false,
+          timer: 1000
+      });
+        $('#modal_cupo_horario').modal('hide');
+      })
+      .catch((error) => {
+          if (error.response) {
+              console.log(error.response.data);
+          }
+      });
+
+
+    }
+});
 
 
 
 
+
+
+});
 
 
 
