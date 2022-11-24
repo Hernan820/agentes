@@ -65,7 +65,7 @@ class ReporteController extends Controller
 */
 
         $consulta1 ="SELECT users.id, users.name, cupos.start, registros.horasiniciales , registros.horasfinales, registros.total_horas, registros.total_citas  FROM `registros`
-        INNER JOIN users on users.id = registros.id_usuario
+        INNER JOIN users on users.id = registros.id_usuario  ;l
         INNER JOIN cupos on cupos.id = registros.id_cupo
         WHERE users.id IN (SELECT users.id FROM users WHERE users.estado_user = 1  ORDER BY users.id DESC) AND cupos.start BETWEEN '$request->fechainicio' AND '$request->fechafinal'
         AND registros.estado_registro is null
