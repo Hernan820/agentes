@@ -1,3 +1,4 @@
+
 let formhorarioprimero = document.getElementById("formdia1");
 let formhorario2 = document.getElementById("formdia2");
 let formhorario3 = document.getElementById("formdia3");
@@ -11,6 +12,14 @@ const numf = 4;
 
 $(document).ready(function () {
   $('#tablahorarios').hide();
+
+  var semana = moment(moment().toDate(), "MM-DD-YYYY").isoWeek()
+  var ano = moment(moment().toDate(), "MM-DD-YYYY").format('YYYY')
+
+  $("#semana").val(ano+"-W"+semana)  ;
+
+  semanahorario(ano,semana);
+  
 });
 
 
@@ -59,16 +68,6 @@ var fechados= f2[2]+"-"+f2[0]+"-"+f2[1];
     $("#fechadia7").val(moment(fechas[6]).format('YYYY-MM-DD'));
 
     $('#tablahorarios').show();
-
-
-    $("#dias").append('<th scope="col">Usuarios</th>');
-
-      fechas.forEach(function (element) {   
-
-      var d = moment(element).format('dddd DD');
-      $("#dias").append('<th scope="col">'+d+'</th>');
-    })
-    $("#dias").append('<th scope="col">Total de horas</th>');
 
   }
 }
@@ -225,6 +224,109 @@ function btnelimina(btn){
   $('#btnagregar1').attr('disabled', false);
 }
 
+$('#semana').on('change', function() {
+  
+   var semana= $("#semana").val().split("-W");
+
+  console.log($("#semana").val());
+
+   semanahorario(semana[0],semana[1]);
+
+});
+
+var dateformat = "YYYY/MM/DD";
+function getWeekDaysByWeekNumber(weeknumber)
+{
+    var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
+    while(weeklength--)
+    {
+        result.push(date.format(dateformat));
+        date.add(1,"day")
+    }
+    return result;
+}
+
+
+function semanahorario(ano,semana){
+
+  $('#dias').empty();
+  $('#filausuario').empty();
+
+      $("#dias").append('<th scope="col">Usuarios</th>');
+
+      getWeekDaysByWeekNumber(semana).forEach(function (element) {   
+
+      var d = moment(element).format('dddd DD');
+      $("#dias").append('<th scope="col">'+d+'</th>');
+    })
+    $("#dias").append('<th scope="col">Total de horas</th>');
+
+
+      
+  axios.post(principalUrl + "hoarios/agentes")
+  .then((respuesta) => {
+
+   respuesta.data.forEach(function (element) {   
+   /************************************* */
+
+   
+   axios.post(principalUrl + "hoarios/semana/"+ano+"/"+semana+"/"+element.id)
+   .then((respuesta) => {
+    
+     $("#filausuario").append('<tr class="">');
+ 
+     $("#filausuario").append('<td>'+respuesta.data.horasuser[0].name+'</td>');
+
+      var TotalHorasuser ='';
+     respuesta.data.horasuser.forEach(function (element, i) {  
+
+
+                 var hini = element.horasiniciales.split(",");
+                 var hfin = element.horasfinales.split(",");
+                 var totalhoras = element.total_horas.split(":");
+
+                 var horasformateadas = '';
+
+                 if(hini[0]== 0 && hfin[0]== 0){
+                   $("#filausuario").append('<td class="diaoff"> OFF</td>');
+ 
+                 }else{
+                 if(hini.length == 1){
+                   $("#filausuario").append('<td>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+ 
+                 }else{
+                   hini.forEach(function (horasini, i) {   
+                     horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
+                   })
+                   $("#filausuario").append('<td>'+horasformateadas+'</td>');
+                 }
+               }
+     })
+
+
+     $("#filausuario").append('<td>'+respuesta.data.totalhoras[0].TotalHoras+'</td>');
+    $("#filausuario").append('</tr>');
+ 
+   })
+   .catch((error) => {
+       if (error.response) {
+           console.log(error.response.data);
+       }
+   });
+
+ /********************************************* */ 
+   })
+
+})
+.catch((error) => {
+    if (error.response) {
+        console.log(error.response.data);
+    }
+});
+
+}
+
+
 
 //EJECUTAN BOTONES
 
@@ -284,7 +386,6 @@ $('#crearhorario').on('click', function() {
     Swal.fire("¡Debe agregar un usuario!");
     return;
   }
-  console.log($("#usuarios").val());
   var fechas = $("#rango_fechas").val().split(" - ");
   fechashorario(fechas[0],fechas[1]);
 });
@@ -293,7 +394,6 @@ $('#crearhorario').on('click', function() {
 
 $('.offdia').on('click', function() {
 
-    console.log(this.id);
 
     var numero = this.id.slice(-1);
     
@@ -362,7 +462,6 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
   });
   horarios.append("usuarios", $("#usuarios").val());
 
-  var nombreususario = $("#usuarios").text();
   var nombre = $('select[id="usuarios"] option:selected').text();
 
   Swal.fire({

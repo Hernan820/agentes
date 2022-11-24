@@ -128,6 +128,7 @@ Route::post('hoarios/agentes', [App\Http\Controllers\RegistrohoariosController::
 Route::post('horarios/guarda', [App\Http\Controllers\RegistrohoariosController::class, 'store']);
 
 
+Route::post('hoarios/semana/{ano}/{semana}/{id}', [App\Http\Controllers\RegistrohoariosController::class, 'semana']);
 
 });
 

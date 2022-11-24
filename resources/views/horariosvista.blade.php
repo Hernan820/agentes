@@ -56,8 +56,16 @@ rango(function() {
 </script>
 
 <div class="container">
+<div class="col-12">
+    <label for="week" class="text-dark">Seleccione una semana</label><br>
+
+    <input type="week" class="form-control col-2" name="semana" id="semana" value="" />
+
+    </div>
     <div class="col-12 text-center">
+
         <div class="f-3">
+
             <h1>
                 <strong>
                     CALENDARIO DE HORARIOS
@@ -79,21 +87,18 @@ rango(function() {
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="col-12">
-        <table class="table">
-            <thead>
-                <tr id="dias">
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
+      
+<table class="table table-striped">
+  <thead>
+  <tr id="dias">
+
+    </tr>
+  </thead>
+  <tbody id="filausuario">
+    
+  </tbody>
+</table>
 
 
 <!-- Modal cupos -->
