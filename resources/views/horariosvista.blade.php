@@ -89,9 +89,10 @@ rango(function() {
     </div>
 </div>
 
-
-      
-<table class="table table-striped">
+<div class="container">
+    <div class="row">
+     
+    <table class="table table-striped">
   <thead>
   <tr id="dias">
 
@@ -101,6 +102,9 @@ rango(function() {
     
   </tbody>
 </table>
+    </div>
+</div>
+ 
 
 
 <!-- Modal cupos -->
@@ -201,7 +205,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia1">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia1">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia1">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -284,7 +288,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar1" class="horas1">
+                                                    <td width="" id="agregar1" class="horas1 botonagrega">
                                                         <input type="button" id="btnagregar1"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -333,7 +337,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia2">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia2">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia2">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -416,7 +420,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar2" class="">
+                                                    <td width="" id="agregar2" class="botonagrega">
                                                         <input type="button" id="btnagregar2"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -465,7 +469,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia3">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia3">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia3">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -548,7 +552,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar3" class="">
+                                                    <td width="" id="agregar3" class="botonagrega">
                                                         <input type="button" id="btnagregar3"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -596,7 +600,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia4">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia4">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia4">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -679,7 +683,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar4" class="">
+                                                    <td width="" id="agregar4" class="botonagrega">
                                                         <input type="button" id="btnagregar4"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -727,7 +731,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia5">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia5">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia5">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -810,7 +814,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar5" class="">
+                                                    <td width="" id="agregar5" class="botonagrega">
                                                         <input type="button" id="btnagregar5"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -858,7 +862,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia6">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia6">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia6">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -941,7 +945,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar6" class="">
+                                                    <td width="" id="agregar6" class="botonagrega">
                                                         <input type="button" id="btnagregar6"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">
@@ -989,7 +993,7 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia7">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm" id="tabladia7">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia7">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -1072,7 +1076,7 @@ rango(function() {
                                                         </div>
                                                     </td>
                                                     </td>
-                                                    <td width="" id="agregar7" class="">
+                                                    <td width="" id="agregar7" class="botonagrega">
                                                         <input type="button" id="btnagregar7"
                                                             class="btn btn-success masmenos "
                                                             value="agregar intervalo">

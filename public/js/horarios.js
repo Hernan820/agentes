@@ -34,7 +34,6 @@ var fechados= f2[2]+"-"+f2[0]+"-"+f2[1];
   var fin = moment(fechados);
   
   if(ini != undefined && fin != undefined){
-    $('#dias').empty();
     var fechas = [];
     
     while (ini.isSameOrBefore(fin)) {
@@ -206,7 +205,7 @@ function btonagrega(tablaid,bton){
  $('#'+tablaid+' tbody tr:eq(0)').clone().appendTo('#'+tablaid+'');
  $(`#`+tablaid+` tbody tr.fila-fija:eq(${num})`).addClass(' dinamico');
 
- $(`#`+tablaid+` tbody .masmenos:eq(${num})`).addClass('elimina'+numero);
+ $(`#`+tablaid+` tbody .masmenos:eq(${num})`).addClass('elimina');
  $(`#`+tablaid+` tbody .masmenos:eq(${num})`).val("elimina"); 
 
  if(num == numf) {
@@ -218,8 +217,13 @@ function btonagrega(tablaid,bton){
 
 function btnelimina(btn){
 
+
   $(btn).closest('tr').remove();
-  $('#btnagregar1').attr('disabled', false);
+
+  var numero = btn.id.slice(-1);
+
+
+  $('#btnagregar'+numero).attr('disabled', false);
 }
 
 $('#semana').on('change', function() {
@@ -274,10 +278,10 @@ function semanahorario(ano,semana){
       nuevo_arreglo.forEach(result => {
 
         if(result.data.horasuser.length != 0){
-          $("#filausuario").append('<tr class="">');
+          $("#filausuario").append('<tr>');
           $("#filausuario").append('<td>'+result.data.horasuser[0].name+'</td>');
       
-          result.data.horasuser.forEach((element) => {
+          result.data.horasuser.forEach((element,i) => {
       
             var hini = element.horasiniciales.split(",");
             var hfin = element.horasfinales.split(",");
@@ -288,15 +292,21 @@ function semanahorario(ano,semana){
       
             }else{
             if(hini.length == 1){
-              $("#filausuario").append('<td>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+              $("#filausuario").append('<td style="font-size: 10px">'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
       
             }else{
               hini.forEach(function (horasini, i) {   
                 horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
               })
-              $("#filausuario").append('<td>'+horasformateadas+'</td>');
+              $("#filausuario").append('<td style="font-size: 10px">'+horasformateadas+'</td>');
             }
           }  
+
+          if(i == result.data.horasuser.length-1){
+           // $("#filausuario").append('</tr>');
+
+          }
+
           });          
         $("#filausuario").append('<td>'+result.data.totalhoras[0].TotalHoras+'</td>');
         $("#filausuario").append('</tr>');
@@ -491,167 +501,40 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
 
 
 // BTNELIMINA
-$(document).on('click', '.elimina1',function() {
+
+$(document).on('click', '.elimina',function() {
+  var numero = this.id.slice(-1);
+
   btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia1]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia1]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia1]").prop("id");
-  var totalh = $("form input[name=total_horasdia1]").prop("id");
-  hora('#tabladia1',totalhmuestra,hiniciales,hfinales,totalh);
+
+  var totalhmuestra = $("form input[name=totalhorasdia"+numero+"]").prop("id");
+  var hiniciales = $("form input[name=horas_iniciales_dia"+numero+"]").prop("id");
+  var hfinales = $("form input[name=horas_finales_dia"+numero+"]").prop("id");
+  var totalh = $("form input[name=total_horasdia"+numero+"]").prop("id");
+  hora('#tabladia'+numero,totalhmuestra,hiniciales,hfinales,totalh);
 });
 
-$(document).on('click', '.elimina2',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia2]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia2]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia2]").prop("id");
-  var totalh = $("form input[name=total_horasdia2]").prop("id");
-  hora('#tabladia2',totalhmuestra,hiniciales,hfinales,totalh);
-});
 
-$(document).on('click', '.elimina3',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia3]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia3]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia3]").prop("id");
-  var totalh = $("form input[name=total_horasdia3]").prop("id");
-  hora('#tabladia3',totalhmuestra,hiniciales,hfinales,totalh);
-});
 
-$(document).on('click', '.elimina4',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia4]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia4]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia4]").prop("id");
-  var totalh = $("form input[name=total_horasdia4]").prop("id");
-  hora('#tabladia4',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$(document).on('click', '.elimina5',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia5]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia5]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia5]").prop("id");
-  var totalh = $("form input[name=total_horasdia5]").prop("id");
-  hora('#tabladia5',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$(document).on('click', '.elimina6',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia6]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia6]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia6]").prop("id");
-  var totalh = $("form input[name=total_horasdia6]").prop("id");
-  hora('#tabladia6',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$(document).on('click', '.elimina7',function() {
-  btnelimina(this);
-  var totalhmuestra = $("form input[name=totalhorasdia7]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia7]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia7]").prop("id");
-  var totalh = $("form input[name=total_horasdia7]").prop("id");
-  hora('#tabladia7',totalhmuestra,hiniciales,hfinales,totalh);
-});
 
 // CHANGE DE TABLAS
 
-$('#tabladia1 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia1]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia1]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia1]").prop("id");
-  var totalh = $("form input[name=total_horasdia1]").prop("id");
-  hora('#tabladia1',totalhmuestra,hiniciales,hfinales,totalh);
+$('.tablehoras ').on('change',function() {
+  var numero = this.id.slice(-1);
+  var totalhmuestra = $("form input[name=totalhorasdia"+numero+"]").prop("id");
+  var hiniciales = $("form input[name=horas_iniciales_dia"+numero+"]").prop("id");
+  var hfinales = $("form input[name=horas_finales_dia"+numero+"]").prop("id");
+  var totalh = $("form input[name=total_horasdia"+numero+"]").prop("id");
+  hora('#tabladia'+numero,totalhmuestra,hiniciales,hfinales,totalh);
 });
 
-$('#tabladia2 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia2]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia2]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia2]").prop("id");
-  var totalh = $("form input[name=total_horasdia2]").prop("id");
-  hora('#tabladia2',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$('#tabladia3 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia3]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia3]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia3]").prop("id");
-  var totalh = $("form input[name=total_horasdia3]").prop("id");
-  hora('#tabladia3',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-
-$('#tabladia4 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia4]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia4]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia4]").prop("id");
-  var totalh = $("form input[name=total_horasdia4]").prop("id");
-  hora('#tabladia4',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$('#tabladia5 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia5]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia5]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia5]").prop("id");
-  var totalh = $("form input[name=total_horasdia5]").prop("id");
-  hora('#tabladia5',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$('#tabladia6 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia6]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia6]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia6]").prop("id");
-  var totalh = $("form input[name=total_horasdia6]").prop("id");
-  hora('#tabladia6',totalhmuestra,hiniciales,hfinales,totalh);
-});
-
-$('#tabladia7 tbody').on('change','tr.fila-fija',function() {
-  var totalhmuestra = $("form input[name=totalhorasdia7]").prop("id");
-  var hiniciales = $("form input[name=horas_iniciales_dia7]").prop("id");
-  var hfinales = $("form input[name=horas_finales_dia7]").prop("id");
-  var totalh = $("form input[name=total_horasdia7]").prop("id");
-  hora('#tabladia7',totalhmuestra,hiniciales,hfinales,totalh);
-});
 // BTN  AGREGA INTERNVALO
 
-$('#agregar1').on('click', function() {
-  var tablaid = 'tabladia1';
-  var boton = '#btnagregar1';
-btonagrega(tablaid,boton)
-});
 
-$('#agregar2').on('click', function() {
-  var tablaid = 'tabladia2';
-  var boton = '#btnagregar2';
-btonagrega(tablaid,boton)
-});
+$('.botonagrega').on('click', function() {
 
-$('#agregar3').on('click', function() {
-  var tablaid = 'tabladia3';
-  var boton = '#btnagregar3';
-btonagrega(tablaid,boton)
-});
-
-$('#agregar4').on('click', function() {
-  var tablaid = 'tabladia4';
-  var boton = '#btnagregar4';
-btonagrega(tablaid,boton)
-});
-
-$('#agregar5').on('click', function() {
-  var tablaid = 'tabladia5';
-  var boton = '#btnagregar5';
-btonagrega(tablaid,boton)
-});
-
-$('#agregar6').on('click', function() {
-  var tablaid = 'tabladia6';
-  var boton = '#btnagregar6';
-btonagrega(tablaid,boton)
-});
-
-$('#agregar7').on('click', function() {
-  var tablaid = 'tabladia7';
-  var boton = '#btnagregar7';
+  var numero = this.id.slice(-1);
+  var tablaid = 'tabladia'+numero;
+  var boton = '#btnagregar'+numero;
 btonagrega(tablaid,boton)
 });
