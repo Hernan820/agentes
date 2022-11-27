@@ -182,4 +182,43 @@ class RegistrohoariosController extends Controller
 
        // return $fechaInicio ,$fechaFin ;
      }
+
+
+              /**
+     * **************
+     */
+     function usuarioshorarios($ano,$semana_no){
+
+        $week = $semana_no;
+        $year = $ano;
+    
+        $timestamp = mktime( 0, 0, 0, 1, 1,  $year ) + ( $week * 7 * 24 * 60 * 60 );
+        $timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
+        $date_for_monday = date( 'Y-m-d', $timestamp_for_monday );
+    
+        $diaInicio="Monday";
+        $diaFin="Sunday";
+        $hoy = $date_for_monday;
+    
+        $strFecha = strtotime($hoy);
+    
+        $fechaInicio = date('Y-m-d',strtotime('last '.$diaInicio,$strFecha));
+        $fechaFin = date('Y-m-d',strtotime('next '.$diaFin,$strFecha));
+    
+        if(date("l",$strFecha)==$diaInicio){
+            $fechaInicio= date("Y-m-d",$strFecha);
+        }
+        if(date("l",$strFecha)==$diaFin){
+            $fechaFin= date("Y-m-d",$strFecha);
+        }
+
+        $consulta ="SELECT users.id FROM  registrohoarios
+        INNER JOIN users on users.id = registrohoarios.id_usuario
+        WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1
+        GROUP BY users.id;";
+    
+        $usuarios = DB::select($consulta);
+
+        return response()->json($usuarios);
+     }
 }
