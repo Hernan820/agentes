@@ -276,10 +276,11 @@ function semanahorario(ano,semana){
     Promise.all(respuesta.data.map( item => { return axios.post(principalUrl + "horarios/semana/"+ano+"/"+semana+"/"+item.id) }))
     .then(nuevo_arreglo => {  // el resultado será un arreglo nuevo con los resultados de cada Promesa (siempre que todas hayan sido resueltas)
       nuevo_arreglo.forEach(result => {
+        var tr = $('<tr style="font-size: 15px;color:black">');
 
         if(result.data.horasuser.length != 0){
-          $("#filausuario").append('<tr>');
-          $("#filausuario").append('<td>'+result.data.horasuser[0].name+'</td>');
+          $("#filausuario").append(tr);
+          tr.append('<td>'+result.data.horasuser[0].name+'</td>');
       
           result.data.horasuser.forEach((element,i) => {
       
@@ -288,28 +289,22 @@ function semanahorario(ano,semana){
             var horasformateadas = '';
       
             if(hini[0]== 0 && hfin[0]== 0){
-              $("#filausuario").append('<td class="diaoff"> OFF</td>');
+              tr.append('<td class="diaoff"> OFF</td>');
       
             }else{
             if(hini.length == 1){
-              $("#filausuario").append('<td style="font-size: 10px">'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+              tr.append('<td>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
       
             }else{
               hini.forEach(function (horasini, i) {   
                 horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
               })
-              $("#filausuario").append('<td style="font-size: 10px">'+horasformateadas+'</td>');
+              tr.append('<td>'+horasformateadas+'</td>');
             }
           }  
 
-          if(i == result.data.horasuser.length-1){
-           // $("#filausuario").append('</tr>');
-
-          }
-
           });          
-        $("#filausuario").append('<td>'+result.data.totalhoras[0].TotalHoras+'</td>');
-        $("#filausuario").append('</tr>');
+        tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
         }
 
       });
