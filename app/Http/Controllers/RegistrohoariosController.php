@@ -83,9 +83,14 @@ class RegistrohoariosController extends Controller
      * @param  \App\Models\registrohoarios  $registrohoarios
      * @return \Illuminate\Http\Response
      */
-    public function edit(registrohoarios $registrohoarios)
+    public function edit(Request $request)
     {
-        //
+        $sql = "SELECT users.id as iduser,users.name ,registrohoarios.* FROM  registrohoarios
+        INNER JOIN users ON users.id = registrohoarios.id_usuario
+        WHERE  registrohoarios.id IN($request->idhorarios) AND registrohoarios.estado_horario = 1;";
+        
+        $usuarios = DB::select($sql);
+        return $usuarios;
     }
 
     /**
@@ -163,7 +168,7 @@ class RegistrohoariosController extends Controller
     }
 
 
-    $consulta1 ="SELECT users.id, users.name, registrohoarios.fecha_horario, registrohoarios.horasiniciales, registrohoarios.horasfinales, registrohoarios.total_horas  FROM  registrohoarios
+    $consulta1 ="SELECT registrohoarios.id as idh ,users.id, users.name, registrohoarios.fecha_horario, registrohoarios.horasiniciales, registrohoarios.horasfinales, registrohoarios.total_horas  FROM  registrohoarios
     INNER JOIN users on users.id = registrohoarios.id_usuario
     WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id = $id;";
 

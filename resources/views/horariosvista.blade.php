@@ -10,8 +10,12 @@
 <script src="{{ asset('js/horarios.js') }}" defer></script>
 
 <style>
-.modal-lg {
+.horarioporusuario {
     max-width: 80% !important;
+}
+
+.editahorariousuario{
+/*max-width: 50% !important;*/
 }
 
 .p-3 {
@@ -58,10 +62,10 @@ rango(function() {
 </script>
 
 <div class="container">
-<div class="col-12">
-    <label for="week" class="text-dark">Seleccione una semana</label><br>
+    <div class="col-12">
+        <label for="week" class="text-dark">Seleccione una semana</label><br>
 
-    <input type="week" class="form-control col-2" name="semana" id="semana" value="" />
+        <input type="week" class="form-control col-2" name="semana" id="semana" value="" />
 
     </div>
     <div class="col-12 text-center">
@@ -72,9 +76,9 @@ rango(function() {
                 <strong>
                     CALENDARIO DE HORARIOS
                 </strong>
-            <button type="button" class="btn btn-primary float-right " id="horariodeusuario" >
-                crear horario
-            </button>
+                <button type="button" class="btn btn-primary float-right " id="horariodeusuario">
+                    crear horario
+                </button>
             </h1>
 
         </div>
@@ -91,26 +95,26 @@ rango(function() {
 
 <div class="container">
     <div class="row">
-     
-    <table class="table table-striped">
-  <thead>
-  <tr id="dias">
 
-    </tr>
-  </thead>
-  <tbody id="filausuario">
-    
-  </tbody>
-</table>
+        <table id="tablehorariosusario" class="table table-striped">
+            <thead>
+                <tr id="dias">
+
+                </tr>
+            </thead>
+            <tbody id="filausuario">
+
+            </tbody>
+        </table>
     </div>
 </div>
- 
+
 
 
 <!-- Modal cupos -->
 <div class="modal fade" id="modal_cupo_horario" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg " id="modalcup" role="document">
+    <div class="modal-dialog modal-lg horarioporusuario" id="modalcup" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -205,7 +209,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia1">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia1">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia1">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -290,25 +295,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar1" class="horas1 botonagrega">
                                                         <input type="button" id="btnagregar1"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff1">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff1">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia1" name="fechadia1"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia1" name="horas_iniciales_dia1"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia1" name="horas_finales_dia1"></input>
-                                        <input type="hidden" value="" id="total_horasdia1" name="total_horasdia1"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia1"
+                                            name="horas_iniciales_dia1"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia1"
+                                            name="horas_finales_dia1"></input>
+                                        <input type="hidden" value="" id="total_horasdia1"
+                                            name="total_horasdia1"></input>
                                     </form>
                                 </div>
 
@@ -337,7 +346,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia2">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia2">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia2">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -422,25 +432,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar2" class="botonagrega">
                                                         <input type="button" id="btnagregar2"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff2">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff2">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia2" name="fechadia2"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia2" name="horas_iniciales_dia2"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia2"  name="horas_finales_dia2"></input>
-                                        <input type="hidden" value="" id="total_horasdia2" name="total_horasdia2"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia2"
+                                            name="horas_iniciales_dia2"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia2"
+                                            name="horas_finales_dia2"></input>
+                                        <input type="hidden" value="" id="total_horasdia2"
+                                            name="total_horasdia2"></input>
                                     </form>
                                 </div>
 
@@ -469,7 +483,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia3">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia3">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia3">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -554,25 +569,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar3" class="botonagrega">
                                                         <input type="button" id="btnagregar3"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff3">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff3">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia3" name="fechadia3"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia3"  name="horas_iniciales_dia3"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia3"  name="horas_finales_dia3"></input>
-                                        <input type="hidden" value="" id="total_horasdia3"  name="total_horasdia3"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia3"
+                                            name="horas_iniciales_dia3"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia3"
+                                            name="horas_finales_dia3"></input>
+                                        <input type="hidden" value="" id="total_horasdia3"
+                                            name="total_horasdia3"></input>
                                     </form>
                                 </div>
 
@@ -600,7 +619,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia4">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia4">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia4">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -685,25 +705,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar4" class="botonagrega">
                                                         <input type="button" id="btnagregar4"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff4">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff4">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia4" name="fechadia4"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia4"  name="horas_iniciales_dia4"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia4" name="horas_finales_dia4"></input>
-                                        <input type="hidden" value="" id="total_horasdia4" name="total_horasdia4"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia4"
+                                            name="horas_iniciales_dia4"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia4"
+                                            name="horas_finales_dia4"></input>
+                                        <input type="hidden" value="" id="total_horasdia4"
+                                            name="total_horasdia4"></input>
                                     </form>
                                 </div>
 
@@ -731,7 +755,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia5">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia5">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia5">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -816,25 +841,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar5" class="botonagrega">
                                                         <input type="button" id="btnagregar5"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff5">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff5">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia5" name="fechadia5"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia5"  name="horas_iniciales_dia5"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia5"  name="horas_finales_dia5"></input>
-                                        <input type="hidden" value="" id="total_horasdia5" name="total_horasdia5"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia5"
+                                            name="horas_iniciales_dia5"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia5"
+                                            name="horas_finales_dia5"></input>
+                                        <input type="hidden" value="" id="total_horasdia5"
+                                            name="total_horasdia5"></input>
                                     </form>
                                 </div>
 
@@ -862,7 +891,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia6">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia6">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia6">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -947,25 +977,29 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar6" class="botonagrega">
                                                         <input type="button" id="btnagregar6"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff6">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff6">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia6" name="fechadia6"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia6"  name="horas_iniciales_dia6"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia6" name="horas_finales_dia6"></input>
-                                        <input type="hidden" value="" id="total_horasdia6" name="total_horasdia6"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia6"
+                                            name="horas_iniciales_dia6"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia6"
+                                            name="horas_finales_dia6"></input>
+                                        <input type="hidden" value="" id="total_horasdia6"
+                                            name="total_horasdia6"></input>
                                     </form>
                                 </div>
 
@@ -993,7 +1027,8 @@ rango(function() {
                                 <div class="form-group" id="">
                                     <form id="formdia7">
 
-                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tabladia7">
+                                        <table class="table table-striped  table-responsive-lg table-sm tablehoras"
+                                            id="tabladia7">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -1078,31 +1113,172 @@ rango(function() {
                                                     </td>
                                                     <td width="" id="agregar7" class="botonagrega">
                                                         <input type="button" id="btnagregar7"
-                                                            class="btn btn-success masmenos "
-                                                            value="agregar intervalo">
+                                                            class="btn btn-success masmenos " value="agregar intervalo">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <br>
-                                        <div class="form-check col-md-3" for="" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                                            <input class="form-check-input offdia" for="" type="checkbox" value="1" id="diaoff7">
+                                        <div class="form-check col-md-3" for=""
+                                            style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                                            <input class="form-check-input offdia" for="" type="checkbox" value="1"
+                                                id="diaoff7">
                                             <label class="form-check-label" for="">
                                                 DIA OFF
                                             </label>
                                         </div>
 
                                         <input type="hidden" value="" id="fechadia7" name="fechadia7"></input>
-                                        <input type="hidden" value="" id="horas_iniciales_dia7" name="horas_iniciales_dia7"></input>
-                                        <input type="hidden" value="" id="horas_finales_dia7" name="horas_finales_dia7"></input>
-                                        <input type="hidden" value="" id="total_horasdia7" name="total_horasdia7"></input>
+                                        <input type="hidden" value="" id="horas_iniciales_dia7"
+                                            name="horas_iniciales_dia7"></input>
+                                        <input type="hidden" value="" id="horas_finales_dia7"
+                                            name="horas_finales_dia7"></input>
+                                        <input type="hidden" value="" id="total_horasdia7"
+                                            name="total_horasdia7"></input>
                                     </form>
                                 </div>
 
                             </div>
 
                         </div>
+                        </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="guardarhorariousuario">Agregar horario</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE EDICION DE HORARIOS DE USUARIO -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg editahorariousuario " id="modalcup" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">
+                    Crear cupos por rango
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="edithorario">
+                    {!! csrf_field() !!}
+                    <div class="container mb-3"><h3 id="fechaedicion" class="text-center"></h3></div>
+                    <div class="form-group">
+                        <table class="table table-striped  table-responsive-lg table-sm" id="tablaedicion">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-4 text-center">Hora inicial</th>
+                                    <th class="col-md-4 text-center">Hora final</th>
+                                    <th class="col-md-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="fila1">
+                                <tr class="fila-fija" id="fila1">
+                                    <td width="">
+                                        <div style="display: flex;justify-content: space-around;">
+                                            <select name="hinicial[]" id="hinicial"
+                                                class="form-control col-md-3 horas entrada">
+                                                <option value="" disabled selected></option>
+                                                <option value="00">00</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+
+                                            <input type="number" class="form-control col-md-3 horas minutitos entrada"
+                                                required="" name="minicial[]" id="minicial"
+                                                aria-describedby="helpId" value="" placeholder="00" autocomplete="off"
+                                                min="0" max="59" style="width:100%">
+
+                                            <select name="horarioinicial[]" id="horarioinicial"
+                                                class="form-control col-md-3 horas entrada">
+                                                <option value="" selected selected disabled="true"></option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <td width="">
+                                        <div style="display: flex;justify-content: space-around;">
+                                            <select name="hfinal[]" id="hfinal"
+                                                class="form-control col-md-3 horas entrada">
+                                                <option value="" disabled selected></option>
+                                                <option value="00">00</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+
+                                            <input type="number" class="form-control col-md-3 horas entrada" required=""
+                                                name="mfinal[]" id="mfinal" aria-describedby="helpId" value=""
+                                                placeholder="00" autocomplete="off" style="width:100%" min="0" max="59">
+
+                                            <select name="horariofinal[]" id="horariofinal"
+                                                class="form-control col-md-3 horas entrada">
+                                                <option value="" selected selected disabled="true"></option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    </td>
+                                    <td width="" id="agregarintervalo" class="">
+                                        <input type="button" id="btnagregarintervalo" class="btn btn-success masmenos entrada"
+                                            value="agregar intervalo">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_de_horas">Total de horas </label>
+                        <input type="text" class="form-control col-md-9 " required="" name="total_de_horas"
+                            id="total_de_horas" aria-describedby="helpId" placeholder="" autocomplete="off"
+                            disabled="true">
+                    </div>
+
+                    <div class="form-check col-md-3"
+                        style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
+                        <input class="form-check-input" type="checkbox" value="1" id="diaoff">
+                        <label class="form-check-label" for="defaultCheck1">
+                            DIA OFF
+                        </label>
+                    </div>
+
+                    <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
+                    <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
+                    <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
+                    <input type="hidden" class="oculto" value="" id="fecharegistro" name="fecharegistro"></input>
+                    <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
+
                 </form>
             </div>
             <div class="modal-footer">

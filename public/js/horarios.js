@@ -197,7 +197,6 @@ horas.each(function(i) {
 
 }
 
-
 function btonagrega(tablaid,bton){
   var numero =tablaid.slice(-1);
   num = $('#'+tablaid+' tbody tr.fila-fija').length;
@@ -216,19 +215,14 @@ function btonagrega(tablaid,bton){
 
 
 function btnelimina(btn){
-
-
   $(btn).closest('tr').remove();
-
   var numero = btn.id.slice(-1);
-
 
   $('#btnagregar'+numero).attr('disabled', false);
 }
 
 $('#semana').on('change', function() {
    var semana= $("#semana").val().split("-W");
-
    semanahorario(semana[0],semana[1]);  
 });
 
@@ -247,7 +241,149 @@ function getWeekDaysByWeekNumber(weeknumber)
         contador++;
     }
     $("#dias").append('<th scope="col">Total de horas</th>');
+   // $("#dias").append('<th scope="col">Opciones</th>');
+
+  }
+
+function horarioedita(btn,idhorarios){
+
+  var idshorarios = new FormData();
+
+  idshorarios.append("idhorarios",idhorarios);
+
+
+axios.post(principalUrl + "horarios/registros",idshorarios)
+.then((respuesta) => {
+
+console.log(respuesta.data);
+
+ })
+ .catch((error) => {
+  if (error.response) {
+      console.log(error.response.data);
+  }
+});
+
+
 }
+
+const tbody = document.querySelector('#tablehorariosusario tbody');
+tbody.addEventListener('click', function (e) {
+  const cell = e.target.closest('td');
+  if (cell.cellIndex == 0 || cell.cellIndex == 8 ) {return;} // Quit, not clicked on a cell
+  const row = cell.parentElement;
+  console.log(cell.innerHTML, row.rowIndex, cell.cellIndex);
+
+    var idshorarios = new FormData();
+
+    idshorarios.append("idhorarios",cell.children.registroid.value);
+
+  axios.post(principalUrl + "horarios/registros",idshorarios)
+  .then((respuesta) => {
+
+    console.log(respuesta.data);
+    $('#tablaedicion tr').slice(2).remove();
+  
+    var horasiniciales = respuesta.data[0].horasiniciales.split(",");
+    var horasfinales = respuesta.data[0].horasfinales.split(",");
+    var totaldehoras = respuesta.data[0].total_horas.split(":");
+
+  
+    if(horasiniciales[0] == 0 && horasfinales[0] == 0){
+  
+        $("#diaoff").prop("checked", true);
+        $('.entrada').attr('readonly', true)
+        $('#btnagregar').attr('disabled', true);
+        $("#total_horas").val("00 Horas 00 Minutos")
+        $("#comentarios").val("Este dia es OFF")
+        $("#total_citas").val("0")
+        $("#TotaDeHoras").val("00:00:00")
+        $("#horasfinales").val("0")
+        $("#horasiniciales").val("0");
+        $('.horas').val('')
+        $("#fechaedicion").text(moment(respuesta.data[0].fecha_horario.split(" ")[0]).format('dddd DD [de] MMMM [del] YYYY'));
+
+        $('#exampleModal').modal('show');
+  
+    }else{
+  
+      $("#diaoff").prop("checked", false);
+      $('.entrada').attr('readonly', false)
+      $('#btnagregar').attr('disabled', false);
+
+    horasiniciales.forEach(function (element, i) {
+        if(i >= 1){
+                $('#tablaedicion tbody tr:eq(0)').clone().appendTo('#tablaedicion');
+                $(`#tablaedicion tbody tr.fila-fija:eq(${i})`).addClass(' dinamico');
+                $(`#tablaedicion tbody .masmenos:eq(${i})`).addClass('elimina');
+                $(`#tablaedicion tbody .masmenos:eq(${i})`).val("elimina");
+        }
+  
+        if(i >= numf){
+            $('#btnagregar').attr('disabled', true);
+            $("#btnagregar").attr('disabled','disabled');
+        }else{
+            $('#btnagregar').attr('disabled', false);
+        }
+    });
+  
+    horasiniciales.forEach(function (element, i) {
+        var horas = $("form select[name='hinicial[]']");
+        var minutos = $("form input[name='minicial[]']");
+        var horarios = $("form select[name='horarioinicial[]']");
+        if(element != ""){
+            var horario = moment(element,'HH:mm:ss').format('hh:mm A').split(" ");
+            var hora = horario[0].split(":");
+  
+            horas.eq(i).val(hora[0]) ;
+            minutos.eq(i).val(hora[1]) ;
+            horarios.eq(i).val(horario[1]) ;
+  
+        }
+    });
+  
+  
+    horasfinales.forEach(function (element, i) {
+        var horas2 = $("form select[name='hfinal[]']");
+        var minutos2 = $("form input[name='mfinal[]']");
+        var horarios2 = $("form select[name='horariofinal[]']");
+        if(element != ""){
+            var horario = moment(element,'HH:mm:ss').format('hh:mm A').split(" ");
+            var hora = horario[0].split(":");
+  
+            horas2.eq(i).val(hora[0]) ;
+            minutos2.eq(i).val(hora[1]) ;
+            horarios2.eq(i).val(horario[1]) ;
+        }
+    });
+
+    var fehcatituio = respuesta.data[0].fecha_horario.split(" ")[0];
+    fehcatituio
+    $("#fechaedicion").text(moment(respuesta.data[0].fecha_horario.split(" ")[0]).format('dddd DD [de] MMMM [del] YYYY'));
+
+    $("#horasiniciales").val(respuesta.data[0].horasiniciales);
+    $("#horasfinales").val(respuesta.data[0].horasfinales);
+    $("#TotaDeHoras").val(respuesta.data[0].total_horas);
+    //$("#fecharegistro").val(moment(fechas[0]).format('YYYY-MM-DD'));
+    $("#id_registro").val(respuesta.data[0].id);
+    $("#total_de_horas").val(totaldehoras[0]+" Horas con "+totaldehoras[1]+" minutos");
+
+    $('#exampleModal').modal('show');
+  }
+  
+  
+   })
+   .catch((error) => {
+    if (error.response) {
+        console.log(error.response.data);
+    }
+  });
+
+
+
+});
+
+
 
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
@@ -281,30 +417,38 @@ function semanahorario(ano,semana){
         if(result.data.horasuser.length != 0){
           $("#filausuario").append(tr);
           tr.append('<td>'+result.data.horasuser[0].name+'</td>');
-      
+          var idusuarios = '';
+
           result.data.horasuser.forEach((element,i) => {
       
             var hini = element.horasiniciales.split(",");
             var hfin = element.horasfinales.split(",");
             var horasformateadas = '';
-      
+
             if(hini[0]== 0 && hfin[0]== 0){
-              tr.append('<td class="diaoff"> OFF</td>');
+              tr.append('<td class="diaoff"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>OFF</td>');
       
             }else{
             if(hini.length == 1){
-              tr.append('<td>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+              tr.append('<td><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
       
             }else{
               hini.forEach(function (horasini, i) {   
                 horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
               })
-              tr.append('<td>'+horasformateadas+'</td>');
+              tr.append('<td><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+horasformateadas+'</td>');
             }
           }  
+          if(i == result.data.horasuser.length-1){
+            idusuarios = idusuarios+element.idh;
 
-          });          
+          }else{
+          idusuarios = idusuarios+element.idh+",";
+          }
+        });          
         tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
+       // tr.append('<td><button type="button" class="btn btn-success " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`)">Editar</button> </td></tr>');
+
         }
 
       });
@@ -527,9 +671,9 @@ $('.tablehoras ').on('change',function() {
 
 
 $('.botonagrega').on('click', function() {
-
   var numero = this.id.slice(-1);
   var tablaid = 'tabladia'+numero;
   var boton = '#btnagregar'+numero;
 btonagrega(tablaid,boton)
 });
+
