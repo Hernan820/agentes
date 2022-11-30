@@ -5,6 +5,7 @@ use DB;
 use App\Models\registro;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\registrohoarios;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -116,19 +117,28 @@ class RegistroController extends Controller
      */
     public function update(Request $request)
     {
-        $actilizar = registro::find($request->id_registro);
 
+        if ( isset($request->edicion) ) {
+            if ($request->edicion == 'edicion') {
+            $horariousuario = registrohoarios::find($request->id_registro);
+            $horariousuario->horasiniciales =$request->hiniciales;
+            $horariousuario->horasfinales =$request->hfinales;
+            $horariousuario->total_horas = $request->TotaDeHoras ;
+            $horariousuario->save();
+            return 1 ;
+            }
+        }else{
+
+        $actilizar = registro::find($request->id_registro);
         $actilizar->horasiniciales= $request->horasiniciales; 
         $actilizar->horasfinales= $request->horasfinales; 
-
         $actilizar->total_horas= $request->TotaDeHoras;
         $actilizar->total_citas= $request->total_citas; 
         $actilizar->comentarios= $request->comentarios; 
-        $actilizar->save(); 
-
-        return 1;
-
-   
+        $actilizar->save();
+        return 1;   
+ 
+        }
     }
 
     /**

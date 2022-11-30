@@ -136,6 +136,7 @@ Route::post('horarios/usuarios/{ano}/{semana}', [App\Http\Controllers\Registroho
 // MUESTRA HORARIOS DE USUARIOS
 Route::post('horarios/registros', [App\Http\Controllers\RegistrohoariosController::class, 'edit']);
 
+Route::post('horario/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 
 });
 

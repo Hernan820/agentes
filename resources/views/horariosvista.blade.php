@@ -1273,15 +1273,17 @@ rango(function() {
                         </label>
                     </div>
 
-                    <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
-                    <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
+                    <input type="hidden" class="oculto" value="" id="hiniciales" name="hiniciales"></input>
+                    <input type="hidden" class="oculto" value="" id="hfinales" name="hfinales"></input>
                     <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
                     <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
+                    
+                    <input type="hidden" class="oculto" value="edicion" id="edicion" name="edicion"></input>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="guardarhorariousuario">Agregar horario</button>
+                <button type="button" class="btn btn-success" id="gurdaedcionhorario">Guardar</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>

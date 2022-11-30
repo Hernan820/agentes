@@ -6,6 +6,7 @@ let formhorario4 = document.getElementById("formdia4");
 let formhorario5 = document.getElementById("formdia5");
 let formhorario6 = document.getElementById("formdia6");
 let formhorario7 = document.getElementById("formdia7");
+let formedita = document.getElementById("edithorario");
 
 //controla el numero de intervalos
 const numf = 4;
@@ -294,14 +295,15 @@ tbody.addEventListener('click', function (e) {
     if(horasiniciales[0] == 0 && horasfinales[0] == 0){
   
         $("#diaoffedicion").prop("checked", true);
-        $('.entrada').attr('readonly', true)
+        $('.entrada').attr('readonly', true);
         $('#btnintervaloedicion').attr('disabled', true);
-        $("#total_de_horas").val("00 Horas 00 Minutos")
-        $("#comentarios").val("Este dia es OFF")
-        $("#TotaDeHoras").val("00:00:00")
-        $("#horasfinales").val("0")
+        $("#total_de_horas").val("00 Horas 00 Minutos");
+        $("#comentarios").val("Este dia es OFF");
+        $("#TotaDeHoras").val("00:00:00");
+        $("#horasfinales").val("0");
         $("#horasiniciales").val("0");
-        $('.horas').val('')
+        $('.horas').val('');
+        $("#id_registro").val(respuesta.data[0].id);
         $("#fechaedicion").text(moment(respuesta.data[0].fecha_horario.split(" ")[0]).format('dddd DD [de] MMMM [del] YYYY'));
         $('#exampleModal').modal('show');
   
@@ -553,8 +555,8 @@ $('.offdia').on('click', function() {
                 $("#total_de_horas").val("00 Horas 00 Minutos");
                 $("#comentarios").val("Este dia es OFF");
                 $("#TotaDeHoras").val("00:00:00");
-                $("#horasfinales").val("0");
-                $("#horasiniciales").val("0");
+                $("#hfinales").val("0");
+                $("#hiniciales").val("0");
                 $('.horas').val('');
               }
           });
@@ -678,8 +680,8 @@ $(document).on('click', '.elimina',function() {
 
   if(this.id =='btnintervaloedicion'){
     var totalhmuestra = $("form input[name=total_de_horas]").prop("id");
-    var hiniciales = $("form input[name=horasiniciales]").prop("id");
-    var hfinales = $("form input[name=horasfinales]").prop("id");
+    var hiniciales = $("form input[name=hiniciales]").prop("id");
+    var hfinales = $("form input[name=hfinales]").prop("id");
     var totalh = $("form input[name=TotaDeHoras]").prop("id");
     
     hora('#tablaedicion',totalhmuestra,hiniciales,hfinales,totalh);
@@ -696,12 +698,11 @@ $(document).on('click', '.elimina',function() {
 
 $('.tablehoras ').on('change',function() {
 
-  console.log(this.id);
   var numero = this.id.slice(-1);
   if(this.id == 'tablaedicion'){
     var totalhmuestra = $("form input[name=total_de_horas]").prop("id");
-    var hiniciales = $("form input[name=horasiniciales]").prop("id");
-    var hfinales = $("form input[name=horasfinales]").prop("id");
+    var hiniciales = $("form input[name=hiniciales]").prop("id");
+    var hfinales = $("form input[name=hfinales]").prop("id");
     var totalh = $("form input[name=TotaDeHoras]").prop("id");
     
     hora('#tablaedicion',totalhmuestra,hiniciales,hfinales,totalh);
@@ -731,3 +732,110 @@ $('.botonagrega').on('click', function() {
   }
 });
 
+// GUARDA EDICION DE HORARIOS DE UN USUARIO
+
+document.getElementById("gurdaedcionhorario").addEventListener("click", function () {
+  if (validaciondatosedita() == false) {return;}
+
+  var datosregistro = new FormData(formedita);
+  datosregistro.append("hfin",$('#hfinales').val());
+  datosregistro.append("hinicial",$('#hiniciales').val());
+
+
+  $('#guardar_registro').attr('disabled', false);
+  console.log($('#horasiniciales').val());
+
+Swal.fire({
+  title: "ACTUALIZAR",
+  text: "¿Estas seguro de guardar los cambios?",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "SI",
+  cancelButtonText: "Cancelar",
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    axios.post(principalUrl + "horario/actualizar",datosregistro)
+    .then((respuesta) => {
+      location.reload();
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Datos actalizados exitosamente!",
+            showConfirmButton: false,
+        });       
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+  }
+});
+});
+
+
+function validaciondatosedita() {
+  var valido = true;
+
+  var horas = $("#tablaedicion tbody select[name='horaini[]']");
+  var minutos = $("#tablaedicion tbody input[name='minutosini[]']");
+  var horarios = $("#tablaedicion tbody select[name='horarioini[]']");
+
+  var horas2 = $("#tablaedicion tbody select[name='horaini2[]']");
+  var minutos2 = $("#tablaedicion tbody input[name='minutosini2[]']");
+  var horarios2 = $("#tablaedicion tbody select[name='horarioini2[]']");
+
+ if( !$('#diaoffedicion').is(':checked') ) {
+
+  horas.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar todas las horas!");
+          valido = false;
+      }
+  });
+
+  
+  minutos.each(function(i) {
+      if( $(this).val() > 59){
+          $(this).val("")
+          Swal.fire("¡Los minutos no pueden ser mayor a 59 min!");
+          valido = false;
+      }
+  });
+  
+ 
+
+  horarios.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar el turno!");
+          valido = false;
+      }
+  });
+
+  horas2.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar todas las horas!");
+          valido = false;
+      }
+  });
+
+  minutos2.each(function(i) {
+      if( $(this).val() > 59){
+          $(this).val("")
+          Swal.fire("¡Los minutos no pueden ser mayor a 59 min!");
+          valido = false;
+      }
+  });
+
+  horarios2.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar el turno!");
+          valido = false;
+      }
+  });
+ }
+
+  return valido;
+}
