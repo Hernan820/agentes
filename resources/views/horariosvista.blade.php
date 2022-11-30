@@ -1172,7 +1172,7 @@ rango(function() {
                     {!! csrf_field() !!}
                     <div class="container mb-3"><h3 id="fechaedicion" class="text-center"></h3></div>
                     <div class="form-group">
-                        <table class="table table-striped  table-responsive-lg table-sm" id="tablaedicion">
+                        <table class="table table-striped  table-responsive-lg table-sm tablehoras" id="tablaedicion">
                             <thead>
                                 <tr>
                                     <th class="col-md-4 text-center">Hora inicial</th>
@@ -1184,7 +1184,7 @@ rango(function() {
                                 <tr class="fila-fija" id="fila1">
                                     <td width="">
                                         <div style="display: flex;justify-content: space-around;">
-                                            <select name="hinicial[]" id="hinicial"
+                                            <select name="horaini[]" id="horaini"
                                                 class="form-control col-md-3 horas entrada">
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
@@ -1203,11 +1203,11 @@ rango(function() {
                                             </select>
 
                                             <input type="number" class="form-control col-md-3 horas minutitos entrada"
-                                                required="" name="minicial[]" id="minicial"
+                                                required="" name="minutosini[]" id="minutosini"
                                                 aria-describedby="helpId" value="" placeholder="00" autocomplete="off"
                                                 min="0" max="59" style="width:100%">
 
-                                            <select name="horarioinicial[]" id="horarioinicial"
+                                            <select name="horarioini[]" id="horarioini"
                                                 class="form-control col-md-3 horas entrada">
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
@@ -1218,7 +1218,7 @@ rango(function() {
 
                                     <td width="">
                                         <div style="display: flex;justify-content: space-around;">
-                                            <select name="hfinal[]" id="hfinal"
+                                            <select name="horaini2[]" id="horaini2"
                                                 class="form-control col-md-3 horas entrada">
                                                 <option value="" disabled selected></option>
                                                 <option value="00">00</option>
@@ -1237,10 +1237,10 @@ rango(function() {
                                             </select>
 
                                             <input type="number" class="form-control col-md-3 horas entrada" required=""
-                                                name="mfinal[]" id="mfinal" aria-describedby="helpId" value=""
+                                                name="minutosini2[]" id="minutosini2" aria-describedby="helpId" value=""
                                                 placeholder="00" autocomplete="off" style="width:100%" min="0" max="59">
 
-                                            <select name="horariofinal[]" id="horariofinal"
+                                            <select name="horarioini2[]" id="horarioini2"
                                                 class="form-control col-md-3 horas entrada">
                                                 <option value="" selected selected disabled="true"></option>
                                                 <option value="AM">AM</option>
@@ -1249,8 +1249,8 @@ rango(function() {
                                         </div>
                                     </td>
                                     </td>
-                                    <td width="" id="agregarintervalo" class="">
-                                        <input type="button" id="btnagregarintervalo" class="btn btn-success masmenos entrada"
+                                    <td width="" id="intervaloedicion" class="botonagrega">
+                                        <input type="button" id="btnintervaloedicion" class="btn btn-success masmenos entrada"
                                             value="agregar intervalo">
                                     </td>
                                 </tr>
@@ -1267,7 +1267,7 @@ rango(function() {
 
                     <div class="form-check col-md-3"
                         style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
-                        <input class="form-check-input" type="checkbox" value="1" id="diaoff">
+                        <input class="form-check-input offdia" type="checkbox" value="1" id="diaoffedicion">
                         <label class="form-check-label" for="defaultCheck1">
                             DIA OFF
                         </label>
@@ -1276,7 +1276,6 @@ rango(function() {
                     <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
                     <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
                     <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
-                    <input type="hidden" class="oculto" value="" id="fecharegistro" name="fecharegistro"></input>
                     <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
 
                 </form>
