@@ -1250,8 +1250,8 @@ rango(function() {
                                     </td>
                                     </td>
                                     <td width="" id="intervaloedicion" class="botonagrega">
-                                        <input type="button" id="btnintervaloedicion" class="btn btn-success masmenos entrada"
-                                            value="agregar intervalo">
+                                        <input type="button" id="btnintervaloedicion" class="btn btn-success masmenos entrada agregaedi"
+                                            value="agregar intervalo" />
                                     </td>
                                 </tr>
                             </tbody>

@@ -305,10 +305,11 @@ tbody.addEventListener('click', function (e) {
         $('.horas').val('');
         $("#id_registro").val(respuesta.data[0].id);
         $("#fechaedicion").text(moment(respuesta.data[0].fecha_horario.split(" ")[0]).format('dddd DD [de] MMMM [del] YYYY'));
+        $('.agregaedi').val('agregar intervalo');
         $('#exampleModal').modal('show');
   
     }else{
-  
+      $('.agregaedi').val('agregar intervalo');
       $("#diaoffedicion").prop("checked", false);
       $('.entrada').attr('readonly', false)
       $('#btnintervaloedicion').attr('disabled', false);
@@ -402,7 +403,7 @@ function semanahorario(ano,semana){
       icon: 'success',
       title: 'cargando horarios',
       showConfirmButton: false,
-      timer: 2000
+      timer: 1000,
     })
     
     if(respuesta.data.length == 0){
@@ -551,6 +552,7 @@ $('.offdia').on('click', function() {
 
                 $("#diaoff").prop("checked", true);
                 $('.entrada').attr('readonly', true);
+                $('.entrada').attr('disabled', true);
                 $('#btnintervaloedicion').attr('disabled', true);
                 $("#total_de_horas").val("00 Horas 00 Minutos");
                 $("#comentarios").val("Este dia es OFF");
@@ -561,7 +563,7 @@ $('.offdia').on('click', function() {
               }
           });
           }else if(!$('#'+this.id).is(':checked')){
-      
+            $('.entrada').attr('disabled', false);
             $("#diaoff").prop("checked", false);
             $('.entrada').attr('readonly', false);
             $('#btnintervaloedicion').attr('disabled', false);
@@ -616,6 +618,7 @@ $('.offdia').on('click', function() {
 });
 
 document.getElementById("guardarhorariousuario").addEventListener("click", function () {
+  if (validacionhorarios() == false) {return;}
 
     var array1 = [1,2,3,4,5,6,7];
 
@@ -776,7 +779,7 @@ Swal.fire({
 });
 
 
-function validaciondatosedita() {
+function validaciondatosedita(){
   var valido = true;
 
   var horas = $("#tablaedicion tbody select[name='horaini[]']");
@@ -839,3 +842,71 @@ function validaciondatosedita() {
 
   return valido;
 }
+
+function validacionhorarios(){
+  var valido = true;
+
+ var dias =[7,6,5,4,3,2,1];
+
+ dias.forEach(function (numero) {
+
+var horas = $("#tabladia"+numero+" tbody  select[name='horaini[]']");
+var minutos = $("#tabladia"+numero+" tbody  input[name='minutosini[]']");
+var horarios = $("#tabladia"+numero+" tbody  select[name='horarioini[]']");
+
+var horas2 = $("#tabladia"+numero+" tbody  select[name='horaini2[]']");
+var minutos2 = $("#tabladia"+numero+" tbody  input[name='minutosini2[]']");
+var horarios2 = $("#tabladia"+numero+" tbody  select[name='horarioini2[]']");
+
+if( !$('#diaoff'+numero).is(':checked') ) {
+
+  horas.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar todas las horas del dia "+numero+"!");
+           valido = false;
+      }
+  });
+
+  minutos.each(function(i) {
+      if( $(this).val() > 59){
+          $(this).val("")
+          Swal.fire("¡Los minutos no pueden ser mayor a 59 min del dia "+numero+"!");
+           valido = false;
+      }
+  });
+  
+  horarios.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar el turno del dia "+numero+"!");
+           valido = false;
+      }
+  });
+
+  horas2.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar todas las horas del dia "+numero+"!");
+           valido = false;
+      }
+  });
+
+  minutos2.each(function(i) {
+      if( $(this).val() > 59){
+          $(this).val("")
+          Swal.fire("¡Los minutos no pueden ser mayor a 59 min del dia "+numero+"!");
+           valido = false;
+      }
+  });
+
+  horarios2.each(function(i) {
+      if( $(this).val() == null){
+          Swal.fire("¡Debe completar el turno del dia "+numero+"!");
+           valido = false;
+      }
+  });
+ }
+
+});
+
+return valido;
+}
+
