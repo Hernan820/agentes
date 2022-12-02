@@ -24,9 +24,13 @@ class RegistrohoariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function horasdefecha($fecha)
     {
-        //
+        $horas = registrohoarios::select('registrohoarios.*')
+                ->where('registrohoarios.fecha_horario','like',$fecha.'%')
+                ->where('registrohoarios.id_usuario','=',auth()->user()->id)
+                ->get();
+        return $horas;
     }
 
     /**

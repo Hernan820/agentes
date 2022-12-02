@@ -4,7 +4,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="{{ asset('js/registrohoras.js') }}" defer></script>
-<script src="{{ asset('js/registrohorario.js') }}" defer></script>
 
 <script src="https://unpkg.com/imask"></script>
 
@@ -46,9 +45,13 @@ table.display {
 
 <input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo"></input>
 <input type="hidden" value="{{$cupo->vista}}" id="vista" name="id_cupo"></input>
-
-
+<input type="hidden" value="{{$cupo->start}}" id="fechas" name="fechas"></input>
 <input type="hidden" name="usuario_log" id="usuario_log" value="{{ auth()->user()->id }}" />
+
+<!-- Input de guardan horario asigando a usuario -->
+
+<input type="hidden" value="" id="hiniciales" name="hiniciales"></input>
+<input type="hidden" value="" id="hfinales" name="hfinales"></input>
 
 <div class="col-md-12" style="background-color: ">
     <div class="jumbotron col-md-12 col d-flex justify-content-between ">
@@ -226,15 +229,20 @@ table.display {
                             min="0">
                     </div>
 
-
                     <div class="form-group">
                         <label for="comentarios">Comentarios </label>
                         <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
                             id="comentarios" aria-describedby="helpId" placeholder="" autocomplete="off">
                     </div>
 
-                    <div class="form-check col-md-3" style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;
-">
+                    
+                    <div class="form-group" id="motivoscoincidencia">
+                        <label for="comentarios">Motivo</label>
+                        <input type="text" class="form-control col-md-9 entrada" required="" name="motivoshorario"
+                            id="motivoshorario" aria-describedby="helpId" placeholder="" autocomplete="off">
+                    </div>
+
+                    <div class="form-check col-md-3" style="padding-left:7.25rem !important; color:black !important;background: #33ECFF !important;">
                         <input class="form-check-input" type="checkbox" value="1" id="diaoff">
                         <label class="form-check-label" for="defaultCheck1">
                             DIA OFF

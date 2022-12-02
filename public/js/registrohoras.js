@@ -4,6 +4,20 @@ let formregistro = document.getElementById("registroHorario");
 
 $(document).ready(function () {
     mostrarboton();
+    $('#motivoscoincidencia').hide();
+    var fecha = $('#fechas').val().split(' ')[0] ;
+    
+    axios.post(principalUrl + "horario/usuario/"+fecha)
+    .then((respuesta) => {
+        $('#hiniciales').val(respuesta.data[0].horasiniciales);
+        $('#hfinales').val(respuesta.data[0].horasfinales);
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+
 });
 
 function mostrarboton(){
@@ -36,6 +50,8 @@ document.getElementById("registro").addEventListener("click", function () {
         $("#CollapseExample1").collapse('hide');
         $("#modal_registro").modal("show");
         $('.entrada').attr('readonly', false)
+        $('#motivoscoincidencia').hide();
+        $('#motivoshorario').val('');
 
         $('#btnagregar').attr('disabled', false);
         $('#tabla tr').slice(2).remove();
@@ -43,15 +59,22 @@ document.getElementById("registro").addEventListener("click", function () {
 
 document.getElementById("guardar_registro").addEventListener("click", function () {
 
-    if (validaciondatos() == false) {return;}
+    if (validaciondatos() == false) {return;};
+
+    if($('#hiniciales').val() != $('#horasiniciales').val() || $('#hfinales').val() != $('#horasfinales').val()){
+
+        if($('#motivoshorario').val() == ''){
+        $('#motivoscoincidencia').show();
+        $('#motivoshorario').focus();
+        Swal.fire("¡Sus horas registradas no coinciden con su horario!     Agregue un motivo");
+        return;
+        }
+    }else{$('#motivoscoincidencia').hide();};
 
     $('#guardar_registro').attr('disabled', true);
 
     var datosregistro = new FormData(formregistro);
     var id_registro = $("#id_registro").val();
-
-    console.log($("#total_citas").val())
-    console.log($("#comentarios").val())
 
     if(id_registro == ""){
         
@@ -588,6 +611,7 @@ function validaciondatos() {
 
     return valido;
 }
+
 
 function eliminar(id){
 
