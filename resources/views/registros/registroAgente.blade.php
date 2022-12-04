@@ -60,9 +60,6 @@ table.display {
         <input class="btn btn-success float-right " id="registro" type="submit" value="Crear registro">
     </div>
 
-
-    @if($cupo->vista == 1)
-
     <idv class="col-md-12 table-responsive">
         <table id="registro_horas" class="table table-striped table-bordered dt-responsive nowrap datatable"
             class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
@@ -77,23 +74,6 @@ table.display {
             </thead>
         </table>
     </div>
-    @elseif ($cupo->vista == 2)
-
-    <idv class="col-md-12 table-responsive">
-        <table id="registro_horario" class="table table-striped table-bordered dt-responsive nowrap datatable"
-            class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
-            <thead>
-                <tr>
-                    <th class="col-md-2">Usuario</th>
-                    <th class="col-md-2">Horario</th>
-                    <th class="col-md-2">Total Horas</th>
-                    <th class="col-md-3">Comentario</th>
-                    <th class="col-md-3">Opciones</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    @endif
 
 </div>
 

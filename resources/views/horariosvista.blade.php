@@ -133,8 +133,8 @@ rango(function() {
                         <div class="col">
                             <div class="form-group">
                                 <label for="rango_fechas">Elije un rango de fechas </label>
-                                <input type="text" class="form-control col-md-9 " required="" name="rango_fechas"
-                                    id="rango_fechas" aria-describedby="helpId" placeholder="" />
+                                <input type="week" class="form-control col-8" name="semanausuario" id="semanausuario" value="" />
+
                             </div>
                         </div>
                         <div class="col">

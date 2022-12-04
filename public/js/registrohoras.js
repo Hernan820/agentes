@@ -61,10 +61,6 @@ document.getElementById("guardar_registro").addEventListener("click", function (
 
     if (validaciondatos() == false) {return;};
 
-    var uno = $('#hiniciales').val();
-    var dos = $('#hfinales').val();
-
-
     if($('#hiniciales').val() != "" && $('#hfinales').val() != ""){
 
         if($('#hiniciales').val() != $('#horasiniciales').val() || $('#hfinales').val() != $('#horasfinales').val()){

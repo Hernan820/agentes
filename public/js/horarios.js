@@ -22,55 +22,64 @@ $(document).ready(function () {
   semanahorario(ano,semana);
 });
 
+function getISOWeek(w, y) {
+  var simple = new Date(y, 0, 1 + (w - 1) * 7);
+  var dow = simple.getDay();
+  var ISOweekStart = simple;
+  if (dow <= 4)
+      ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  else
+      ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+  const temp = {
+    d: ISOweekStart.getDate(),
+    m: ISOweekStart.getMonth(),
+    y: ISOweekStart.getFullYear(),
+  }
+  const numDaysInMonth = new Date(temp.y, temp.m + 1, 0).getDate()
 
-function fechashorario(fecha1,fecha2){
+  var arraydias=['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+    var fechitas =[];
+    arraydias.forEach((dia,i) => { 
 
-  var f1 = fecha1.split("/");
-  var f2 = fecha2.split("/");
+      if (temp.d > numDaysInMonth){
+        temp.m +=1;
+        temp.d = 1;
+      }
+      fechitas.push(new Date(temp.y, temp.m, temp.d++).toLocaleString());
+    });
 
-var fechauno = f1[2]+"-"+f1[0]+"-"+f1[1];
-var fechados= f2[2]+"-"+f2[0]+"-"+f2[1];
+    fechitas.forEach((dia,i) => { 
+      var numero = i+1;
 
-  var ini = moment(fechauno);
-  var fin = moment(fechados);
+      $("#"+arraydias[i]).html(moment(dia.split(',')[0],'DD/MM/YYYY').format('dddd DD'));
+
+      $("#titulo"+numero).html(moment(dia.split(',')[0],'DD/MM/YYYY').format('dddd'));
   
-  if(ini != undefined && fin != undefined){
-    var fechas = [];
-    
-    while (ini.isSameOrBefore(fin)) {
-      fechas.push(ini.format('M/D/YYYY'));
-      ini.add(1, 'days');
-    }
+      $("#fechadia"+numero).val(moment(dia.split(',')[0],'DD/MM/YYYY').format('YYYY-MM-DD'));
 
-    $("#lunes").html(moment(fechas[0]).format('dddd DD'));
-    $("#martes").html(moment(fechas[1]).format('dddd DD'));
-    $("#miercoles").html(moment(fechas[2]).format('dddd DD'));
-    $("#jueves").html(moment(fechas[3]).format('dddd DD'));
-    $("#viernes").html(moment(fechas[4]).format('dddd DD'));
-    $("#sabado").html(moment(fechas[5]).format('dddd DD'));
-    $("#domingo").html(moment(fechas[6]).format('dddd DD'));
-
-    $("#titulo1").html(moment(fechas[0]).format('dddd'));
-    $("#titulo2").html(moment(fechas[1]).format('dddd'));
-    $("#titulo3").html(moment(fechas[2]).format('dddd'));
-    $("#titulo4").html(moment(fechas[3]).format('dddd'));
-    $("#titulo5").html(moment(fechas[4]).format('dddd'));
-    $("#titulo6").html(moment(fechas[5]).format('dddd'));
-    $("#titulo7").html(moment(fechas[6]).format('dddd'));
-    
-    $("#fechadia1").val(moment(fechas[0]).format('YYYY-MM-DD'));
-    $("#fechadia2").val(moment(fechas[1]).format('YYYY-MM-DD'));
-    $("#fechadia3").val(moment(fechas[2]).format('YYYY-MM-DD'));
-    $("#fechadia4").val(moment(fechas[3]).format('YYYY-MM-DD'));
-    $("#fechadia5").val(moment(fechas[4]).format('YYYY-MM-DD'));
-    $("#fechadia6").val(moment(fechas[5]).format('YYYY-MM-DD'));
-    $("#fechadia7").val(moment(fechas[6]).format('YYYY-MM-DD'));
+    });
 
     $('#tablahorarios').show();
-  }
+
+    return fechitas;
+
+   // console.log(numDaysInMonth)
+ /* return Array.from({length: 7}, _ => {
+
+    if (temp.d > numDaysInMonth){
+      temp.m +=1;
+      temp.d = 1;
+*/
+      //dias.push(new Date(temp.y, temp.m, temp.d++).toUTCString());
+      // not needed, Date(2020, 12, 1) == Date(2021, 0, 1)
+      /*if (temp.m >= 12){
+        temp.m = 0
+        temp.y +=1
+      }*/
+   /* }      
+    return new Date(temp.y, temp.m, temp.d++).toLocaleString()   
+  });*/
 }
-
-
 
 
 // FUNCIONES
@@ -422,7 +431,7 @@ function semanahorario(ano,semana){
           tr.append('<td>'+result.data.horasuser[0].name+'</td>');
           var idusuarios = '';
 
-          result.data.horasuser.forEach((element,i) => {
+          result.data.horasuser.forEach((element,i) => { 
       
             var hini = element.horasiniciales.split(",");
             var hfin = element.horasfinales.split(",");
@@ -524,8 +533,10 @@ $('#crearhorario').on('click', function() {
     Swal.fire("¡Debe agregar un usuario!");
     return;
   }
-  var fechas = $("#rango_fechas").val().split(" - ");
-  fechashorario(fechas[0],fechas[1]);
+  var seman_ano = $("#semanausuario").val().split("-W");
+
+  getISOWeek(seman_ano[1],seman_ano[0])
+
 });
 
 
