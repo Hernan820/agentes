@@ -61,15 +61,22 @@ document.getElementById("guardar_registro").addEventListener("click", function (
 
     if (validaciondatos() == false) {return;};
 
-    if($('#hiniciales').val() != $('#horasiniciales').val() || $('#hfinales').val() != $('#horasfinales').val()){
+    var uno = $('#hiniciales').val();
+    var dos = $('#hfinales').val();
 
-        if($('#motivoshorario').val() == ''){
-        $('#motivoscoincidencia').show();
-        $('#motivoshorario').focus();
-        Swal.fire("¡Sus horas registradas no coinciden con su horario!     Agregue un motivo");
-        return;
-        }
-    }else{$('#motivoscoincidencia').hide();};
+
+    if($('#hiniciales').val() != "" && $('#hfinales').val() != ""){
+
+        if($('#hiniciales').val() != $('#horasiniciales').val() || $('#hfinales').val() != $('#horasfinales').val()){
+            if($('#motivoshorario').val() == ''){
+            $('#motivoscoincidencia').show();
+            $('#motivoshorario').focus();
+            Swal.fire("¡Sus horas registradas no coinciden con su horario!     Agregue un motivo");
+            return;
+            }
+        }else{$('#motivoscoincidencia').hide(); $('#motivoshorario').val('')};
+    }
+
 
     $('#guardar_registro').attr('disabled', true);
 
@@ -363,6 +370,10 @@ function editar(id){
         formregistro.comentarios.value = respuesta.data.comentarios;
         formregistro.horasiniciales.value = respuesta.data.horasiniciales;
         formregistro.horasfinales.value = respuesta.data.horasfinales;
+        if($('#hiniciales').val() != respuesta.data.horasiniciales || $('#hfinales').val() != respuesta.data.horasfinales){
+            formregistro.motivoshorario.value = respuesta.data.motivo;
+            $('#motivoscoincidencia').show();
+        }else{$('#motivoscoincidencia').hide();}
         formregistro.TotaDeHoras.value = respuesta.data.total_horas;
     }
         formregistro.id_registro.value = respuesta.data.id;

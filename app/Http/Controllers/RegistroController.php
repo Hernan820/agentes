@@ -55,7 +55,8 @@ class RegistroController extends Controller
             $registrousuario->horasfinales= $request->horasfinales; 
             $registrousuario->total_horas= $request->TotaDeHoras;
             $registrousuario->total_citas=$request->total_citas; 
-            $registrousuario->comentarios= $request->comentarios; 
+            $registrousuario->comentarios= $request->comentarios;
+            $registrousuario->motivo= $request->motivoshorario;  
             $registrousuario->id_usuario= auth()->user()->id;
             $registrousuario->id_cupo = $request->cupo_id; 
             $registrousuario->save(); 
@@ -135,6 +136,8 @@ class RegistroController extends Controller
         $actilizar->total_horas= $request->TotaDeHoras;
         $actilizar->total_citas= $request->total_citas; 
         $actilizar->comentarios= $request->comentarios; 
+        $actilizar->motivo= $request->motivoshorario;  
+
         $actilizar->save();
         return 1;   
  
