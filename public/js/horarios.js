@@ -13,6 +13,7 @@ const numf = 4;
 
 $(document).ready(function () {
   $('#tablahorarios').hide();
+  $('#guardarhorariousuario').hide();
 
   var semana = moment(moment().toDate(), "MM-DD-YYYY").isoWeek()
   var ano = moment(moment().toDate(), "MM-DD-YYYY").format('YYYY')
@@ -23,6 +24,11 @@ $(document).ready(function () {
 });
 
 function getISOWeek(w, y) {
+  $('#usuarios').attr('readonly', true);
+  $('#usuarios').attr('disabled', true);
+  $('#semanausuario').attr('readonly', true);
+  $('#semanausuario').attr('disabled', true);
+
   var simple = new Date(y, 0, 1 + (w - 1) * 7);
   var dow = simple.getDay();
   var ISOweekStart = simple;
@@ -60,25 +66,10 @@ function getISOWeek(w, y) {
     });
 
     $('#tablahorarios').show();
+    $('#guardarhorariousuario').show();
 
     return fechitas;
 
-   // console.log(numDaysInMonth)
- /* return Array.from({length: 7}, _ => {
-
-    if (temp.d > numDaysInMonth){
-      temp.m +=1;
-      temp.d = 1;
-*/
-      //dias.push(new Date(temp.y, temp.m, temp.d++).toUTCString());
-      // not needed, Date(2020, 12, 1) == Date(2021, 0, 1)
-      /*if (temp.m >= 12){
-        temp.m = 0
-        temp.y +=1
-      }*/
-   /* }      
-    return new Date(temp.y, temp.m, temp.d++).toLocaleString()   
-  });*/
 }
 
 
@@ -245,17 +236,27 @@ function getWeekDaysByWeekNumber(weeknumber)
   var dateformat = "dddd DD";
     $('#dias').empty();
    var contador=0;
+   var dia1 = '';
+   var dia2 = '';
+
     var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
     $("#dias").append('<th scope="col">Usuarios</th>');
     while(weeklength--)
-    {
+    { 
+      if(weeklength == 6){
+          dia1= date.format('dddd DD MMMM');
+      }
+      if(weeklength == 0){
+        dia2= date.format('dddd DD MMMM');
+      }
         result.push(date.format(dateformat));
         date.add(1,"day")
         $("#dias").append('<th scope="col">'+result[contador]+'</th>');
         contador++;
     }
     $("#dias").append('<th scope="col">Total de horas</th>');
-   // $("#dias").append('<th scope="col">Opciones</th>');
+
+    $("#titulohorario").text('Semana '+weeknumber+' (Leads) , '+' '+dia1+' - '+dia2);
 
   }
 
@@ -479,9 +480,10 @@ function semanahorario(ano,semana){
 
 
 $('#horariodeusuario').on('click', function() {
+  $('#guardarhorariousuario').hide();
 
   $('#usuarios').empty();
-  $("#rango_fechas").val("");
+  $("#semanausuario").val("");
   limpiamodal();
 
   axios.post(principalUrl + "horarios/agentes")
@@ -507,6 +509,10 @@ function limpiamodal(){
   $("input[type=checkbox]").prop("checked", false);
   $('.entrada').attr('readonly', false)
  
+  $('#usuarios').attr('readonly', false);
+  $('#usuarios').attr('disabled', false);
+  $('#semanausuario').attr('readonly', false);
+  $('#semanausuario').attr('disabled', false);
   array1.forEach(function (numero) {
     $('#tabladia'+numero+' tr').slice(2).remove();
     $('#btnagregar'+numero).attr('disabled', false);
@@ -521,11 +527,9 @@ function limpiamodal(){
   $('#tablahorarios').hide();
 }
 
-
-
 $('#crearhorario').on('click', function() {
 
-  if($("#rango_fechas").val() == ""){
+  if($("#semanausuario").val() == ""){
     Swal.fire("¡Debe agregar un rango de fechas!");
     return;
   }
@@ -535,10 +539,29 @@ $('#crearhorario').on('click', function() {
   }
   var seman_ano = $("#semanausuario").val().split("-W");
 
-  getISOWeek(seman_ano[1],seman_ano[0])
-
+  validahorariouser(seman_ano[1], seman_ano[0]);
 });
 
+function validahorariouser(semana, ano){
+  var iduser = $("#usuarios").val();
+  var nombre = $('select[id="usuarios"] option:selected').text();
+
+  axios.post(principalUrl + "horarios/semana/"+ano+"/"+semana+"/"+iduser)
+  .then((respuesta) => {
+
+    if(respuesta.data.horasuser.length == 0 ){
+      getISOWeek(semana,ano)
+    }else{
+      Swal.fire("¡El agente "+nombre+" ya tiene horario en la semana "+semana+" del año "+ano+"!");
+      $("#usuarios").val('');
+    }
+  })
+  .catch((error) => {
+      if (error.response) {
+          console.log(error.response.data);
+      }
+  });
+}
 
 
 $('.offdia').on('click', function() {
@@ -669,6 +692,7 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
           timer: 1000
       });
         $('#modal_cupo_horario').modal('hide');
+        location.reload();
       })
       .catch((error) => {
           if (error.response) {

@@ -70,7 +70,7 @@ class CupoController extends Controller
      */
     public function show(cupo $cupo)
     {
-       $sql =  "SELECT * FROM `cupos` WHERE cupos.vista = 1;";
+       $sql =  "SELECT * FROM `cupos`;";
        $resultado = DB::select($sql);
         return $resultado;   
      }

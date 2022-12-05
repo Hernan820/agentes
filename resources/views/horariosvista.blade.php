@@ -95,10 +95,12 @@ rango(function() {
 
 <div class="container">
     <div class="row">
-
+        <div class="col">
+            <h3 id="titulohorario" class="mb-3"></h3>
+        </div>
         <table id="tablehorariosusario" class="table table-striped">
             <thead>
-                <tr id="dias">
+                <tr id="dias" class="mb-0 p-0" style="color:black">
 
                 </tr>
             </thead>
@@ -1147,7 +1149,7 @@ rango(function() {
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="guardarhorariousuario">Agregar horario</button>
+                <button type="button" class="btn btn-primary" id="guardarhorariousuario">Agregar horario</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
