@@ -106,12 +106,13 @@ Route::get('vistahorarios', function () {
     return view('horariosvista');
 });
 
-//RUTA DE CUPOS DE HORARIO
+//RUTA DE CUPOS DE HORARIO 
+/*
 Route::get('agente/horarios', [App\Http\Controllers\CupoController::class, 'cuposhorario']);
 
 Route::post('horario/cupo', [App\Http\Controllers\CupoController::class, 'store']);
 
-Route::get('horario/mostrar/{id}', [App\Http\Controllers\CupoController::class, 'vistahorarios']);
+Route::get('horario/mostrar/{id}', [App\Http\Controllers\CupoController::class, 'vistahorarios']);*/
 
 
 Route::get('horarios/usuario/{id}', [App\Http\Controllers\RegistrohoariosController::class, '']);
