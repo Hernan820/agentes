@@ -76,6 +76,7 @@ class RegistrohoariosController extends Controller
         $usuarios = User::join("model_has_roles","model_has_roles.model_id","=","users.id")
                           ->join("roles","roles.id","=","model_has_roles.role_id")  
                           ->select("users.*")
+                          ->where("users.estado_user","=",1)
                           ->where("roles.id","=",2)
                           ->get();
 

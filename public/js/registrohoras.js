@@ -415,7 +415,7 @@ function hora(){
 
    
       $('body').on('click', '.minutitos', function(){
-        $(this).mask("(999) 999-9999");
+      //  $(this).mask("(999) 999-9999");
       });
 
 
@@ -534,7 +534,7 @@ function hora(){
       
       formateada = moment.utc(sumatodashoras.asMilliseconds()).format("HH:mm:ss") 
      var arr= formateada.split(":");
-      console.log(arr);
+      //console.log(arr);
       $("#total_horas").val(arr[0]+" Horas "+arr[1]+" Minutos")
 
       $("#TotaDeHoras").val(formateada)

@@ -87,7 +87,7 @@ rango(function() {
 <br><br><br>
 
 <div class="container  col-md-9 bg-blue">
-    <div class="cards" style="    background: papayawhip;">
+    <div class="cards" style="    background: ;">
         <div id=""></div>
 
     </div>
@@ -96,7 +96,7 @@ rango(function() {
 <div class="container">
     <div class="row">
         <div class="col">
-            <h3 id="titulohorario" class="mb-3"></h3>
+            <h3 id="titulohorario" class="mb-3" style="background:#d5a6bd"   ></h3>
         </div>
         <table id="tablehorariosusario" class="table table-striped">
             <thead>

@@ -240,7 +240,9 @@ function getWeekDaysByWeekNumber(weeknumber)
    var dia2 = '';
 
     var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
-    $("#dias").append('<th scope="col">Usuarios</th>');
+    $("#dias").append('<th scope="col" style="background:#b6d7a8"></th>');
+
+    $("#dias").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
     while(weeklength--)
     { 
       if(weeklength == 6){
@@ -251,10 +253,10 @@ function getWeekDaysByWeekNumber(weeknumber)
       }
         result.push(date.format(dateformat));
         date.add(1,"day")
-        $("#dias").append('<th scope="col">'+result[contador]+'</th>');
+        $("#dias").append('<th scope="col" style="background:#b6d7a8">'+result[contador]+'</th>');
         contador++;
     }
-    $("#dias").append('<th scope="col">Total de horas</th>');
+    $("#dias").append('<th scope="col" style="background:#b6d7a8">Total de horas</th>');
 
     $("#titulohorario").text('Semana '+weeknumber+' (Leads) , '+' '+dia1+' - '+dia2);
 
@@ -285,7 +287,7 @@ console.log(respuesta.data);
 const tbody = document.querySelector('#tablehorariosusario tbody');
 tbody.addEventListener('click', function (e) {
   const cell = e.target.closest('td');
-  if (cell.cellIndex == 0 || cell.cellIndex == 8 ) {return;} // Quit, not clicked on a cell
+  if (cell.cellIndex == 0 || cell.cellIndex == 1 || cell.cellIndex == 9 ) {return;} // Quit, not clicked on a cell
   const row = cell.parentElement;
  // console.log(cell.innerHTML, row.rowIndex, cell.cellIndex);
 
@@ -424,12 +426,15 @@ function semanahorario(ano,semana){
     
     Promise.all(respuesta.data.map( item => { return axios.post(principalUrl + "horarios/semana/"+ano+"/"+semana+"/"+item.id) }))
     .then(nuevo_arreglo => {  // el resultado será un arreglo nuevo con los resultados de cada Promesa (siempre que todas hayan sido resueltas)
+        var cotadorusers=1;
       nuevo_arreglo.forEach(result => {
         var tr = $('<tr style="font-size: 15px;color:black">');
 
         if(result.data.horasuser.length != 0){
           $("#filausuario").append(tr);
-          tr.append('<td>'+result.data.horasuser[0].name+'</td>');
+          tr.append('<td style="background:#">'+cotadorusers+'</td>');
+          cotadorusers++;
+          tr.append('<td style="background:#b6d7a8">'+result.data.horasuser[0].name+'</td>');
           var idusuarios = '';
 
           result.data.horasuser.forEach((element,i) => { 
