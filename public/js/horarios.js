@@ -262,32 +262,50 @@ function getWeekDaysByWeekNumber(weeknumber)
 
   }
 
-function horarioedita(btn,idhorarios){
+function horarioedita(btn,idhorarios,nombre){
 
-  var idshorarios = new FormData();
+  var datoshorario = new FormData();
+  datoshorario.append("idhorarios",idhorarios);
 
-  idshorarios.append("idhorarios",idhorarios);
+  Swal.fire({
+    title: "ELIMINAR",
+    text: "¿Quieres eliminar los horarios de esta semana de "+nombre+"?",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "SI",
+    cancelButtonText: "Cancelar",
+}).then((result) => {
+    if (result.isConfirmed) {
 
-
-axios.post(principalUrl + "horarios/registros",idshorarios)
+      axios.post(principalUrl + "horarios/registros",datoshorario)
 .then((respuesta) => {
 
-console.log(respuesta.data);
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'registros de esta semana eliminados',
+    showConfirmButton: false,
+    timer: 1000,
+  });
+  location.reload();
 
  })
  .catch((error) => {
   if (error.response) {
       console.log(error.response.data);
   }
-});
+});       
 
+    }
+});
 
 }
 
 const tbody = document.querySelector('#tablehorariosusario tbody');
 tbody.addEventListener('click', function (e) {
   const cell = e.target.closest('td');
-  if (cell.cellIndex == 0 || cell.cellIndex == 1 || cell.cellIndex == 9 ) {return;} // Quit, not clicked on a cell
+  if (cell.cellIndex == 0 || cell.cellIndex == 1 || cell.cellIndex == 9 || cell.cellIndex == 10 ) {return;} // Quit, not clicked on a cell
   const row = cell.parentElement;
  // console.log(cell.innerHTML, row.rowIndex, cell.cellIndex);
 
@@ -444,17 +462,17 @@ function semanahorario(ano,semana){
             var horasformateadas = '';
 
             if(hini[0]== 0 && hfin[0]== 0){
-              tr.append('<td class="diaoff"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>OFF</td>');
+              tr.append('<td class="diaoff" style=" text-align: center !important" ><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input><span style="background:#33ECFF;" > OFF</span></td>');
       
             }else{
             if(hini.length == 1){
-              tr.append('<td><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+              tr.append('<td style=" text-align: center !important"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
       
             }else{
               hini.forEach(function (horasini, i) {   
                 horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
               })
-              tr.append('<td><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+horasformateadas+'</td>');
+              tr.append('<td style=" text-align: center !important"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+horasformateadas+'</td>');
             }
           }  
           if(i == result.data.horasuser.length-1){
@@ -465,7 +483,7 @@ function semanahorario(ano,semana){
           }
         });          
         tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
-       // tr.append('<td><button type="button" class="btn btn-success " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`)">Editar</button> </td></tr>');
+       tr.append('<td><button type="button" class="btn btn-primary " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`,`'+result.data.horasuser[0].name+'`)">Eliminar</button> </td></tr>');
 
         }
 
@@ -685,9 +703,11 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
 }).then((result) => {
     if (result.isConfirmed) {
 
+      $('#guardarhorariousuario').attr('disabled', true);
 
       axios.post(principalUrl + "horarios/guarda",horarios)
       .then((respuesta) => {
+        $('#guardarhorariousuario').attr('disabled', false);
 
         Swal.fire({
           position: "top-end",

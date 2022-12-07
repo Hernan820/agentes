@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('#motivoscoincidencia').hide();
     var fecha = $('#fechas').val().split(' ')[0] ;
     
-    axios.post(principalUrl + "horario/usuario/"+fecha)
+    axios.post(principalUrl + "horariovalida/usuario/"+fecha)
     .then((respuesta) => {
         $('#hiniciales').val(respuesta.data[0].horasiniciales);
         $('#hfinales').val(respuesta.data[0].horasfinales);

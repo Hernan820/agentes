@@ -61,7 +61,7 @@ rango(function() {
 });
 </script>
 
-<div class="container">
+<div class="container rounded border border-primary">
     <div class="col-12">
         <label for="week" class="text-dark">Seleccione una semana</label><br>
 
@@ -84,16 +84,9 @@ rango(function() {
         </div>
     </div>
 </div>
-<br><br><br>
+<br><br>
 
-<div class="container  col-md-9 bg-blue">
-    <div class="cards" style="    background: ;">
-        <div id=""></div>
-
-    </div>
-</div>
-
-<div class="container">
+<div class="container rounded border border-primary">
     <div class="row">
         <div class="col">
             <h3 id="titulohorario" class="mb-3" style="background:#d5a6bd"   ></h3>

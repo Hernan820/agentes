@@ -29,6 +29,7 @@ class RegistrohoariosController extends Controller
         $horas = registrohoarios::select('registrohoarios.*')
                 ->where('registrohoarios.fecha_horario','like',$fecha.'%')
                 ->where('registrohoarios.id_usuario','=',auth()->user()->id)
+                ->where('registrohoarios.estado_horario','=',1)
                 ->get();
         return $horas;
     }
@@ -89,13 +90,15 @@ class RegistrohoariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
-    {
-        $sql = "SELECT users.id as iduser,users.name ,registrohoarios.* FROM  registrohoarios
-        INNER JOIN users ON users.id = registrohoarios.id_usuario
-        WHERE  registrohoarios.id IN($request->idhorarios) AND registrohoarios.estado_horario = 1;";
-        
-        $usuarios = DB::select($sql);
-        return $usuarios;
+    {   
+        $id_registros =explode(',',$request->idhorarios);
+
+        foreach($id_registros as $id){  
+            $horariousuario = registrohoarios::find($id);
+            $horariousuario->estado_horario = 0 ;
+            $horariousuario->save();
+        }
+        return $id_registros;
     }
 
     /**

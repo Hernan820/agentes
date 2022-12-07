@@ -139,7 +139,7 @@ Route::post('horarios/registros', [App\Http\Controllers\RegistrohoariosControlle
 
 Route::post('horario/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 
-Route::post('horario/usuario/{fecha}', [App\Http\Controllers\RegistrohoariosController::class, 'horasdefecha']);
+Route::post('horariovalida/usuario/{fecha}', [App\Http\Controllers\RegistrohoariosController::class, 'horasdefecha']);
 
 });
 
