@@ -240,7 +240,7 @@ function getWeekDaysByWeekNumber(weeknumber)
    var dia2 = '';
 
     var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
-    $("#dias").append('<th scope="col" style="background:#b6d7a8"></th>');
+    $("#dias").append('<th scope="col" style="background:#b6d7a8">#</th>');
 
     $("#dias").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
     while(weeklength--)
@@ -278,7 +278,7 @@ function horarioedita(btn,idhorarios,nombre){
 }).then((result) => {
     if (result.isConfirmed) {
 
-      axios.post(principalUrl + "horarios/registros",datoshorario)
+      axios.post(principalUrl + "horarios/eliminar",datoshorario)
 .then((respuesta) => {
 
   Swal.fire({

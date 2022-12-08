@@ -135,7 +135,10 @@ Route::post('horarios/semana/{ano}/{semana}/{id}', [App\Http\Controllers\Registr
 Route::post('horarios/usuarios/{ano}/{semana}', [App\Http\Controllers\RegistrohoariosController::class, 'usuarioshorarios']);
 
 // MUESTRA HORARIOS DE USUARIOS
-Route::post('horarios/registros', [App\Http\Controllers\RegistrohoariosController::class, 'edit']);
+Route::post('horarios/eliminar', [App\Http\Controllers\RegistrohoariosController::class, 'edit']);
+
+Route::post('horarios/registros', [App\Http\Controllers\RegistrohoariosController::class, 'registrosedit']);
+
 
 Route::post('horario/actualizar', [App\Http\Controllers\RegistroController::class, 'update']);
 

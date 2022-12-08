@@ -119,9 +119,14 @@ class RegistrohoariosController extends Controller
      * @param  \App\Models\registrohoarios  $registrohoarios
      * @return \Illuminate\Http\Response
      */
-    public function destroy(registrohoarios $registrohoarios)
+    public function registrosedit(Request $request)
     {
-        //
+        $sql = "SELECT users.id as iduser,users.name ,registrohoarios.* FROM  registrohoarios
+        INNER JOIN users ON users.id = registrohoarios.id_usuario
+        WHERE  registrohoarios.id IN($request->idhorarios) AND registrohoarios.estado_horario = 1;";
+
+        $usuarios = DB::select($sql);
+        return $usuarios;
     }
 
     /**

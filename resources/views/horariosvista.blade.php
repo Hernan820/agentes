@@ -86,7 +86,7 @@ rango(function() {
 </div>
 <br><br>
 
-<div class="container rounded border border-primary">
+<div class="container rounded ">
     <div class="row">
         <div class="col">
             <h3 id="titulohorario" class="mb-3" style="background:#d5a6bd"   ></h3>
