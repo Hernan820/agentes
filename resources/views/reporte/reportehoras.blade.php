@@ -39,12 +39,13 @@
 <idv class="col-md-12 table-responsive">
     <table id="registro_horas"
         class="table table-striped table-bordered dt-responsive nowrap datatable text-center table-sm" class="display"
-        cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
+        cellspacing="0" cellpadding="3" width="100%" style="background-color: ;color: black;">
         <thead>
             <tr>
                 <th class="col-md-2">Nombre</th>
                 <th class="col-md-2">Fecha</th>
                 <th class="col-md-2">Hora inicio / Hora fin</th>
+                <th class="col-md-2"> Motivo</th>
                 <th class="col-md-2"> Horas</th>
                 <th class="col-md-2"> Citas</th>
             </tr>
