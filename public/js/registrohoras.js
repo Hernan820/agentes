@@ -69,8 +69,11 @@ document.getElementById("guardar_registro").addEventListener("click", function (
             $('#motivoshorario').focus();
             Swal.fire("¡Sus horas registradas no coinciden con su horario!     Agregue un motivo");
             return;
+            }else if($('#motivoshorario').val().length < 10){
+                Swal.fire("¡Agrega un motivo valido");
+                return;
             }
-        }else{$('#motivoscoincidencia').hide(); $('#motivoshorario').val('')};
+        }else{$('#motivoscoincidencia').hide();};
     }
 
 
