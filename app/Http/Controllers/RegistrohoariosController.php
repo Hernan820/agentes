@@ -230,11 +230,12 @@ class RegistrohoariosController extends Controller
             $fechaFin= date("Y-m-d",$strFecha);
         }
 
-        $consulta ="SELECT users.id FROM  registrohoarios
+        $consulta ="SELECT registrohoarios.id as idregistro ,users.id FROM  registrohoarios
         INNER JOIN users on users.id = registrohoarios.id_usuario
         WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1
-        GROUP BY users.id;";
-    
+        GROUP BY users.id 
+        ORDER BY idregistro ASC;";
+
         $usuarios = DB::select($consulta);
 
         return response()->json($usuarios);
