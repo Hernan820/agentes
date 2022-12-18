@@ -235,14 +235,17 @@ function getWeekDaysByWeekNumber(weeknumber)
 {   
   var dateformat = "dddd DD";
     $('#dias').empty();
+    $('#diasvenezuela').empty();  
+
    var contador=0;
    var dia1 = '';
    var dia2 = '';
 
     var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
     $("#dias").append('<th scope="col" style="background:#b6d7a8">#</th>');
-
     $("#dias").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
+    $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">#</th>');
+    $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
     while(weeklength--)
     { 
       if(weeklength == 6){
@@ -250,15 +253,22 @@ function getWeekDaysByWeekNumber(weeknumber)
       }
       if(weeklength == 0){
         dia2= date.format('dddd DD MMMM');
-      }
+      }       
         result.push(date.format(dateformat));
         date.add(1,"day")
         $("#dias").append('<th scope="col" style="background:#b6d7a8">'+result[contador]+'</th>');
+        $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">'+result[contador]+'</th>');
         contador++;
     }
     $("#dias").append('<th scope="col" style="background:#b6d7a8">Total de horas</th>');
+    $("#dias").append('<th scope="col" style="background:#b6d7a8"></th>');
 
-    $("#titulohorario").text('Semana '+weeknumber+' (Leads) , '+' '+dia1+' - '+dia2);
+    $("#titulohorario").text('Semana '+weeknumber+' (Leads) , '+' '+dia1+' - '+dia2+' EL SALVADOR ☆HORA DE EL SALVADOR☆');
+
+    $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">Total de horas</th>');
+    $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8"></th>');
+
+    $("#titulohorariovenezuela").text('Semana '+weeknumber+' (Leads) , '+' '+dia1+' - '+dia2+' VENZUELA ☆NEW YORK TIME☆' );
 
   }
 
@@ -424,6 +434,7 @@ function semanahorario(ano,semana){
 
   getWeekDaysByWeekNumber(semana);
   $('#filausuario').empty();
+  $('#filausuariovenezuela').empty();
 
   axios.post(principalUrl + "horarios/usuarios/"+ano+"/"+semana)
   .then((respuesta) => {
@@ -446,6 +457,10 @@ function semanahorario(ano,semana){
     .then(nuevo_arreglo => {  // el resultado será un arreglo nuevo con los resultados de cada Promesa (siempre que todas hayan sido resueltas)
         var cotadorusers=1;
       nuevo_arreglo.forEach(result => {
+
+        if(result.data.horasuser[0].pais == 1){
+
+
         var tr = $('<tr style="font-size: 15px;color:black">');
 
         if(result.data.horasuser.length != 0){
@@ -486,6 +501,55 @@ function semanahorario(ano,semana){
        tr.append('<td><button type="button" class="btn btn-primary " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`,`'+result.data.horasuser[0].name+'`)">Eliminar</button> </td></tr>');
 
         }
+
+
+      }else if(result.data.horasuser[0].pais == 2){
+
+
+        
+        var tr = $('<tr style="font-size: 15px;color:black">');
+
+        if(result.data.horasuser.length != 0){
+          $("#filausuariovenezuela").append(tr);
+          tr.append('<td style="background:#">'+cotadorusers+'</td>');
+          cotadorusers++;
+          tr.append('<td style="background:#b6d7a8">'+result.data.horasuser[0].name+'</td>');
+          var idusuarios = '';
+
+          result.data.horasuser.forEach((element,i) => { 
+      
+            var hini = element.horasiniciales.split(",");
+            var hfin = element.horasfinales.split(",");
+            var horasformateadas = '';
+
+            if(hini[0]== 0 && hfin[0]== 0){
+              tr.append('<td class="diaoff" style=" text-align: center !important" ><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input><span style="background:#33ECFF;" > OFF</span></td>');
+      
+            }else{
+            if(hini.length == 1){
+              tr.append('<td style=" text-align: center !important"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+moment(element.horasiniciales,"H:mm:ss").format('h:mm A')+'<br/>'+moment(element.horasfinales,"H:mm:ss").format('h:mm A')+'</td>');
+      
+            }else{
+              hini.forEach(function (horasini, i) {   
+                horasformateadas=  horasformateadas+ moment(horasini,"H:mm:ss").format('h:mm A')+'<br/>'+moment(hfin[i],"H:mm:ss").format('h:mm A')+'<br/>'
+              })
+              tr.append('<td style=" text-align: center !important"><input type="hidden" value='+element.idh+' id="registroid" name="registroid"></input>'+horasformateadas+'</td>');
+            }
+          }  
+          if(i == result.data.horasuser.length-1){
+            idusuarios = idusuarios+element.idh;
+
+          }else{
+          idusuarios = idusuarios+element.idh+",";
+          }
+        });          
+        tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
+       tr.append('<td><button type="button" class="btn btn-primary " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`,`'+result.data.horasuser[0].name+'`)">Eliminar</button> </td></tr>');
+
+        }
+
+      }
+
 
       });
     });

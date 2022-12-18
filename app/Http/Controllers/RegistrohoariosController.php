@@ -181,7 +181,7 @@ class RegistrohoariosController extends Controller
     }
 
 
-    $consulta1 ="SELECT registrohoarios.id as idh ,users.id, users.name, registrohoarios.fecha_horario, registrohoarios.horasiniciales, registrohoarios.horasfinales, registrohoarios.total_horas  FROM  registrohoarios
+    $consulta1 ="SELECT registrohoarios.id as idh ,users.id, users.name, users.id_pais as pais , registrohoarios.fecha_horario, registrohoarios.horasiniciales, registrohoarios.horasfinales, registrohoarios.total_horas  FROM  registrohoarios
     INNER JOIN users on users.id = registrohoarios.id_usuario
     WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id = $id;";
 

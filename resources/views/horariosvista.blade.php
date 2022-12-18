@@ -88,8 +88,8 @@ rango(function() {
 
 <div class="container rounded ">
     <div class="row">
-        <div class="col">
-            <h3 id="titulohorario" class="mb-3" style="background:#d5a6bd"   ></h3>
+        <div class="col-12 p-0 text-center">
+            <h3 id="titulohorario" class="mb-0" style="background:#d5a6bd; padding:8px" ></h3>
         </div>
         <table id="tablehorariosusario" class="table table-striped">
             <thead>
@@ -103,7 +103,24 @@ rango(function() {
         </table>
     </div>
 </div>
+<br><br>
+<div class="container rounded ">
+    <div class="row">
+        <div class="col-12 p-0 text-center">
+            <h3 id="titulohorariovenezuela" class="mb-0" style="background:#d5a6bd; padding:8px" ></h3>
+        </div>
+        <table id="tablehorariosusariovenezuela" class="table table-striped">
+            <thead>
+                <tr id="diasvenezuela" class="mb-0 p-0" style="color:black">
 
+                </tr>
+            </thead>
+            <tbody id="filausuariovenezuela">
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <!-- Modal cupos -->
