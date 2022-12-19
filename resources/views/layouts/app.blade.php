@@ -69,6 +69,10 @@
         top: 0 !important;
         position: fixed !important;
     }
+    .enlace{
+        color: white;
+
+    }
     </style>
     <div class="page-wrapper">
 
@@ -110,7 +114,8 @@
                                     <span class="bot-line"></span>USUARIOS</a>
                             </li>
                             <li class="has-sub">
-                                <a data-target="#" data-toggle="modal" class="MainNavText" id="modalmantenimiento" href="#">
+                                <a data-target="#" data-toggle="modal" class="MainNavText modalmantenimiento" id=""
+                                    href="#">
                                     </i>
                                     <span class="bot-line"></span>CUPOS</a>
                             </li>
@@ -124,7 +129,7 @@
                             @if (Route::has('login'))
                             @if(@Auth::user()->hasRole('agente'))
                             <li class="has-sub">
-                                <a data-target="#" data-toggle="modal" class="MainNavText" id="modalmishoras" href="#">
+                                <a data-target="#" data-toggle="modal" class="MainNavText modalmishoras" id="" href="#">
                                     </i>
                                     <span class="bot-line"></span>MIS HORAS</a>
                             </li>
@@ -132,7 +137,7 @@
                             @endif
                             @endguest
 
-                           
+
                             <!-- *************************************************** -->
 
                         </ul>
@@ -176,6 +181,88 @@
                 </div>
             </div>
         </header>
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="background: #1d3668;">
+            <div class="header__logo" style="background: #1d3668;">
+                @guest
+                <a class="image" href="{{ url('/')}}">
+                    @else
+                    <a class="image" href="{{ url('/home')}}">
+                        @endguest
+                        <img class="image" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}"
+                            alt="Cool Admin" />
+                    </a>
+            </div> <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                    @guest
+
+                    @else
+                    @if (Route::has('login'))
+                    @if(@Auth::user()->hasRole('administrador'))
+                    <li class="has-sub">
+                        <a href="{{ asset('vistahorarios') }}" class="enlace">
+                            </i>
+                            HORARIOS</a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="{{ asset('vistareporte') }}" class="enlace">
+                            </i>
+                            REPORTE</a>
+                    </li>
+                    <li class="has-sub">
+                        <a href="{{ asset('usuarios') }}" class="enlace">
+                            </i>
+                            USUARIOS</a>
+                    </li>
+                    <li class="has-sub">
+                        <a data-target="#" data-toggle="modal" class="MainNavText enlace modalmantenimiento" id="" href="#">
+                            </i>
+                            CUPOS</a>
+                    </li>
+                    @endif
+                    @endif
+                    @endguest
+
+                    <!-- *************************************************** boton de mis horas  -->
+                    @guest
+                    @else
+                    @if (Route::has('login'))
+                    @if(@Auth::user()->hasRole('agente'))
+                    <li class="has-sub">
+                        <a data-target="#" data-toggle="modal" class="MainNavText enlace modalmishoras" id="" href="#">
+                            </i>
+                            <span class="bot-line"></span>MIS HORAS</a>
+                    </li>
+                    @endif
+                    @endif
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle enlace" href="#" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(@Auth::user()->hasRole('administrador'))
+                            @endif 
+                            <a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                    @endguest
+                </ul>
+            </div>
+        </nav>
 
         <!-- PAGE CONTENT-->
         <div class="page-content--bgf7">
@@ -271,11 +358,11 @@
                     <form action="" id="horasusuario">
 
                         {!! csrf_field() !!}
-                        
+
                         @if(Auth::check())
-                            <script>
-                                var userID = "{{auth()->user()->id}}";
-                            </script>
+                        <script>
+                        var userID = "{{auth()->user()->id}}";
+                        </script>
                         @endif
 
                         <div class="form-group">
@@ -296,29 +383,29 @@
                         </div>
 
                         <div class="form-group">
-                        <button type="button" class="btn btn-success" id="calcular"  >Calcular</button>
+                            <button type="button" class="btn btn-success" id="calcular">Calcular</button>
                         </div>
 
                         <div class="form-group">
                             <label for="nombre">Total de Horas</label>
                             <input type="text" class="form-control " required="" name="totalhoras" id="totalhoras"
-                                aria-describedby="helpId" placeholder=" " required=""
-                                autocomplete="off"  disabled="true">
+                                aria-describedby="helpId" placeholder=" " required="" autocomplete="off"
+                                disabled="true">
                         </div>
 
                         <div class="form-group">
                             <label for="nombre">Total de citas</label>
                             <input type="text" class="form-control " required="" name="totalcitas" id="totalcitas"
-                                aria-describedby="helpId" placeholder=" " required=""
-                                autocomplete="off" disabled="true">
+                                aria-describedby="helpId" placeholder=" " required="" autocomplete="off"
+                                disabled="true">
                         </div>
 
                         <div class="form-group">
-                                <label for="textmishoras">Mis horas </label>
-                                <textarea name="textmishoras" rows="5" required="" id="textmishoras"
-                                    style="white-space: pre-wrap;" class="form-control descripcion" cols="50"
-                                    autocomplete="off"></textarea>
-                            </div>
+                            <label for="textmishoras">Mis horas </label>
+                            <textarea name="textmishoras" rows="5" required="" id="textmishoras"
+                                style="white-space: pre-wrap;" class="form-control descripcion" cols="50"
+                                autocomplete="off"></textarea>
+                        </div>
 
                     </form>
                 </div>

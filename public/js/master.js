@@ -2,7 +2,7 @@ var principalUrl = "http://localhost/agentes/public/";
 //var principalUrl = "https://mydailyhours.com/";
 
 
-$('#modalmantenimiento').on('click', function() {
+$('.modalmantenimiento').on('click', function() {
     $("#mostrarcupos").html("");
 
     axios.post(principalUrl + "agente/mostrarcupos")
@@ -77,7 +77,7 @@ function accionesCupos(option, id) {
 
 }
 
-$('#modalmishoras').on('click', function() {
+$('.modalmishoras').on('click', function() {
     $("#horasusuario").trigger("reset");
     $('#textmishoras').html("");
     $('#mishoras').modal('show');
