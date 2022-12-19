@@ -314,6 +314,16 @@ function horarioedita(btn,idhorarios,nombre){
 
 const tbody = document.querySelector('#tablehorariosusario tbody');
 tbody.addEventListener('click', function (e) {
+  editahorario(e);
+});
+
+const tablebody = document.querySelector('#tablehorariosusariovenezuela tbody');
+tablebody.addEventListener('click', function (e) {
+  editahorario(e);
+});
+
+
+function editahorario(e){
   const cell = e.target.closest('td');
   if (cell.cellIndex == 0 || cell.cellIndex == 1 || cell.cellIndex == 9 || cell.cellIndex == 10 ) {return;} // Quit, not clicked on a cell
   const row = cell.parentElement;
@@ -385,7 +395,6 @@ tbody.addEventListener('click', function (e) {
         }
     });
   
-  
     horasfinales.forEach(function (element, i) {
         var horas2 = $("#tablaedicion tbody select[name='horaini2[]']");
         var minutos2 = $("#tablaedicion tbody input[name='minutosini2[]']");
@@ -414,7 +423,6 @@ tbody.addEventListener('click', function (e) {
     $('#exampleModal').modal('show');
   }
   
-  
    })
    .catch((error) => {
     if (error.response) {
@@ -422,11 +430,7 @@ tbody.addEventListener('click', function (e) {
     }
   });
 
-
-
-});
-
-
+}
 
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
@@ -497,16 +501,12 @@ function semanahorario(ano,semana){
           idusuarios = idusuarios+element.idh+",";
           }
         });          
-        tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
+        tr.append('<td style=" text-align: center !important">'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
        tr.append('<td><button type="button" class="btn btn-primary " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`,`'+result.data.horasuser[0].name+'`)">Eliminar</button> </td></tr>');
-
         }
-
 
       }else if(result.data.horasuser[0].pais == 2){
 
-
-        
         var tr = $('<tr style="font-size: 15px;color:black">');
 
         if(result.data.horasuser.length != 0){
@@ -543,14 +543,11 @@ function semanahorario(ano,semana){
           idusuarios = idusuarios+element.idh+",";
           }
         });          
-        tr.append('<td>'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
+        tr.append('<td style=" text-align: center !important" >'+result.data.totalhoras[0].TotalHoras+'</td></tr>');
        tr.append('<td><button type="button" class="btn btn-primary " id="editarhorarios" onclick="horarioedita(this,`'+idusuarios+'`,`'+result.data.horasuser[0].name+'`)">Eliminar</button> </td></tr>');
 
         }
-
       }
-
-
       });
     });
 })
