@@ -42,27 +42,29 @@ class RegistrohoariosController extends Controller
      */
     public function store(Request $request)
     {
-        $array = [1,2,3,4,5,6,7];
+        foreach(explode(',',$request->usuarios) as $idusuario){
 
-        foreach($array as $numero){
-            $fecha ="fechadia".$numero;
-            $horasini ="horas_iniciales_dia".$numero;
-            $horasfin ="horas_finales_dia".$numero;
-            $totalh ="total_horasdia".$numero;
-
-            if($request-> $horasini != ""){
-
-            $horariousuario = new registrohoarios;
-            $horariousuario->fecha_horario = $request-> $fecha ;
-            $horariousuario->horasiniciales = $request-> $horasini;
-            $horariousuario->horasfinales = $request->$horasfin ;
-            $horariousuario->total_horas = $request->$totalh ;
-            $horariousuario->estado_horario = 1 ;
-            $horariousuario->id_usuario = $request->usuarios ;
-            $horariousuario->save();
+            $array = [1,2,3,4,5,6,7];
+            foreach($array as $numero){
+                $fecha ="fechadia".$numero;
+                $horasini ="horas_iniciales_dia".$numero;
+                $horasfin ="horas_finales_dia".$numero;
+                $totalh ="total_horasdia".$numero;
+    
+                if($request-> $horasini != ""){
+    
+                $horariousuario = new registrohoarios;
+                $horariousuario->fecha_horario = $request-> $fecha ;
+                $horariousuario->horasiniciales = $request-> $horasini;
+                $horariousuario->horasfinales = $request->$horasfin ;
+                $horariousuario->total_horas = $request->$totalh ;
+                $horariousuario->estado_horario = 1 ;
+                $horariousuario->id_usuario = $idusuario ;
+                $horariousuario->save();
+               }
+             }
         }
 
-         }
          return 1;
     }
 
@@ -183,13 +185,13 @@ class RegistrohoariosController extends Controller
 
     $consulta1 ="SELECT registrohoarios.id as idh ,users.id, users.name, users.id_pais as pais , registrohoarios.fecha_horario, registrohoarios.horasiniciales, registrohoarios.horasfinales, registrohoarios.total_horas  FROM  registrohoarios
     INNER JOIN users on users.id = registrohoarios.id_usuario
-    WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id = $id;";
+    WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id IN($id);";
 
     $horasuser = DB::select($consulta1);
 
     $consulta2 ="SELECT users.id,( HOUR(SEC_TO_TIME(SUM(TIME_TO_SEC(registrohoarios.total_horas))))) as TotalHoras FROM  registrohoarios
     INNER JOIN users on users.id = registrohoarios.id_usuario
-    WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id = $id GROUP BY users.id;";
+    WHERE  registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 AND users.id IN($id) GROUP BY users.id;";
 
     $totalhoras = DB::select($consulta2);
 

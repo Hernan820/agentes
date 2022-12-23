@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
 <script src="{{ asset('js/horarios.js') }}" defer></script>
 
@@ -21,44 +20,15 @@
 .p-3 {
     padding: 1.9rem !important;
 }
+
+.multiselect {
+    
+}
+
 </style>
 <script type="text/javascript">
-var rango = jQuery.noConflict();
+var select = jQuery.noConflict();
 
-rango(function() {
-    rango('#rango_fechas').daterangepicker({
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
-
-    rango('#rango_fechas').on('apply.daterangepicker', function(ev, picker) {
-        var ini = moment(picker.startDate.format('YYYY-MM-DD'));
-        var fin = moment(picker.endDate.format('YYYY-MM-DD'));
-        if (ini != undefined && fin != undefined) {
-
-            var fechas = [];
-            while (ini.isSameOrBefore(fin)) {
-                fechas.push(ini.format('M/D/YYYY'));
-                ini.add(1, 'days');
-            }
-            if (fechas.length != 7) {
-                Swal.fire("¡Debe agregar 7 dias que conforma una semana!");
-                rango(this).val('');
-                return;
-            }
-        }
-
-        rango('#rango_fechas').val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate
-            .format('MM/DD/YYYY'));
-    });
-
-    rango('#rango_fechas').on('cancel.daterangepicker', function(ev, picker) {
-        rango(this).val('');
-    });
-
-});
 </script>
 
 <div class="container rounded border border-primary">
@@ -141,7 +111,7 @@ rango(function() {
 
                     {!! csrf_field() !!}
 
-                    <div class="row text-center d-flex">
+                    <div class="row text d-flex" style="color:black">
                         <div class="col">
                             <div class="form-group">
                                 <label for="rango_fechas">Elije un rango de fechas </label>
@@ -151,8 +121,8 @@ rango(function() {
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="total_horas">Usuarios </label>
-                                <select name="usuarios" id="usuarios" class="form-control">
+                                <label for="total_horas">Usuarios </label><br>
+                                <select name="usuarios" id="usuarios" class="form-control border border-secondary usuarios" multiple="multiple">
                                 </select>
                             </div>
                         </div>
