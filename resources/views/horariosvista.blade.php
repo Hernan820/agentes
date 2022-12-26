@@ -122,7 +122,7 @@ var select = jQuery.noConflict();
                         <div class="col">
                             <div class="form-group">
                                 <label for="total_horas">Usuarios </label><br>
-                                <select name="usuarios" id="usuarios" class="form-control border border-secondary usuarios" multiple="multiple">
+                                <select name="usuarios" id="usuarios" class="form-control">
                                 </select>
                             </div>
                         </div>

@@ -24,11 +24,11 @@ $(document).ready(function () {
 });
 
 function getISOWeek(w, y) {
-  //$('#usuarios').attr('readonly', true);
-  //$('#usuarios').attr('disabled', true);
+  $('#usuarios').attr('readonly', true);
+  $('#usuarios').attr('disabled', true);
   $('#semanausuario').attr('readonly', true);
   $('#semanausuario').attr('disabled', true);
-  select('#usuarios').multiselect('disable');
+  //select('#usuarios').multiselect('disable');
 
   var simple = new Date(y, 0, 1 + (w - 1) * 7);
   var dow = simple.getDay();
@@ -573,24 +573,11 @@ $('#horariodeusuario').on('click', function() {
   var usuarioselect = [];
   axios.post(principalUrl + "horarios/agentes")
     .then((respuesta) => {
+      $("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
+      respuesta.data.forEach(function (element) {   
+      $("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
+         })
 
-         respuesta.data.forEach(function (element) { 
-          usuarioselect.push(
-                  {label: element.name, value: element.id},
-          );
-        })
-
-        select('#usuarios').multiselect({
-          buttonClass: '<div class="form-control border rounded multiselect dropdown-toggle btn btn-default" />',
-          nonSelectedText: 'Seleccione Usuarios',
-          selectAllText:'Todos',
-          nSelectedText: 'seleccionados',
-          allSelectedText: 'Todos seleccionados',
-          enableCollapsibleOptGroups: true,
-          includeSelectAllOption: true,
-        });  
-
-      select('#usuarios').multiselect('dataprovider', usuarioselect);
       $('#modal_cupo_horario').modal('show');
     })
     .catch((error) => {
@@ -632,8 +619,8 @@ $('#crearhorario').on('click', function() {
     Swal.fire("¡Debe agregar un rango de fechas!");
     return;
   }
-   if($("#usuarios").val().length == 0){
-    Swal.fire("¡Debe agregar un usuario!");
+if($("#usuarios").val() == null){
+      Swal.fire("¡Debe agregar un usuario!");
     return;
   }
   var seman_ano = $("#semanausuario").val().split("-W");
@@ -643,7 +630,7 @@ $('#crearhorario').on('click', function() {
 
 function validahorariouser(semana, ano){
   var iduser = $("#usuarios").val();
-  var nombre = [];
+  var nombre = $('select[id="usuarios"] option:selected').text();
 
   axios.post(principalUrl + "horarios/semana/"+ano+"/"+semana+"/"+iduser)
   .then((respuesta) => {
@@ -651,13 +638,9 @@ function validahorariouser(semana, ano){
     if(respuesta.data.horasuser.length == 0 ){
       getISOWeek(semana,ano)
     }else{
-      respuesta.data.horasuser.forEach(function (element ,i) { 
-        if(nombre.indexOf(element.name) === -1){
-          nombre.push(element.name);
-        }
-      })
+
       Swal.fire("¡El agente "+nombre+" ya tiene horario en la semana "+semana+" del año "+ano+"!");
-      //$("#usuarios").val('');
+      $("#usuarios").val('');
     }
   })
   .catch((error) => {
@@ -770,7 +753,7 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
   });
   horarios.append("usuarios", $("#usuarios").val());
 
-  var nombre = $('.multiselect')[0].title;
+  var nombre = $('select[id="usuarios"] option:selected').text();
 
   Swal.fire({
     title: "HORARIOS",
@@ -788,7 +771,7 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
       axios.post(principalUrl + "horarios/guarda",horarios)
       .then((respuesta) => {
 
-        select('#usuarios').multiselect('enable');
+       // select('#usuarios').multiselect('enable');
         $('#guardarhorariousuario').attr('disabled', false);
 
         Swal.fire({
