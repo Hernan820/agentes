@@ -6,12 +6,14 @@ let formhorario4 = document.getElementById("formdia4");
 let formhorario5 = document.getElementById("formdia5");
 let formhorario6 = document.getElementById("formdia6");
 let formhorario7 = document.getElementById("formdia7");
-let formedita = document.getElementById("edithorario");
+let formedita = document.getElementById("edithorario");   
 
 //controla el numero de intervalos
 const numf = 4;
 
 $(document).ready(function () {
+  select('#usuarios').selectpicker({ title:'Usuarios' });
+
   $('#tablahorarios').hide();
   $('#guardarhorariousuario').hide();
 
@@ -21,6 +23,16 @@ $(document).ready(function () {
   $("#semana").val(ano+"-W"+semana)  ;
 
   semanahorario(ano,semana);
+});
+
+const myChoices = new Array();
+select('#usuarios').on('changed.bs.select', function(e, clickedIndex, isSelected, previousValue) {
+  var selected = document.getElementById("usuarios").options[clickedIndex].value;
+  if (myChoices.indexOf(selected) == -1) {
+    myChoices.push(selected);
+  } else {
+    myChoices.splice(myChoices.indexOf(selected), 1);
+  }
 });
 
 function getISOWeek(w, y) {
@@ -573,11 +585,11 @@ $('#horariodeusuario').on('click', function() {
   var usuarioselect = [];
   axios.post(principalUrl + "horarios/agentes")
     .then((respuesta) => {
-      $("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
+     // select("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
       respuesta.data.forEach(function (element) {   
-      $("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
+        select("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
          })
-
+         select('.usuariosbonitos').selectpicker('refresh');
       $('#modal_cupo_horario').modal('show');
     })
     .catch((error) => {
@@ -629,18 +641,22 @@ if($("#usuarios").val() == null){
 });
 
 function validahorariouser(semana, ano){
-  var iduser = $("#usuarios").val();
-  var nombre = $('select[id="usuarios"] option:selected').text();
-
+  var iduser = $('#usuarios option:selected').toArray().map(item => item.value ).join();
+  var nombre =[];
+  //console.log(nombre);
   axios.post(principalUrl + "horarios/semana/"+ano+"/"+semana+"/"+iduser)
   .then((respuesta) => {
 
     if(respuesta.data.horasuser.length == 0 ){
       getISOWeek(semana,ano)
     }else{
-
+      respuesta.data.horasuser.forEach(function (element ,i) { 
+        if(nombre.indexOf(element.name) === -1){
+          nombre.push(element.name);
+        }
+      })
       Swal.fire("¡El agente "+nombre+" ya tiene horario en la semana "+semana+" del año "+ano+"!");
-      $("#usuarios").val('');
+      //$("#usuarios").val('');
     }
   })
   .catch((error) => {
@@ -751,9 +767,9 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
       horarios.append("total_horasdia"+numero, $("#total_horasdia"+numero).val());
 
   });
-  horarios.append("usuarios", $("#usuarios").val());
-
-  var nombre = $('select[id="usuarios"] option:selected').text();
+  horarios.append("usuarios", myChoices);
+ 
+  var nombre =  $('#usuarios option:selected').toArray().map(item => item.text ).join();
 
   Swal.fire({
     title: "HORARIOS",
