@@ -12,7 +12,7 @@ let formedita = document.getElementById("edithorario");
 const numf = 4;
 
 $(document).ready(function () {
-  select('#usuarios').selectpicker({ title:'Usuarios' });
+ // select('#usuarios').selectpicker({ title:'Usuarios' });
 
   $('#tablahorarios').hide();
   $('#guardarhorariousuario').hide();
@@ -39,7 +39,7 @@ function getISOWeek(w, y) {
   $('#usuarios').attr('disabled', true);
   $('#semanausuario').attr('readonly', true);
   $('#semanausuario').attr('disabled', true);
-  //select('#usuarios').multiselect('disable');
+  select('#usuarios').multiselect('disable');
 
   var simple = new Date(y, 0, 1 + (w - 1) * 7);
   var dow = simple.getDay();
@@ -588,18 +588,35 @@ $('#horariodeusuario').on('click', function() {
   var usuarioselect = [];
   axios.post(principalUrl + "horarios/agentes")
     .then((respuesta) => {
-     // select("#usuarios").append("<option selected='selected' disabled selected value=''>usuarios</option>" );
-      respuesta.data.forEach(function (element) {   
-        select("#usuarios").append("<option value="+element.id+">"+element.name+"</option>" );
-         })
-         select('.usuariosbonitos').selectpicker('refresh');
-      $('#modal_cupo_horario').modal('show');
+      respuesta.data.forEach(function (element) { 
+        usuarioselect.push(
+                {label: element.name, value: element.id},
+        );
+      })
+      select('#usuarios').multiselect('dataprovider', usuarioselect);
+
     })
     .catch((error) => {
         if (error.response) {
             console.log(error.response.data);
         }
     });
+
+    select('#usuarios').multiselect({
+      buttonClass: '<div class="form-control border rounded multiselect dropdown-toggle btn btn-default" />',
+      nonSelectedText: 'Seleccione Usuarios',
+      selectAllText:'Todos',
+      nSelectedText: 'seleccionados',
+      allSelectedText: 'Todos seleccionados',
+      enableCollapsibleOptGroups: true,
+      includeSelectAllOption: true,
+      //enableFiltering: true,
+      maxHeight: 450   ,
+     // enableFiltering:true,
+    }); 
+
+
+    $('#modal_cupo_horario').modal('show');
 
 });
 
@@ -770,7 +787,7 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
       horarios.append("total_horasdia"+numero, $("#total_horasdia"+numero).val());
 
   });
-  horarios.append("usuarios", myChoices);
+  horarios.append("usuarios", $("#usuarios").val());
  
   var nombre =  $('#usuarios option:selected').toArray().map(item => item.text ).join();
 
