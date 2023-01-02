@@ -36,7 +36,7 @@ class CupoController extends Controller
             $cupo->start= $date;
             $cupo->end= $date;
             $cupo->title="Día De Trabajo";
-            $cupo->vista=1;
+           // $cupo->vista=1;
             $cupo->save();  
         }
         return 1;

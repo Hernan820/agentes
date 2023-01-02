@@ -17,12 +17,11 @@ $(document).ready(function () {
   $('#tablahorarios').hide();
   $('#guardarhorariousuario').hide();
 
-  var semana = moment(moment().toDate(), "MM-DD-YYYY").isoWeek()
-  var ano = moment(moment().toDate(), "MM-DD-YYYY").format('YYYY')
+  var numerosemana = moment(moment().format()).format("GGGG-[W]WW");  
 
-  $("#semana").val(ano+"-W"+semana)  ;
+  $("#semana").val(numerosemana)  ;//"2023-W01"
 
-  semanahorario(ano,semana);
+  semanahorario(numerosemana.split("-W")[0],numerosemana.split("-W")[1]);
 });
 
 const myChoices = new Array();
@@ -244,7 +243,7 @@ $('#semana').on('change', function() {
    semanahorario(semana[0],semana[1]);  
 });
 
-function getWeekDaysByWeekNumber(weeknumber)
+function getWeekDaysByWeekNumber(weeknumber, ano)
 {   
   var dateformat = "dddd DD";
     $('#dias').empty();
@@ -254,25 +253,29 @@ function getWeekDaysByWeekNumber(weeknumber)
    var dia1 = '';
    var dia2 = '';
 
-    var date = moment().isoWeek(weeknumber||1).startOf("week"), weeklength=7, result=[];
     $("#dias").append('<th scope="col" style="background:#b6d7a8">#</th>');
     $("#dias").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
     $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">#</th>');
     $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">Usuarios</th>');
-    while(weeklength--)
-    { 
-      if(weeklength == 6){
-          dia1= date.format('dddd DD MMMM');
-      }
-      if(weeklength == 0){
-        dia2= date.format('dddd DD MMMM');
-      }       
-        result.push(date.format(dateformat));
-        date.add(1,"day")
-        $("#dias").append('<th scope="col" style="background:#b6d7a8">'+result[contador]+'</th>');
-        $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">'+result[contador]+'</th>');
-        contador++;
+    let d = moment(String(ano).padStart(4, '0') + 'W' + String(weeknumber).padStart(2,'0'));
+
+    for (var dates=[], i=0; i < 7; i++) {
+
+        if(i == 0){
+            dia1= d.format('dddd DD MMMM');
+        }
+        if(i == 6){
+          dia2= d.format('dddd DD MMMM');
+        } 
+
+
+      dates.push(d.format('dddd DD '));
+      d.add(1, 'day');
+      $("#dias").append('<th scope="col" style="background:#b6d7a8">'+dates[i]+'</th>');
+      $("#diasvenezuela").append('<th scope="col" style="background:#b6d7a8">'+dates[i]+'</th>');
     }
+
+
     $("#dias").append('<th scope="col" style="background:#b6d7a8">Total de horas</th>');
     $("#dias").append('<th scope="col" style="background:#b6d7a8"></th>');
 
@@ -449,7 +452,7 @@ function editahorario(e){
 
 function semanahorario(ano,semana){
 
-  getWeekDaysByWeekNumber(semana);
+  getWeekDaysByWeekNumber(semana,ano);
   $('#filausuario').empty();
   $('#filausuariovenezuela').empty();
 
