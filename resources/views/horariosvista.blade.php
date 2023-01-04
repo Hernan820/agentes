@@ -292,7 +292,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff1">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff1">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -429,7 +429,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff2">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff2">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -566,7 +566,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff3">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff3">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -702,7 +702,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff4">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff4">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -838,7 +838,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff5">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff5">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -974,7 +974,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff6">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff6">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -1110,7 +1110,7 @@ var select = jQuery.noConflict();
                                             style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                                             <input class="form-check-input offdia" for="" type="checkbox" value="1"
                                                 id="diaoff7">
-                                            <label class="form-check-label" for="">
+                                            <label class="form-check-label" for="diaoff7">
                                                 DIA OFF
                                             </label>
                                         </div>
@@ -1254,7 +1254,7 @@ var select = jQuery.noConflict();
                     <div class="form-check col-md-3"
                         style="padding-left: 7.25rem  !important; color: black !important;   background: #33ECFF  !important;">
                         <input class="form-check-input offdia" type="checkbox" value="1" id="diaoffedicion">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <label class="form-check-label" for="diaoffedicion">
                             DIA OFF
                         </label>
                     </div>

@@ -614,10 +614,7 @@ $('#horariodeusuario').on('click', function() {
       maxHeight: 450   ,
      // enableFiltering:true,
     }); 
-
-
     $('#modal_cupo_horario').modal('show');
-
 });
 
 
@@ -790,7 +787,7 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
   horarios.append("usuarios", $("#usuarios").val());
  
   var nombre =  $('#usuarios option:selected').toArray().map(item => item.text ).join();
-
+  var semanaeditando = $('#semanausuario').val();
   Swal.fire({
     title: "HORARIOS",
     text: "¿Estas seguro de guardar los horarios de "+nombre+" ?",
@@ -818,7 +815,10 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
           timer: 1000
       });
         $('#modal_cupo_horario').modal('hide');
-        location.reload();
+
+        $("#semana").val(semanaeditando)  ;//"2023-W01"
+        semanahorario(semanaeditando.split("-W")[0],semanaeditando.split("-W")[1]);
+        //location.reload();
       })
       .catch((error) => {
           if (error.response) {
