@@ -110,9 +110,40 @@ class RegistrohoariosController extends Controller
      * @param  \App\Models\registrohoarios  $registrohoarios
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, registrohoarios $registrohoarios)
+    public function usuariosemana($ano,$semana)
     {
-        //
+        $week = $semana;
+        $year = $ano;
+    
+        $timestamp = mktime( 0, 0, 0, 1, 1,  $year ) + ( $week * 7 * 24 * 60 * 60 );
+        $timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
+        $date_for_monday = date( 'Y-m-d', $timestamp_for_monday );
+    
+    
+    
+        $diaInicio="Monday";
+        $diaFin="Sunday";
+        $hoy = $date_for_monday;
+    
+        $strFecha = strtotime($hoy);
+    
+        $fechaInicio = date('Y-m-d',strtotime('last '.$diaInicio,$strFecha));
+        $fechaFin = date('Y-m-d',strtotime('next '.$diaFin,$strFecha));
+    
+        if(date("l",$strFecha)==$diaInicio){
+            $fechaInicio= date("Y-m-d",$strFecha);
+        }
+        if(date("l",$strFecha)==$diaFin){
+            $fechaFin= date("Y-m-d",$strFecha);
+        }
+
+        $sql = "SELECT users.* FROM users
+        INNER JOIN model_has_roles on model_has_roles.model_id = users.id
+        INNER JOIN roles on roles.id = model_has_roles.role_id
+        WHERE NOT EXISTS (SELECT NULL FROM registrohoarios WHERE registrohoarios.id_usuario = users.id AND registrohoarios.fecha_horario BETWEEN '$fechaInicio' AND '$fechaFin' AND registrohoarios.estado_horario = 1 ) AND roles.id =2 AND users.estado_user = 1;";
+
+        $usuarios = DB::select($sql);
+        return $usuarios;
     }
 
     /**
@@ -151,20 +182,12 @@ class RegistrohoariosController extends Controller
      */
 
      function semana($ano,$semana_no,$id){
-/*
-        $datos = explode("-W", $semana);
-        $año = $datos[0];
-        $semana_no =$datos[1];
-    */
-
     $week = $semana_no;
     $year = $ano;
 
     $timestamp = mktime( 0, 0, 0, 1, 1,  $year ) + ( $week * 7 * 24 * 60 * 60 );
     $timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
     $date_for_monday = date( 'Y-m-d', $timestamp_for_monday );
-
-
 
     $diaInicio="Monday";
     $diaFin="Sunday";

@@ -144,6 +144,8 @@ Route::post('horario/actualizar', [App\Http\Controllers\RegistroController::clas
 
 Route::post('horariovalida/usuario/{fecha}', [App\Http\Controllers\RegistrohoariosController::class, 'horasdefecha']);
 
+Route::post('horarios/agentessemana/{ano}/{semana}', [App\Http\Controllers\RegistrohoariosController::class, 'usuariosemana']);
+
 });
 
 

@@ -12,26 +12,35 @@ let formedita = document.getElementById("edithorario");
 const numf = 4;
 
 $(document).ready(function () {
- // select('#usuarios').selectpicker({ title:'Usuarios' });
 
   $('#tablahorarios').hide();
   $('#guardarhorariousuario').hide();
 
   var numerosemana = moment(moment().format()).format("GGGG-[W]WW");  
-
   $("#semana").val(numerosemana)  ;//"2023-W01"
-
   semanahorario(numerosemana.split("-W")[0],numerosemana.split("-W")[1]);
 });
 
-const myChoices = new Array();
-select('#usuarios').on('changed.bs.select', function(e, clickedIndex, isSelected, previousValue) {
-  var selected = document.getElementById("usuarios").options[clickedIndex].value;
-  if (myChoices.indexOf(selected) == -1) {
-    myChoices.push(selected);
-  } else {
-    myChoices.splice(myChoices.indexOf(selected), 1);
-  }
+$('#semanausuario').on('change', function() {
+  $('#usuarios').empty();
+  var usuariosemana = $(this).val().split("-W");
+  const usuarioselect = [];
+  axios.post(principalUrl + "horarios/agentessemana/"+usuariosemana[0]+"/"+usuariosemana[1])
+  .then((respuesta) => {
+    respuesta.data.forEach(function (element) { 
+      usuarioselect.push(
+              {label: element.name, value: element.id},
+      );
+    })
+    select('#usuarios').multiselect('dataprovider', usuarioselect);
+
+  })
+  .catch((error) => {
+      if (error.response) {
+          console.log(error.response.data);
+      }
+    });
+  
 });
 
 function getISOWeek(w, y) {
@@ -582,28 +591,12 @@ function semanahorario(ano,semana){
 $('#horariodeusuario').on('click', function() {
   $('#guardarhorariousuario').hide();
 
-  $('#usuarios').empty();
+  //$('#usuarios').empty();
   $("#semanausuario").val("");
   limpiamodal();
-  var usuarioselect = [];
-  axios.post(principalUrl + "horarios/agentes")
-    .then((respuesta) => {
-      respuesta.data.forEach(function (element) { 
-        usuarioselect.push(
-                {label: element.name, value: element.id},
-        );
-      })
-      select('#usuarios').multiselect('dataprovider', usuarioselect);
-
-    })
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data);
-        }
-    });
 
     select('#usuarios').multiselect({
-      buttonClass: '<div class="form-control border rounded multiselect dropdown-toggle btn btn-default" />',
+      buttonClass: '<div class="form-control col-12 text-dark border rounded multiselect dropdown-toggle btn btn-default" />',
       nonSelectedText: 'Seleccione Usuarios',
       selectAllText:'Todos',
       nSelectedText: 'seleccionados',
@@ -614,7 +607,13 @@ $('#horariodeusuario').on('click', function() {
       maxHeight: 450   ,
      // enableFiltering:true,
     }); 
+    select('#usuarios').multiselect('enable');
+    usuarioselect=[{label:'no hay usuarios', value:'',disabled: true}]; 
+    select('#usuarios').multiselect('dataprovider', usuarioselect);
+
+
     $('#modal_cupo_horario').modal('show');
+    
 });
 
 
@@ -648,7 +647,7 @@ $('#crearhorario').on('click', function() {
     Swal.fire("¡Debe agregar un rango de fechas!");
     return;
   }
-if($("#usuarios").val() == null){
+if($("#usuarios").val().length == 0){
       Swal.fire("¡Debe agregar un usuario!");
     return;
   }
