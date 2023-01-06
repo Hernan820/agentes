@@ -78,7 +78,7 @@ function getISOWeek(w, y) {
     fechitas.forEach((dia,i) => { 
       var numero = i+1;
 
-      $("#"+arraydias[i]).html(moment(dia.split(',')[0],'DD/MM/YYYY').format('dddd DD'));
+      $("#"+arraydias[i]).html(moment(dia.split(',')[0],'DD/MM/YYYY').format('dddd ')+'<span id="idhoras'+numero+'"> (00h)</span>');
 
       $("#titulo"+numero).html(moment(dia.split(',')[0],'DD/MM/YYYY').format('dddd'));
   
@@ -215,8 +215,9 @@ horas.each(function(i) {
   $("#"+muestrahoras).val(arr[0]+" Horas "+arr[1]+" Minutos")
 
   $("#"+htotal).val(formateada)
-
-
+  var numeroid =id.slice(-1);
+  $("#idhoras"+id.slice(-1)).text(' ('+arr[0]+' h)')
+  
 }
 
 function btonagrega(tablaid,bton){
@@ -457,6 +458,31 @@ function editahorario(e){
 
 }
 
+function sumahorasemana(){
+
+var array =[1,2,3,4,5,6,7];
+$('#totalhorassemana').val('');
+//const arrayOfTimes = ["02:24", "10:30", "20:00", "01:17", "00:45"] //25 hours and 56 minutes in total
+const arrayOfTimes = [] ;
+
+array.forEach(function (element ,i) { 
+
+  if( $('#total_horasdia'+element).val() != ""){
+    arrayOfTimes.push($('#total_horasdia'+element).val());
+  }
+})
+
+const sum = arrayOfTimes.reduce(
+  (time1, time2) => time1.add(moment.duration(time2)),
+  moment.duration()
+);
+
+var horasemana = sum.days() * 24 + sum.hours();
+var minsemana = sum.minutes();
+
+$('#totalhorassemana').val(horasemana+' Horas con '+minsemana+" minutos");
+}
+
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
 function semanahorario(ano,semana){
@@ -590,9 +616,9 @@ function semanahorario(ano,semana){
 
 $('#horariodeusuario').on('click', function() {
   $('#guardarhorariousuario').hide();
-
-  //$('#usuarios').empty();
+  $("#totalhorassemana").val("");
   $("#semanausuario").val("");
+
   limpiamodal();
 
     select('#usuarios').multiselect({
@@ -875,6 +901,7 @@ $('.tablehoras ').on('change',function() {
   var hfinales = $("form input[name=horas_finales_dia"+numero+"]").prop("id");
   var totalh = $("form input[name=total_horasdia"+numero+"]").prop("id");
   hora('#tabladia'+numero,totalhmuestra,hiniciales,hfinales,totalh);
+  sumahorasemana();
   }
 });
 

@@ -137,8 +137,17 @@ var select = jQuery.noConflict();
                         </div>
                     </div>
 
+                    <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Total horas de la semana</div>
+                                        </div>
+                                        <input type="text" class="form-control" id="totalhorassemana" placeholder="" disabled
+                                            name="totalhorassemana">
+                                    </div>
+                                </div>
 
-                    <div id="tablahorarios">
+                    <div id="tablahorarios" class="border border-secondary rounded">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="lunes" data-toggle="tab" href="#home" role="tab"
@@ -176,12 +185,11 @@ var select = jQuery.noConflict();
 
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia1" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia1" placeholder="" disabled
                                             name="totalhorasdia1">
                                     </div>
                                 </div>
@@ -313,12 +321,11 @@ var select = jQuery.noConflict();
 
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia2" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia2" placeholder="" disabled
                                             name="totalhorasdia2">
                                     </div>
                                 </div>
@@ -450,12 +457,11 @@ var select = jQuery.noConflict();
 
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia3" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia3" placeholder="" disabled
                                             name="totalhorasdia3">
                                     </div>
                                 </div>
@@ -586,12 +592,11 @@ var select = jQuery.noConflict();
                             <div class="tab-pane fade" id="formjueves" role="tabpanel" aria-labelledby="jueves">
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia4" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia4" placeholder="" disabled
                                             name="totalhorasdia4">
                                     </div>
                                 </div>
@@ -722,12 +727,11 @@ var select = jQuery.noConflict();
                             <div class="tab-pane fade" id="fomrviernes" role="tabpanel" aria-labelledby="viernes">
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia5" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia5" placeholder="" disabled
                                             name="totalhorasdia5">
                                     </div>
                                 </div>
@@ -858,12 +862,11 @@ var select = jQuery.noConflict();
                             <div class="tab-pane fade" id="formsabado" role="tabpanel" aria-labelledby="sabado">
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia6" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia6" placeholder="" disabled
                                             name="totalhorasdia6">
                                     </div>
                                 </div>
@@ -994,12 +997,11 @@ var select = jQuery.noConflict();
                             <div class="tab-pane fade" id="formdomingo" role="tabpanel" aria-labelledby="domingo">
                                 <br>
                                 <div class="form-group">
-                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Total de horas</div>
                                         </div>
-                                        <input type="text" class="form-control col-4" id="totalhorasdia7" placeholder=""
+                                        <input type="text" class="form-control col-4" id="totalhorasdia7" placeholder="" disabled
                                             name="totalhorasdia7">
                                     </div>
                                 </div>
