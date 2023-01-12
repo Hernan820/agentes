@@ -6,6 +6,8 @@ use App\Models\registrohoarios;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
+use App\Models\registro;
+use App\Models\cupo;
 
 class RegistrohoariosController extends Controller
 {
@@ -61,6 +63,22 @@ class RegistrohoariosController extends Controller
                 $horariousuario->estado_horario = 1 ;
                 $horariousuario->id_usuario = $idusuario ;
                 $horariousuario->save();
+
+                if($request-> $horasini == 0 &&  $request->$horasfin == 0){
+                    $idcupo = cupo::where('cupos.start','=',$request-> $fecha )
+                           ->where('cupos.estado_cupo','=',NULL )->get();
+
+                    $registrousuario = new registro;
+                    $registrousuario->horasiniciales= $request-> $horasini; 
+                    $registrousuario->horasfinales= $request->$horasfin; 
+                    $registrousuario->total_horas= $request->$totalh;
+                    $registrousuario->total_citas= 0; 
+                    $registrousuario->comentarios= 'Este dia es OFF';
+                    $registrousuario->id_usuario= $idusuario;
+                    $registrousuario->id_cupo =  $idcupo[0]->id;
+                    $registrousuario->save(); 
+                }
+
                }
              }
             }
@@ -265,4 +283,77 @@ class RegistrohoariosController extends Controller
 
         return response()->json($usuarios);
      }
+
+
+     public function update(Request $request){
+
+        if ($request->edicion == 'edicion') {
+
+            $horariousuario = registrohoarios::find($request->id_registro);
+
+            $idcupo = cupo::where('cupos.start','=',$horariousuario->fecha_horario )
+            ->where('cupos.estado_cupo','=',NULL )->get();
+
+            $countregistro = registro::where('registros.id_cupo','=',$idcupo[0]->id)
+                               ->where('registros.id_usuario','=',$horariousuario->id_usuario)
+                               ->where('registros.estado_registro','=',null)->count();
+
+            $usuarioregistro=registro::where('registros.id_cupo','=',$idcupo[0]->id)
+                               ->where('registros.id_usuario','=',$horariousuario->id_usuario)
+                               ->where('registros.estado_registro','=',null)->get();
+
+            if($horariousuario->hiniciales == 0 && $horariousuario->hfinales == 0 && $request->hiniciales != 0 && $request->hfinales != 0  ){
+                    
+                if($idcupo[0]->start > date('Y-m-d').' 00:00:00'){
+                    if($countregistro > 0 ){
+                        $registrousuario =registro::find($usuarioregistro[0]->id);
+                        $registrousuario->estado_registro= 0; 
+                        $registrousuario->save(); 
+                    }
+                }
+
+            }
+
+
+            $horariousuario->horasiniciales =$request->hiniciales;
+            $horariousuario->horasfinales =$request->hfinales;
+            $horariousuario->total_horas = $request->TotaDeHoras ;
+            $horariousuario->save();
+
+
+            if($request->hiniciales == 0 && $request->hfinales == 0 ){
+                if($idcupo[0]->start > date('Y-m-d').' 00:00:00'){
+
+                if($countregistro === 0){
+
+                $registrousuario = new registro;
+                $registrousuario->horasiniciales= $request->hiniciales; 
+                $registrousuario->horasfinales= $request->hfinales; 
+                $registrousuario->total_horas= $request->TotaDeHoras;
+                $registrousuario->total_citas= 0; 
+                $registrousuario->comentarios= 'Este dia es OFF';
+                $registrousuario->id_usuario= $horariousuario->id_usuario ;
+                $registrousuario->id_cupo =  $idcupo[0]->id;
+                $registrousuario->save(); 
+
+                }else{
+
+                        $registrousuario =registro::find($usuarioregistro[0]->id);
+                        $registrousuario->horasiniciales= $request->hiniciales; 
+                        $registrousuario->horasfinales= $request->hfinales; 
+                        $registrousuario->total_horas= $request->TotaDeHoras;
+                        $registrousuario->total_citas= 0; 
+                        $registrousuario->comentarios= 'Este dia es OFF';
+                        $registrousuario->id_usuario= $horariousuario->id_usuario ;
+                        $registrousuario->id_cupo =  $idcupo[0]->id;
+                        $registrousuario->save(); 
+        
+                }
+            }
+            }
+
+            return 1 ;
+        }
+        
+    }
 }

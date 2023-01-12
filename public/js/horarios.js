@@ -376,8 +376,8 @@ function editahorario(e){
         $("#total_de_horas").val("00 Horas 00 Minutos");
         $("#comentarios").val("Este dia es OFF");
         $("#TotaDeHoras").val("00:00:00");
-        $("#horasfinales").val("0");
-        $("#horasiniciales").val("0");
+        $("#hfinales").val("0");
+        $("#hiniciales").val("0");
         $('.horas').val('');
         $("#id_registro").val(respuesta.data[0].id);
         $("#fechaedicion").text(moment(respuesta.data[0].fecha_horario.split(" ")[0]).format('dddd DD [de] MMMM [del] YYYY'));
@@ -388,6 +388,8 @@ function editahorario(e){
       $('.agregaedi').val('agregar intervalo');
       $("#diaoffedicion").prop("checked", false);
       $('.entrada').attr('readonly', false)
+      $('.entrada').attr('disabled', false)
+
       $('#btnintervaloedicion').attr('disabled', false);
 
     horasiniciales.forEach(function (element, i) {
@@ -739,6 +741,9 @@ $('.offdia').on('click', function() {
                 $("#hfinales").val("0");
                 $("#hiniciales").val("0");
                 $('.horas').val('');
+              }else{
+                $('#diaoffedicion').prop("checked", false);
+
               }
           });
           }else if(!$('#'+this.id).is(':checked')){
@@ -810,7 +815,6 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
 
   });
   horarios.append("usuarios", $("#usuarios").val());
- 
   var nombre =  $('#usuarios option:selected').toArray().map(item => item.text ).join();
   var semanaeditando = $('#semanausuario').val();
   Swal.fire({
@@ -828,7 +832,6 @@ document.getElementById("guardarhorariousuario").addEventListener("click", funct
 
       axios.post(principalUrl + "horarios/guarda",horarios)
       .then((respuesta) => {
-
        // select('#usuarios').multiselect('enable');
         $('#guardarhorariousuario').attr('disabled', false);
 
