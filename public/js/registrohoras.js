@@ -1,5 +1,5 @@
 //controla el numero de intervalos
-const numSus = 4;
+const numSus = 14;
 let formregistro = document.getElementById("registroHorario");
 
 $(document).ready(function () {
