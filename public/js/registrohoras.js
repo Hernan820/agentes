@@ -75,6 +75,10 @@ document.getElementById("guardar_registro").addEventListener("click", function (
             }
         }else{$('#motivoscoincidencia').hide();};
     }
+    /*else{
+        Swal.fire("¡Ponte en contacto con el administrador,   tu horario de esta semana no ha sido asignado");
+        return; 
+    }*/
 
 
     $('#guardar_registro').attr('disabled', true);
