@@ -189,7 +189,7 @@
                     @else
                     <a class="image" href="{{ url('/home')}}">
                         @endguest
-                        <img class="image" style=" width:90px ;" src="{{ asset('images/icon/logo.png') }}"
+                        <img class="image" style=" width:80px ;" src="{{ asset('images/icon/logo.png') }}"
                             alt="Cool Admin" />
                     </a>
             </div> <button class="navbar-toggler" type="button" data-toggle="collapse"

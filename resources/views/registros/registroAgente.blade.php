@@ -43,15 +43,15 @@ table.display {
 @endif
 
 
-<input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo"></input>
-<input type="hidden" value="{{$cupo->vista}}" id="vista" name="id_cupo"></input>
-<input type="hidden" value="{{$cupo->start}}" id="fechas" name="fechas"></input>
+<input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo">
+<input type="hidden" value="{{$cupo->vista}}" id="vista" name="id_cupo">
+<input type="hidden" value="{{$cupo->start}}" id="fechas" name="fechas">
 <input type="hidden" name="usuario_log" id="usuario_log" value="{{ auth()->user()->id }}" />
 
 <!-- Input de guardan horario asigando a usuario -->
 
-<input type="hidden" value="" id="hiniciales" name="hiniciales"></input>
-<input type="hidden" value="" id="hfinales" name="hfinales"></input>
+<input type="hidden" value="" id="hiniciales" name="hiniciales">
+<input type="hidden" value="" id="hfinales" name="hfinales">
 
 <div class="col-md-12" style="background-color: ">
     <div class="jumbotron col-md-12 col d-flex justify-content-between ">
@@ -60,7 +60,7 @@ table.display {
         <input class="btn btn-success float-right " id="registro" type="submit" value="Crear registro">
     </div>
 
-    <idv class="col-md-12 table-responsive">
+    <div class="col-md-12 table-responsive">
         <table id="registro_horas" class="table table-striped table-bordered dt-responsive nowrap datatable"
             class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
             <thead>
@@ -229,11 +229,11 @@ table.display {
                         </label>
                     </div>
 
-                    <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales"></input>
-                    <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales"></input>
-                    <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras"></input>
-                    <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro"></input>
-                    <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id"></input>
+                    <input type="hidden" class="oculto" value="" id="horasiniciales" name="horasiniciales">
+                    <input type="hidden" class="oculto" value="" id="horasfinales" name="horasfinales">
+                    <input type="hidden" class="oculto" value="" id="TotaDeHoras" name="TotaDeHoras">
+                    <input type="hidden" class="oculto" value="" id="id_registro" name="id_registro">
+                    <input type="hidden" class="" value="{{$cupo->id}}" id="cupo_id" name="cupo_id">
 
                 </form>
             </div>

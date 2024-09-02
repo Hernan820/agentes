@@ -199,16 +199,16 @@ $('#intervalo').attr('disabled', true);
 
                     if(rol == "administrador"){
                         return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                            '<button type="button" class="btn btn-success col-md-4" id="opcionesregistro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                         );
                     }else if(rol == "agente"){
                         if (id_user == usuario) {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                                '<button type="button" class="btn btn-success col-md-4" id="opcionesregistro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                                 );
                         } else {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button>'
+                                '<button type="button" class="btn btn-success col-md-4" id="opcionesregistro" onclick="editar('+data+')">Editar</button>'
                             );
                         }
                     }
@@ -263,12 +263,12 @@ $('#intervalo').attr('disabled', true);
 
                     if(rol == "administrador"){
                         return (
-                            '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                            '<button type="button" class="btn btn-success col-md-4" id="opcionesregis" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                         );
                     }else if(rol == "agente"){
                         if (id_user == usuario) {
                             return (
-                                '<button type="button" class="btn btn-success col-md-4" id="guardar_registro" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
+                                '<button type="button" class="btn btn-success col-md-4" id="opcionesregis" onclick="editar('+data+')">Editar</button> <button type="button" class="btn btn-success col-md-4" id="eliminar_regitro" onclick="eliminar('+data+')">Eliminar</button>'
                                 );
                         } else {
                             return ("");
