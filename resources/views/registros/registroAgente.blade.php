@@ -224,7 +224,7 @@ table.display {
 
                     <div class="form-check col-md-3" style="padding-left:7.25rem !important; color:black !important;background: #33ECFF !important;">
                         <input class="form-check-input" type="checkbox" value="1" id="diaoff">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <label class="form-check-label" for="diaoff">
                             DIA OFF
                         </label>
                     </div>

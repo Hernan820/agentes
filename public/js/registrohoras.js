@@ -282,10 +282,6 @@ $('#intervalo').attr('disabled', true);
       
     });
    }
-
-
-
- 
 });
 
 function editar(id){
@@ -420,12 +416,6 @@ $(document).on('click', '.elimina',function() {
 
 function hora(){
 
-   
-      $('body').on('click', '.minutitos', function(){
-      //  $(this).mask("(999) 999-9999");
-      });
-
-
     $("#horasiniciales").val("");
     $("#horasfinales").val("");
     var sumatodashoras = moment.duration(0);
@@ -437,8 +427,6 @@ function hora(){
     var horas2 = $("form select[name='horaini2[]']");
     var minutos2 = $("form input[name='minutosini2[]']");
     var horarios2 = $("form select[name='horarioini2[]']");
-
-
 
     horas.each(function(i) {
 
@@ -471,83 +459,89 @@ function hora(){
         }
        
         var horaprocesada = moment.duration(moment(hora2+":"+minuto2+":00 "+horario2, "HH:mm:ss a").diff(moment(hora+":"+minuto+":00 "+horario, "HH:mm:ss a")));
-      var totalrango = moment(horaprocesada.hours()+":"+horaprocesada.minutes()+":00","H:mm:ss").format("HH:mm:ss");
+        var totalrango = moment(horaprocesada.hours()+":"+horaprocesada.minutes()+":00","H:mm:ss").format("HH:mm:ss");
+        var horasiniciales =   moment(hora+":"+minuto+":00 "+horario,"h:mm:ss A").format("HH:mm:ss");
+        var horasfinales =   moment(hora2+":"+minuto2+":00 "+horario2,"h:mm:ss A").format("HH:mm:ss");
 
-     var horasiniciales =   moment(hora+":"+minuto+":00 "+horario,"h:mm:ss A").format("HH:mm:ss");
-
-     var horasfinales =   moment(hora2+":"+minuto2+":00 "+horario2,"h:mm:ss A").format("HH:mm:ss");
-
-     if(hora2 != null  && horario2 != null){
-        if(horasfinales <= horasiniciales){
-             horas2.eq(i).val("") ;
-            minutos2.eq(i).val("") ;
-            horarios2.eq(i).val("") ;
-            Swal.fire({
-                position: "top-end",
-                icon: "info",
-                title: "La hora final no puede ser menor o igual a la hora inicial!",
-                showConfirmButton: false,
-            }); 
-            return;
-        }
-     }
-
-     if(hora2 != null  && horario2 != null){
-        sumatodashoras.add(totalrango);
-
-        if($("#horasiniciales").val() == ""){
-            $("#horasiniciales").val(horasiniciales);
-        }else {
-            $("#horasiniciales").val(function(i, currVal) {
-                return currVal +","+ horasiniciales;
-             });
-        }
-
-        if($("#horasfinales").val() == ""){
-            $("#horasfinales").val(horasfinales)
-        }else{
-            $("#horasfinales").val(function(i, currVal) {
-                return currVal +"," +horasfinales;
-             });
-        }
-
-     }
-     
-     if(i >= 1){
-
-        if( $(this).val() != null  && horario != null){
-            var horasfinales =   moment(horas2.eq(i-1).val()+":"+minutos2.eq(i-1).val()+":00 "+horarios2.eq(i-1).val(),"h:mm:ss A").format("HH:mm:ss");
-        
-            var horasiniciales =   moment(hora+":"+minuto+":00 "+horario,"h:mm:ss A").format("HH:mm:ss");
-    
-            if(horasiniciales <= horasfinales){
-                $(this).val("")  ;
+        if(i == 0 && hora != null && horario != null ){
+            if(horasiniciales < "06:00:00"){
+                horas.eq(i).val("") ;
                 minutos.eq(i).val("") ;
                 horarios.eq(i).val("") ;
                 Swal.fire({
-                    position: "top-end",
+                    position: "top-center",
                     icon: "info",
-                    title: "Este intervalo no puede tener horas menores al anterior!",
+                    title: "¡La hora inicial no puede ser menor a las 6 am!",
                     showConfirmButton: false,
                 }); 
+                return;
             }
         }
 
-     }
+        if(hora2 != null  && horario2 != null){
+           if(horasfinales <= horasiniciales){
+                horas2.eq(i).val("") ;
+                minutos2.eq(i).val("") ;
+                horarios2.eq(i).val("") ;
+                Swal.fire({
+                    position: "top-end",
+                    icon: "info",
+                    title: "La hora final no puede ser menor o igual a la hora inicial!",
+                    showConfirmButton: false,
+                }); 
+                return;
+            }
+        }
 
+        if(hora2 != null  && horario2 != null){
+            sumatodashoras.add(totalrango);
+
+            if($("#horasiniciales").val() == ""){
+                $("#horasiniciales").val(horasiniciales);
+            }else {
+                $("#horasiniciales").val(function(i, currVal) {
+                    return currVal +","+ horasiniciales;
+                });
+            }
+
+            if($("#horasfinales").val() == ""){
+                $("#horasfinales").val(horasfinales)
+            }else{
+                $("#horasfinales").val(function(i, currVal) {
+                    return currVal +"," +horasfinales;
+                });
+            }
+        }
+     
+        if(i >= 1){
+
+            if( $(this).val() != null  && horario != null){
+                var horasfinales =   moment(horas2.eq(i-1).val()+":"+minutos2.eq(i-1).val()+":00 "+horarios2.eq(i-1).val(),"h:mm:ss A").format("HH:mm:ss");
+            
+                var horasiniciales =   moment(hora+":"+minuto+":00 "+horario,"h:mm:ss A").format("HH:mm:ss");
+        
+                if(horasiniciales <= horasfinales){
+                    $(this).val("")  ;
+                    minutos.eq(i).val("") ;
+                    horarios.eq(i).val("") ;
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "info",
+                        title: "Este intervalo no puede tener horas menores al anterior!",
+                        showConfirmButton: false,
+                    }); 
+                }
+            }
+        }
+    });
       
-      })
+    formateada = moment.utc(sumatodashoras.asMilliseconds()).format("HH:mm:ss") 
+    var arr= formateada.split(":");
+     //console.log(arr);
+    $("#total_horas").val(arr[0]+" Horas "+arr[1]+" Minutos")
 
-      
-      formateada = moment.utc(sumatodashoras.asMilliseconds()).format("HH:mm:ss") 
-     var arr= formateada.split(":");
-      //console.log(arr);
-      $("#total_horas").val(arr[0]+" Horas "+arr[1]+" Minutos")
-
-      $("#TotaDeHoras").val(formateada)
-
-
-}
+    $("#TotaDeHoras").val(formateada)
+};
 
 
 $('tbody').on('change','tr.fila-fija',function() {
@@ -582,7 +576,6 @@ function validaciondatos() {
         }
     });
 
-    
     minutos.each(function(i) {
         if( $(this).val() > 59){
             $(this).val("")
@@ -591,8 +584,6 @@ function validaciondatos() {
         }
     });
     
-   
-
     horarios.each(function(i) {
         if( $(this).val() == null){
             Swal.fire("¡Debe completar el turno!");
@@ -663,9 +654,6 @@ function eliminar(id){
         }
     });
 }
-
-
-
 
 $('#diaoff').on('click', function() {
   
