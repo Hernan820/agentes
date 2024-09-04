@@ -192,7 +192,7 @@
                         <img class="image" style=" width:80px ;" src="{{ asset('images/icon/logo.png') }}"
                             alt="Cool Admin" />
                     </a>
-            </div> <button class="navbar-toggler" type="button" data-toggle="collapse"
+            </div> <button class="navbar-toggler border border-white" type="button" data-toggle="collapse"
                 data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
