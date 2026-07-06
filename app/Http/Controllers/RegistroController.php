@@ -92,6 +92,28 @@ class RegistroController extends Controller
         ->where("registros.id_cupo","=",$id)
         ->where("registros.estado_registro","=",null)
         ->get();
+
+        // $datos = \DB::table('users')
+        // ->leftJoin('registros', function ($join) use ($id) {
+        //     $join->on('users.id', '=', 'registros.id_usuario')
+        //         ->where('registros.id_cupo', '=', $id)
+        //         ->whereNull('registros.estado_registro')
+        //         ->where("users.estado_user","=",1);
+        // })
+        // ->select(
+        //     'users.*',
+        //     'registros.*',
+        //     'registros.id as registro_id',
+        //     'registros.id_cupo',
+        //     'registros.estado_registro',
+        //     \DB::raw('CASE 
+        //         WHEN registros.id IS NULL THEN "SIN_REGISTRO"
+        //         ELSE "CON_REGISTRO"
+        //     END as estado_en_cupo')
+        // )
+        //     ->where("users.estado_user","=",1)
+        // ->get();
+
         return response()->json($datos);
     }
 

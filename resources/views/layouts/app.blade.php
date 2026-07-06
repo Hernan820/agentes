@@ -14,12 +14,11 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Team Acevedo">
-    <meta name="keywords" content="au theme template">
+    <meta name="author" content="Contigo Mortgage">
+    <meta property="og:image" content="{{ asset('/iconos/logo.png') }}">
 
     <!-- Title Page-->
-    <title>Sistema de agentes</title>
+    <title>Mydailyhours - Contigo Mortgage</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset('css/font-face.css') }}" rel="stylesheet" media="all">
@@ -268,7 +267,7 @@
         <div class="page-content--bgf7">
 
             <!-- BREADCRUMB-->
-            <section class="au-breadcrumb2">
+            {{-- <section class="au-breadcrumb2">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -276,8 +275,9 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> --}}
             <!-- END BREADCRUMB-->
+            <br>
             @yield('content')
 
             <!-- COPYRIGHT-->
