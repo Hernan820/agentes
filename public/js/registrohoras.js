@@ -177,17 +177,30 @@ $('#intervalo').attr('disabled', true);
             dataSrc: "",
         },
         columns: [
+            { data: "id",width: "0.5px",
+                //contador de filas iniciando en 1 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
             { data: "name",width: "50px" },
             { data: "total_horas",width: "50px",    
             render: function (data, type, row) {
+
+                if(data == null){
+                    data = "Sin registro";
+                }
+
                 return (data+"  Horas");
             }, 
         },
             { data: "total_citas",width: "50px",
             render: function (data, type, row) {
 
+                if(data == null){
+                    data = "Sin registro";
+                }
                 return (data+"    Citas");
-
             }, },
             { data: "comentarios",width: "50px"},
             {
@@ -216,6 +229,17 @@ $('#intervalo').attr('disabled', true);
                 },
             },
         ], 
+
+        // agreg color a las filas que vengan con valor null principalmente en la columna de total horas
+
+        rowCallback: function (row, data) {
+            if (data.total_horas == null) {
+                $(row).css("background-color", "#f8d7da");
+            }
+
+        },
+
+
     });
 
    }else if( rol == "agente"){
@@ -232,6 +256,12 @@ $('#intervalo').attr('disabled', true);
             dataSrc: "",
         },
         columns: [
+            { data: "id",width: "0.5px",
+                //contador de filas iniciando en 1 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
             { data: "name",width: "50px",
             render: function (data, type, row) {
                 return (data);

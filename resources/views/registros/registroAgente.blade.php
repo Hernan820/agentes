@@ -65,6 +65,7 @@ table.display {
             class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
             <thead>
                 <tr>
+                    <th class="col-md-2">#</th>
                     <th class="col-md-2">Nombre</th>
                     <th class="col-md-2">Total Horas</th>
                     <th class="col-md-2">Total Citas</th>
