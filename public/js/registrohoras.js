@@ -174,7 +174,7 @@ $('#intervalo').attr('disabled', true);
         bInfo: false,
         ajax: {
             url: principalUrl + "registro/datos/" + idcupo,
-            dataSrc: "",
+            dataSrc: "datos",
         },
         columns: [
             { data: "id",width: "0.5px",
@@ -730,3 +730,75 @@ Swal.fire({
     }
 
 });
+
+function generarReporte(){
+
+    var id_Cupo = $("#id_cupo").val();
+
+    axios.get(principalUrl + "registro/datos/"+id_Cupo)
+        .then(function(response){
+
+            let usuarios = response.data.datos;
+
+            let conHoras = [];
+            let sinHoras = [];
+
+            usuarios.forEach(usuario => {
+                if(usuario.total_horas){
+                    conHoras.push(
+                        `${usuario.name}`
+                    );
+                }else{
+                    sinHoras.push(usuario.name);
+                }
+            });
+
+            let hoy = response.data.fecha_cupo_humanizada;
+            let reporte = "";
+
+            reporte += "📋 REPORTE DE HORAS\n";
+            reporte += "Fecha: " + hoy + "\n\n";
+            reporte += "✅ Con horas (" + conHoras.length + ")\n";
+
+            if(conHoras.length){
+                conHoras.forEach(nombre => {
+                    reporte += "- " + nombre + "\n";
+                });
+            }else{
+                reporte += "Ninguno\n";
+            }
+
+            reporte += "\n";
+            reporte += "❌ Sin horas (" + sinHoras.length + ")\n";
+
+            if(sinHoras.length){
+                sinHoras.forEach(nombre => {
+                    reporte += "- " + nombre + "\n";
+                });
+            }else{
+                reporte += "Ninguno\n";
+            }
+
+            $("#txtReporte").val(reporte);
+            $("#modalReporte").modal("show");
+
+        });
+}
+
+function copiarReporte(){
+
+    let texto = $("#txtReporte").val();
+
+    navigator.clipboard.writeText(texto)
+    .then(function(){
+
+        swal.fire({
+            title: "¡Copiado!",
+            text: "El reporte ha sido copiado al portapapeles.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false
+        });
+
+    });
+}

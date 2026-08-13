@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\registrohoarios;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Carbon\Carbon;
 
 class RegistroController extends Controller
 {
@@ -87,11 +88,16 @@ class RegistroController extends Controller
     }
 
     function todosregistros($id){
-        // $datos = registro::join("users","users.id","=","registros.id_usuario")
-        // ->select("users.*","registros.*")
-        // ->where("registros.id_cupo","=",$id)
-        // ->where("registros.estado_registro","=",null)
-        // ->get();
+
+        $start = DB::table('cupos')->where('id', $id)->value('start');
+
+        if ($start) {
+            $fecha_cupo_humanizada = ucfirst(
+                Carbon::parse($start)->locale('es')->isoFormat('dddd D [de] MMMM [del] YYYY')
+            );
+        } else {
+            $fecha_cupo_humanizada = "Fecha no encontrada";
+        }
 
         $datos = \DB::table('users')
         ->leftJoin('registros', function ($join) use ($id) {
@@ -102,6 +108,7 @@ class RegistroController extends Controller
         })
         ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->leftJoin('cupos', 'registros.id_cupo', '=', 'cupos.id')
         ->select(
             'users.id',
             'users.name',
@@ -112,6 +119,7 @@ class RegistroController extends Controller
             'registros.id as registro_id',
             'registros.id_cupo',
             'registros.estado_registro',
+            'cupos.start',
             \DB::raw('CASE 
                 WHEN registros.id IS NULL THEN "SIN_REGISTRO"
                 ELSE "CON_REGISTRO"
@@ -121,7 +129,10 @@ class RegistroController extends Controller
         ->where("roles.id","=",2)
         ->get();
 
-        return response()->json($datos);
+        return response()->json([
+            'datos' => $datos,
+            'fecha_cupo_humanizada' => $fecha_cupo_humanizada
+        ]);
     }
 
     /**
