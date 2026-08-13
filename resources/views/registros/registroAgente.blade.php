@@ -57,7 +57,33 @@ table.display {
     <div class="jumbotron col-md-12 col d-flex justify-content-between ">
         <h2><strong> Lista de control de Horas&nbsp; &nbsp; &nbsp; Fecha:
                 &nbsp;{{ \Carbon\Carbon::parse($cupo->start)->isoformat('dddd D \d\e MMMM \d\e\l Y')}}</strong> </h2>
-        <input class="btn btn-success float-right " id="registro" type="submit" value="Crear registro">
+
+        @if(Auth::user() && Auth::user()->hasRole('administrador'))
+            <input class="btn btn-success float-right" id="registro" type="submit" value="Crear registro">
+        @else
+            @php
+                $fechaCupo = \Carbon\Carbon::parse($cupo->start)->startOfDay();
+                $fechaActual = \Carbon\Carbon::today();
+                $esDiaActual = $fechaCupo->isSameDay($fechaActual);
+            @endphp
+
+            <div class="d-flex flex-column align-items-center">
+                <input class="btn btn-success float-right {{ $esDiaActual ? '' : 'disabled' }}"
+                       id="registro"
+                       type="submit"
+                       value="Crear registro"
+                       {{ $esDiaActual ? '' : 'disabled' }}
+                       title="Solo habilitado para el día actual">
+
+                @if(!$esDiaActual)
+                    <small class="text-danger mt-1 text-center fw-bold" style="max-width: 180px;">
+                        <b>
+                            Solo habilitado para la fecha de hoy.
+                        </b>
+                    </small>
+                @endif
+            </div>
+        @endif
     </div>
 
     <button class="btn btn-primary @if(!Auth::user() || !Auth::user()->hasRole('administrador')) d-none @endif" onclick="generarReporte()">
