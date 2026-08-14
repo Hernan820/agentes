@@ -106,30 +106,42 @@ table.display {
                 &nbsp;{{ \Carbon\Carbon::parse($cupo->start)->isoformat('dddd D \d\e MMMM \d\e\l Y')}}</strong> </h2>
 
         @if(Auth::user() && Auth::user()->hasRole('administrador'))
-            <input class="btn btn-success float-right" id="registro" type="submit" value="Crear registro">
+            <input class="btn btn-primary float-right" id="registro" type="submit" value="Crear registro">
         @else
             @php
                 $fechaCupo = \Carbon\Carbon::parse($cupo->start)->startOfDay();
                 $fechaActual = \Carbon\Carbon::today();
                 $esDiaActual = $fechaCupo->isSameDay($fechaActual);
+                $registroHabilitado = $esDiaActual || $cupo->permitir_registro;
             @endphp
 
-            <div class="d-flex flex-column align-items-center">
-                <input class="btn btn-success float-right {{ $esDiaActual ? '' : 'disabled' }} inpCrearRegistro"
-                       id="registro"
-                       type="submit"
-                       value="Crear registro"
-                       {{ $esDiaActual ? '' : 'disabled' }}
-                       title="Solo habilitado para el día actual">
+                <div class="d-flex flex-column align-items-center">
 
-                @if(!$esDiaActual)
-                    <small class="text-danger mt-1 text-center fw-bold inpCrearRegistro" style="max-width: 180px;">
-                        <b>
-                            Solo habilitado para la fecha de hoy.
-                        </b>
-                    </small>
-                @endif
-           </div>
+                    <input class="btn btn-primary float-right inpCrearRegistro"
+                        id="registro"
+                        type="submit"
+                        value="Crear registro"
+                        {{ $registroHabilitado ? '' : 'disabled' }}
+                        title="{{ $registroHabilitado ? 'Crear registro' : 'Solo habilitado para la fecha de hoy' }}">
+
+                    @if(!$esDiaActual && $cupo->permitir_registro)
+
+                        <small class="text-success mt-1 text-center font-weight-bold inpCrearRegistro"
+                            style="max-width: 220px;">
+                            <b>
+                                Habilitado por el administrador.
+                            </b>
+                        </small>
+
+                    @elseif(!$registroHabilitado)
+                        <small class="text-danger mt-1 text-center font-weight-bold inpCrearRegistro"
+                            style="max-width: 180px;">
+                            <b>
+                                Solo habilitado para la fecha de hoy.
+                            </b>
+                        </small>
+                    @endif
+                </div>
         @endif
     </div>
 
