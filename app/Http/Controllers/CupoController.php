@@ -101,9 +101,11 @@ class CupoController extends Controller
      * @param  \App\Models\cupo  $cupo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cupo $cupo)
+    public function update(Request $request)
     {
-        //
+        $cupoHabilitacion = cupo::find($request->cupo_id);
+        $cupoHabilitacion->permitir_registro = $request->registro_habilitado;
+        $cupoHabilitacion->save();
     }
 
     /**

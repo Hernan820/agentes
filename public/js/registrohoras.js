@@ -805,3 +805,29 @@ function copiarReporte(){
 
     });
 }
+
+$('#registro_habilitado').on('change', function () {
+
+    let habilitado = $(this).is(':checked') ? 1 : 0;
+    let cupoId = $("#id_cupo").val();
+
+    axios.post( principalUrl+'cupo/registro-habilitado', {
+        cupo_id: cupoId,
+        registro_habilitado: habilitado
+    })
+    .then(function (response) {
+
+        swal.fire({
+            title: "Actualizado!",
+            text: "Cupo actualizado correctamente!",
+            icon: "success",
+            timer: 1000,
+            showConfirmButton: false
+        });
+        location.reload();
+    })
+    .catch(function (error) {
+        console.error('Error al actualizar el estado:', error);
+        $('#registro_habilitado').prop('checked', !habilitado);
+    });
+});

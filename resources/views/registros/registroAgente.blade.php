@@ -91,7 +91,7 @@ table.display {
 
 
 <input type="hidden" value="{{$cupo->id}}" id="id_cupo" name="id_cupo">
-<input type="hidden" value="{{$cupo->vista}}" id="vista" name="id_cupo">
+<input type="hidden" value="{{$cupo->vista}}" id="vista" name="vista">
 <input type="hidden" value="{{$cupo->start}}" id="fechas" name="fechas">
 <input type="hidden" name="usuario_log" id="usuario_log" value="{{ auth()->user()->id }}" />
 
@@ -144,7 +144,7 @@ table.display {
                     <input type="checkbox"
                            id="registro_habilitado"
                            name="registro_habilitado"
-                           {{ $cupo->registro_habilitado ? 'checked' : '' }}>
+                           {{ $cupo->permitir_registro ? 'checked' : '' }}>
                     <span class="slider"></span>
                 </label>
                 <label for="registro_habilitado" class="mb-0">

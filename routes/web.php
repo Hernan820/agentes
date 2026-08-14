@@ -36,6 +36,9 @@ Route::post('agente/mostrarcupos', [App\Http\Controllers\CupoController::class, 
 
 Route::post('agente/eliminar/{id}', [App\Http\Controllers\CupoController::class, 'destroy']);
 
+Route::post('cupo/registro-habilitado', [App\Http\Controllers\CupoController::class, 'update']);
+
+
 //VISTA DE MANTENIMIENTO DE REGISTRO DE HORAS
 
 Route::get('usuarios', [App\Http\Controllers\HomeController::class, 'vistausuarios']);
