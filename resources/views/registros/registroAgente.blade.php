@@ -109,10 +109,23 @@ table.display {
             <input class="btn btn-primary float-right" id="registro" type="submit" value="Crear registro">
         @else
             @php
+
                 $fechaCupo = \Carbon\Carbon::parse($cupo->start)->startOfDay();
                 $fechaActual = \Carbon\Carbon::today();
+                $fechaManana = $fechaActual->copy()->addDay();
+
                 $esDiaActual = $fechaCupo->isSameDay($fechaActual);
-                $registroHabilitado = $esDiaActual || $cupo->permitir_registro;
+
+                $esDiaEspecialManana = $fechaCupo->isSameDay($fechaManana)
+                    && (
+                        $fechaCupo->day === 15 ||
+                        $fechaCupo->isLastOfMonth()
+                    );
+
+                $registroHabilitado = $esDiaActual
+                    || $esDiaEspecialManana
+                    || $cupo->permitir_registro;
+
             @endphp
 
                 <div class="d-flex flex-column align-items-center">
@@ -124,7 +137,16 @@ table.display {
                         {{ $registroHabilitado ? '' : 'disabled' }}
                         title="{{ $registroHabilitado ? 'Crear registro' : 'Solo habilitado para la fecha de hoy' }}">
 
-                    @if(!$esDiaActual && $cupo->permitir_registro)
+                    @if(!$esDiaActual && $esDiaEspecialManana)
+
+                        <small class="text-info mt-1 text-center font-weight-bold inpCrearRegistro"
+                            style="max-width: 220px;">
+                            <b>
+                                Habilitado desde un día antes.
+                            </b>
+                        </small>
+
+                    @elseif(!$esDiaActual && $cupo->permitir_registro)
 
                         <small class="text-success mt-1 text-center font-weight-bold inpCrearRegistro"
                             style="max-width: 220px;">
@@ -134,12 +156,14 @@ table.display {
                         </small>
 
                     @elseif(!$registroHabilitado)
+
                         <small class="text-danger mt-1 text-center font-weight-bold inpCrearRegistro"
                             style="max-width: 180px;">
                             <b>
-                                Solo habilitado para la fecha de hoy.
+                                No habilitado
                             </b>
                         </small>
+
                     @endif
                 </div>
         @endif
