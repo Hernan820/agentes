@@ -35,6 +35,53 @@ table.display {
     table-layout: fixed;
 }
 </style>
+<style>
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 19px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .2s;
+    border-radius: 19px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+    background-color: #28a745;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(15px);
+}
+</style>
+
 
 @if(@Auth::user()->hasRole('administrador'))
 <input type="hidden" name="rol" id="rol" value="administrador" />
@@ -54,7 +101,7 @@ table.display {
 <input type="hidden" value="" id="hfinales" name="hfinales">
 
 <div class="col-md-12" style="background-color: ">
-    <div class="jumbotron col-md-12 col d-flex justify-content-between ">
+    <div class="jumbotron col-md-12 col d-flex justify-content-between border border-secondary rounded shadow-sm my-3 py-2">
         <h2><strong> Lista de control de Horas&nbsp; &nbsp; &nbsp; Fecha:
                 &nbsp;{{ \Carbon\Carbon::parse($cupo->start)->isoformat('dddd D \d\e MMMM \d\e\l Y')}}</strong> </h2>
 
@@ -82,15 +129,41 @@ table.display {
                         </b>
                     </small>
                 @endif
+           </div>
+        @endif
+    </div>
+
+<div class="card border border-primary rounded mb-2 shadow-sm  @if(Auth::user() && !Auth::user()->hasRole('administrador'))  d-none @endif  ">
+    <div class="card-header bg-white py-2">
+        <strong>Controles del cupo</strong>
+    </div>
+    <div class="card-body py-2">
+        @if(Auth::user() && Auth::user()->hasRole('administrador'))
+            <div class="d-flex align-items-center">
+                <label class="switch mb-0 mr-2">
+                    <input type="checkbox"
+                           id="registro_habilitado"
+                           name="registro_habilitado"
+                           {{ $cupo->registro_habilitado ? 'checked' : '' }}>
+                    <span class="slider"></span>
+                </label>
+                <label for="registro_habilitado" class="mb-0">
+                    Habilitar registro
+                </label>
             </div>
         @endif
     </div>
 
-    <button class="btn btn-primary @if(!Auth::user() || !Auth::user()->hasRole('administrador')) d-none @endif" onclick="generarReporte()">
-        Generar reporte
-    </button>
+    <div class="card-footer bg-white py-2">
+        <button
+            class="btn btn-primary btn-sm"
+            onclick="generarReporte()">
+            Generar reporte
+        </button>
+    </div>
+</div>
 
-    <div class="col-md-12 table-responsive">
+    <div class="col-md-12 table-responsive mt-3">
         <table id="registro_horas" class="table table-striped table-bordered dt-responsive nowrap datatable"
             class="display" cellspacing="0" cellpadding="3" width="100%" style="background-color: ">
             <thead>
