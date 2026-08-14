@@ -23,7 +23,7 @@ $(document).ready(function () {
 function mostrarboton(){
     var rol = $("#rol").val();
     if(rol == "administrador"){
-        $("#registro").show();
+        $(".inpCrearRegistro").show();
     }else{
         var idu = $("#usuario_log").val();
         var cupo = $("#id_cupo").val();
@@ -31,9 +31,9 @@ function mostrarboton(){
         axios.get(principalUrl + "registro/conteoregistros/"+ idu+"/"+cupo)
         .then((respuesta) => {
             if(respuesta.data > 0){
-                $("#registro").hide();
+                $(".inpCrearRegistro").hide();
             }else{
-                $("#registro").show();
+                $(".inpCrearRegistro").show();
             }
         })
         .catch((error) => {
@@ -234,7 +234,10 @@ $('#intervalo').attr('disabled', true);
 
         rowCallback: function (row, data) {
             if (data.total_horas == null) {
-                $(row).css("background-color", "#f8d7da");
+                $(row).css({
+                    "background-color": "#f1e0e1"
+                    // ,"display": "none"
+                });
             }
 
         },

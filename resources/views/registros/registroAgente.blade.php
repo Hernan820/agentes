@@ -3,7 +3,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<script src="{{ asset('js/registrohoras.js') }}" defer></script>
+<script src="{{ asset('js/registrohoras.js?v=abcdefg123413') }}" defer></script>
 
 <script src="https://unpkg.com/imask"></script>
 
@@ -68,7 +68,7 @@ table.display {
             @endphp
 
             <div class="d-flex flex-column align-items-center">
-                <input class="btn btn-success float-right {{ $esDiaActual ? '' : 'disabled' }}"
+                <input class="btn btn-success float-right {{ $esDiaActual ? '' : 'disabled' }} inpCrearRegistro"
                        id="registro"
                        type="submit"
                        value="Crear registro"
@@ -76,7 +76,7 @@ table.display {
                        title="Solo habilitado para el día actual">
 
                 @if(!$esDiaActual)
-                    <small class="text-danger mt-1 text-center fw-bold" style="max-width: 180px;">
+                    <small class="text-danger mt-1 text-center fw-bold inpCrearRegistro" style="max-width: 180px;">
                         <b>
                             Solo habilitado para la fecha de hoy.
                         </b>
@@ -286,7 +286,7 @@ table.display {
                     Reporte de horas
                 </h5>
 
-                <button class="close" data-dismiss="modal">
+                <button class="close" data-bs-dismiss="modal">
                     <span>&times;</span>
                 </button>
             </div>
@@ -313,7 +313,7 @@ table.display {
 
                 <button
                     class="btn btn-secondary"
-                    data-dismiss="modal"
+                    data-bs-dismiss="modal"
                 >
                     Cerrar
                 </button>
