@@ -80,6 +80,209 @@ table.display {
 .switch input:checked + .slider:before {
     transform: translateX(15px);
 }
+
+.registro-agente .registro-header {
+    align-items: center;
+    gap: 1rem;
+}
+
+.registro-agente .registro-header h2 {
+    margin: 0;
+    font-size: clamp(1.15rem, 2.5vw, 1.75rem);
+}
+
+.registro-agente #registro_horas_wrapper {
+    width: 100%;
+}
+
+#modal_registro .modal-dialog {
+    width: calc(100vw - 3rem);
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#modal_registro .modal-content {
+    max-height: calc(100vh - 2rem);
+}
+
+#modal_registro .modal-body {
+    overflow-y: auto;
+}
+
+#modal_registro #tabla {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#modal_registro #tabla th:nth-child(1),
+#modal_registro #tabla td:nth-child(1),
+#modal_registro #tabla th:nth-child(2),
+#modal_registro #tabla td:nth-child(2) {
+    width: 42%;
+}
+
+#modal_registro #tabla th:nth-child(3),
+#modal_registro #tabla td:nth-child(3) {
+    width: 16%;
+}
+
+#modal_registro #tabla th,
+#modal_registro #tabla td {
+    vertical-align: middle;
+}
+
+#modal_registro .registro-hora-grupo {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    max-width: 400px;
+    gap: .5rem;
+}
+
+#modal_registro .registro-hora-grupo .form-control {
+    width: 100%;
+    height: 44px;
+    min-width: 0;
+    box-sizing: border-box;
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+#modal_registro .registro-campo {
+    max-width: 620px;
+}
+
+#modal_registro .registro-campo .form-control {
+    width: 100%;
+}
+
+#modal_registro .registro-diaoff {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .65rem .85rem;
+    color: #111;
+    background: #33ecff;
+    border-radius: .25rem;
+}
+
+#modal_registro .registro-diaoff .form-check-input {
+    position: static;
+    margin: 0;
+}
+
+@media (max-width: 767.98px) {
+    .registro-agente .registro-header {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .registro-agente .registro-header h2 {
+        line-height: 1.35;
+    }
+
+    .registro-agente .registro-header #registro {
+        width: 100%;
+    }
+
+    .registro-agente .table-responsive {
+        margin-right: -.5rem;
+        margin-left: -.5rem;
+        width: calc(100% + 1rem);
+    }
+
+    #modal_registro .modal-dialog {
+        width: auto;
+        margin: .5rem;
+    }
+
+    #modal_registro .modal-content {
+        max-height: calc(100vh - 1rem);
+    }
+
+    #modal_registro .modal-body {
+        padding: 1rem .75rem;
+    }
+
+    #modal_registro #tabla,
+    #modal_registro #tabla tbody,
+    #modal_registro #tabla tr,
+    #modal_registro #tabla td {
+        display: block;
+        width: 100%;
+    }
+
+    #modal_registro #tabla td:nth-child(1),
+    #modal_registro #tabla td:nth-child(2),
+    #modal_registro #tabla td:nth-child(3) {
+        width: 100%;
+    }
+
+    #modal_registro #tabla thead {
+        display: none;
+    }
+
+    #modal_registro #tabla tr.fila-fija {
+        margin-bottom: .75rem;
+        padding: .75rem;
+        border: 1px solid #dee2e6;
+        border-radius: .375rem;
+    }
+
+    #modal_registro #tabla td {
+        padding: .5rem 0;
+        border: 0;
+    }
+
+    #modal_registro #tabla td::before {
+        display: block;
+        margin-bottom: .35rem;
+        font-weight: 600;
+        content: attr(data-label);
+    }
+
+    #modal_registro .registro-hora-grupo {
+        gap: .35rem;
+    }
+
+    #modal_registro .registro-hora-grupo .form-control {
+        padding-right: .35rem;
+        padding-left: .35rem;
+        font-size: 16px;
+    }
+
+    #modal_registro #btnagregar {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    #modal_registro .registro-campo {
+        max-width: none;
+    }
+
+    #modal_registro .modal-footer {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    #modal_registro .modal-footer .btn {
+        width: 100%;
+        min-height: 44px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #modal_registro .modal-dialog {
+        min-height: calc(100% - 1rem);
+    }
+
+    #modal_registro .modal-content {
+        min-height: calc(100vh - 1rem);
+    }
+}
 </style>
 
 
@@ -100,8 +303,8 @@ table.display {
 <input type="hidden" value="" id="hiniciales" name="hiniciales">
 <input type="hidden" value="" id="hfinales" name="hfinales">
 
-<div class="col-md-12" style="background-color: ">
-    <div class="jumbotron col-md-12 col d-flex justify-content-between border border-secondary rounded shadow-sm my-3 py-2">
+<div class="col-md-12 registro-agente" style="background-color: ">
+    <div class="jumbotron col-md-12 col d-flex justify-content-between border border-secondary rounded shadow-sm my-3 py-2 registro-header">
         <h2><strong> Lista de control de Horas&nbsp; &nbsp; &nbsp; Fecha:
                 &nbsp;{{ \Carbon\Carbon::parse($cupo->start)->isoformat('dddd D \d\e MMMM \d\e\l Y')}}</strong> </h2>
 
@@ -220,12 +423,12 @@ table.display {
 
 <!-- Modal registro de horas -->
 
-<div class="modal fade" id="modal_registro" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+<div class="modal fade" id="modal_registro" tabindex="-1" role="dialog" aria-labelledby="modal_registro_title"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" id="modalcup" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">
+                <h5 class="modal-title" id="modal_registro_title">
                     Registro de horas de usuario
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -239,21 +442,21 @@ table.display {
 
 
                     <div class="form-group">
-                        <table class="table table-striped  table-responsive-lg table-sm" id="tabla">
+                        <table class="table table-striped table-sm" id="tabla">
                             <thead>
                                 <tr>
                                     <th class="col-md-4">Hora inicial</th>
                                     <th class="col-md-4">Hora final</th>
-                                    <th class="col-md-3"></th>
+                                    <th class="col-md-3">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="fila1">
                                 <tr class="fila-fija" id="fila1">
-                                    <td width="">
-                                        <div style="display: flex;justify-content: space-around;">
+                                    <td data-label="Hora inicial">
+                                        <div class="registro-hora-grupo">
                                             <select name="horaini[]" id="horaini"
-                                                class="form-control col-md-3 horas entrada">
-                                                <option value="" disabled selected></option>
+                                                class="form-control horas entrada" aria-label="Hora de inicio">
+                                                <option value="" disabled selected>Hora</option>
                                                 <option value="00">00</option>
                                                 <option value="01">01</option>
                                                 <option value="02">02</option>
@@ -269,14 +472,14 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="number" class="form-control col-md-3 horas minutitos entrada"
+                                            <input type="number" class="form-control horas minutitos entrada"
                                                 required="" name="minutosini[]" id="minutosini"
                                                 aria-describedby="helpId" value="" placeholder="00" autocomplete="off"
-                                                min="0" max="59" style="width:100%">
+                                                min="0" max="59" aria-label="Minutos de inicio">
 
                                             <select name="horarioini[]" id="horario1"
-                                                class="form-control col-md-3 horas entrada">
-                                                <option value="" selected selected disabled="true"></option>
+                                                class="form-control horas entrada" aria-label="AM o PM de inicio">
+                                                <option value="" disabled selected>AM/PM</option>
                                                 <option value="AM">AM</option>
                                                 <option value="PM">PM</option>
                                             </select>
@@ -285,13 +488,13 @@ table.display {
                                     </td>
 
 
-                                    <td width="">
-                                        <div style="display: flex;justify-content: space-around;">
+                                    <td data-label="Hora final">
+                                        <div class="registro-hora-grupo">
 
 
                                             <select name="horaini2[]" id="horaini2"
-                                                class="form-control col-md-3 horas entrada">
-                                                <option value="" disabled selected></option>
+                                                class="form-control horas entrada" aria-label="Hora de finalización">
+                                                <option value="" disabled selected>Hora</option>
                                                 <option value="00">00</option>
                                                 <option value="01">01</option>
                                                 <option value="02">02</option>
@@ -307,14 +510,15 @@ table.display {
                                                 <option value="12">12</option>
                                             </select>
 
-                                            <input type="number" class="form-control col-md-3 horas entrada" required=""
+                                            <input type="number" class="form-control horas entrada" required=""
                                                 name="minutosini2[]" id="minutosini2" aria-describedby="helpId" value=""
-                                                placeholder="00" autocomplete="off" style="width:100%" min="0" max="59">
+                                                placeholder="00" autocomplete="off" min="0" max="59"
+                                                aria-label="Minutos de finalización">
 
 
                                             <select name="horarioini2[]" id="horario2"
-                                                class="form-control col-md-3 horas entrada">
-                                                <option value="" selected selected disabled="true"></option>
+                                                class="form-control horas entrada" aria-label="AM o PM de finalización">
+                                                <option value="" disabled selected>AM/PM</option>
                                                 <option value="AM">AM</option>
                                                 <option value="PM">PM</option>
                                             </select>
@@ -324,8 +528,7 @@ table.display {
 
 
                                     </td>
-                                    </td>
-                                    <td width="" id="agregar" class="">
+                                    <td id="agregar" class="" data-label="Acciones">
                                         <input type="button" id="btnagregar" class="btn btn-success masmenos entrada"
                                             value="agregar intervalo">
                                     </td>
@@ -335,34 +538,34 @@ table.display {
                     </div>
 
 
-                    <div class="form-group">
+                    <div class="form-group registro-campo">
                         <label for="total_horas">Total de horas </label>
                         <input type="text" class="form-control col-md-9 " required="" name="total_horas"
                             id="total_horas" aria-describedby="helpId" placeholder="" autocomplete="off"
                             disabled="true">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group registro-campo">
                         <label for="total_citas">Agregue el total de citas </label>
                         <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
                             id="total_citas" aria-describedby="helpId" value="" placeholder="" autocomplete="off"
                             min="0">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group registro-campo">
                         <label for="comentarios">Comentarios </label>
                         <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
                             id="comentarios" aria-describedby="helpId" placeholder="" autocomplete="off">
                     </div>
 
                     
-                    <div class="form-group" id="motivoscoincidencia">
+                    <div class="form-group registro-campo" id="motivoscoincidencia">
                         <label for="comentarios">Motivo</label>
                         <input type="text" class="form-control col-md-9 entrada" required="" name="motivoshorario"
                             id="motivoshorario" aria-describedby="helpId" placeholder="" autocomplete="off">
                     </div>
 
-                    <div class="form-check col-md-3" style="padding-left:7.25rem !important; color:black !important;background: #33ECFF !important;">
+                    <div class="form-check registro-diaoff">
                         <input class="form-check-input" type="checkbox" value="1" id="diaoff">
                         <label class="form-check-label" for="diaoff">
                             DIA OFF
