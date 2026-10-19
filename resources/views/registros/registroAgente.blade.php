@@ -110,9 +110,26 @@ table.display {
     overflow-y: auto;
 }
 
+#modal_registro .registro-seccion {
+    margin-bottom: 1.5rem;
+}
+
+#modal_registro .registro-seccion-titulo {
+    margin-bottom: .25rem;
+    color: #263b5e;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#modal_registro .registro-ayuda {
+    margin-bottom: .75rem;
+    color: #6c757d;
+}
+
 #modal_registro #tabla {
     width: 100%;
     table-layout: fixed;
+    margin-bottom: 0;
 }
 
 #modal_registro #tabla th:nth-child(1),
@@ -130,6 +147,15 @@ table.display {
 #modal_registro #tabla th,
 #modal_registro #tabla td {
     vertical-align: middle;
+}
+
+#modal_registro #tabla tbody tr {
+    border-top: 1px solid #dee2e6;
+}
+
+#modal_registro #tabla tbody td {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
 }
 
 #modal_registro .registro-hora-grupo {
@@ -153,8 +179,24 @@ table.display {
     max-width: 620px;
 }
 
+#modal_registro .registro-campo label {
+    font-weight: 600;
+}
+
 #modal_registro .registro-campo .form-control {
     width: 100%;
+}
+
+#modal_registro .registro-resumen {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: #f5f7fa;
+    border: 1px solid #e1e6ed;
+    border-radius: .375rem;
+}
+
+#modal_registro .registro-resumen .registro-campo:last-child {
+    margin-bottom: 0;
 }
 
 #modal_registro .registro-diaoff {
@@ -203,6 +245,10 @@ table.display {
 
     #modal_registro .modal-body {
         padding: 1rem .75rem;
+    }
+
+    #modal_registro .registro-seccion-titulo {
+        font-size: 1rem;
     }
 
     #modal_registro #tabla,
@@ -424,14 +470,15 @@ table.display {
 <!-- Modal registro de horas -->
 
 <div class="modal fade" id="modal_registro" tabindex="-1" role="dialog" aria-labelledby="modal_registro_title"
+    aria-describedby="modal_registro_help"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modalcup" role="document">
+    <div class="modal-dialog " id="modalcup" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal_registro_title">
-                    Registro de horas de usuario
+                    Registrar jornada
                 </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar ventana">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -440,19 +487,23 @@ table.display {
 
                     {!! csrf_field() !!}
 
+                    <section class="registro-seccion" aria-labelledby="registro_intervalos_titulo">
+                        <h6 class="registro-seccion-titulo" id="registro_intervalos_titulo">Horario trabajado</h6>
+                        <p class="registro-ayuda" id="modal_registro_help">
+                            Indica la hora de inicio y fin de cada periodo. Si tomaste un descanso, agrega un intervalo por cada periodo trabajado.
+                        </p>
 
-                    <div class="form-group">
-                        <table class="table table-striped table-sm" id="tabla">
+                        <table class="table table-sm" id="tabla">
                             <thead>
                                 <tr>
-                                    <th class="col-md-4">Hora inicial</th>
-                                    <th class="col-md-4">Hora final</th>
-                                    <th class="col-md-3">Acciones</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="fila1">
                                 <tr class="fila-fija" id="fila1">
-                                    <td data-label="Hora inicial">
+                                    <td data-label="Inicio del intervalo">
                                         <div class="registro-hora-grupo">
                                             <select name="horaini[]" id="horaini"
                                                 class="form-control horas entrada" aria-label="Hora de inicio">
@@ -474,7 +525,7 @@ table.display {
 
                                             <input type="number" class="form-control horas minutitos entrada"
                                                 required="" name="minutosini[]" id="minutosini"
-                                                aria-describedby="helpId" value="" placeholder="00" autocomplete="off"
+                                                value="" placeholder="Min." autocomplete="off"
                                                 min="0" max="59" aria-label="Minutos de inicio">
 
                                             <select name="horarioini[]" id="horario1"
@@ -488,7 +539,7 @@ table.display {
                                     </td>
 
 
-                                    <td data-label="Hora final">
+                                    <td data-label="Fin del intervalo">
                                         <div class="registro-hora-grupo">
 
 
@@ -511,8 +562,8 @@ table.display {
                                             </select>
 
                                             <input type="number" class="form-control horas entrada" required=""
-                                                name="minutosini2[]" id="minutosini2" aria-describedby="helpId" value=""
-                                                placeholder="00" autocomplete="off" min="0" max="59"
+                                                name="minutosini2[]" id="minutosini2" value=""
+                                                placeholder="Min." autocomplete="off" min="0" max="59"
                                                 aria-label="Minutos de finalización">
 
 
@@ -530,45 +581,53 @@ table.display {
                                     </td>
                                     <td id="agregar" class="" data-label="Acciones">
                                         <input type="button" id="btnagregar" class="btn btn-success masmenos entrada"
-                                            value="agregar intervalo">
+                                            value="Agregar intervalo">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </section>
 
 
-                    <div class="form-group registro-campo">
-                        <label for="total_horas">Total de horas </label>
-                        <input type="text" class="form-control col-md-9 " required="" name="total_horas"
-                            id="total_horas" aria-describedby="helpId" placeholder="" autocomplete="off"
-                            disabled="true">
-                    </div>
+                    <section class="registro-seccion registro-resumen" aria-labelledby="registro_resumen_titulo">
+                        <h6 class="registro-seccion-titulo" id="registro_resumen_titulo">Resumen de la jornada</h6>
+                        <p class="registro-ayuda">El total de horas se calcula automáticamente a partir de los intervalos.</p>
+                        <div class="form-group registro-campo">
+                            <label for="total_horas">Total de horas trabajadas</label>
+                            <input type="text" class="form-control col-md-9 " required="" name="total_horas"
+                                id="total_horas" aria-describedby="total_horas_help" placeholder="" autocomplete="off"
+                                disabled="true">
+                            <small class="form-text text-muted" id="total_horas_help">Se actualiza al ingresar o modificar los intervalos.</small>
+                        </div>
 
-                    <div class="form-group registro-campo">
-                        <label for="total_citas">Agregue el total de citas </label>
-                        <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
-                            id="total_citas" aria-describedby="helpId" value="" placeholder="" autocomplete="off"
-                            min="0">
-                    </div>
+                        <div class="form-group registro-campo">
+                            <label for="total_citas">Número total de citas</label>
+                            <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
+                                id="total_citas" aria-describedby="total_citas_help" value="" placeholder="Ej. 8" autocomplete="off"
+                                min="0">
+                            <small class="form-text text-muted" id="total_citas_help">Escribe cuántas citas atendiste durante la jornada.</small>
+                        </div>
 
-                    <div class="form-group registro-campo">
-                        <label for="comentarios">Comentarios </label>
-                        <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
-                            id="comentarios" aria-describedby="helpId" placeholder="" autocomplete="off">
-                    </div>
+                        <div class="form-group registro-campo">
+                            <label for="comentarios">Comentario de la jornada</label>
+                            <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
+                                id="comentarios" aria-describedby="comentarios_help" placeholder="Agrega un detalle relevante" autocomplete="off">
+                            <small class="form-text text-muted" id="comentarios_help">Si no hay nada que agregar, indica “Sin comentarios”.</small>
+                        </div> 
 
-                    
-                    <div class="form-group registro-campo" id="motivoscoincidencia">
-                        <label for="comentarios">Motivo</label>
-                        <input type="text" class="form-control col-md-9 entrada" required="" name="motivoshorario"
-                            id="motivoshorario" aria-describedby="helpId" placeholder="" autocomplete="off">
-                    </div>
+                        <div class="form-group registro-campo" id="motivoscoincidencia">
+                            <label for="motivoshorario">Motivo de diferencia con el horario asignado</label>
+                            <input type="text" class="form-control col-md-9 entrada" required="" name="motivoshorario"
+                                id="motivoshorario" aria-describedby="motivoshorario_help" placeholder="Explica brevemente el motivo" autocomplete="off">
+                            <small class="form-text text-muted" id="motivoshorario_help">Describe por qué las horas registradas no coinciden con tu horario.</small>
+                        </div>
+
+                    </section>
 
                     <div class="form-check registro-diaoff">
                         <input class="form-check-input" type="checkbox" value="1" id="diaoff">
                         <label class="form-check-label" for="diaoff">
-                            DIA OFF
+                            Marcar como día libre (sin horas trabajadas)
                         </label>
                     </div>
 
@@ -581,8 +640,8 @@ table.display {
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="guardar_registro">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="guardar_registro">Guardar registro</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

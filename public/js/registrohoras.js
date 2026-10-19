@@ -348,7 +348,7 @@ function editar(id){
                     $('#tabla tbody tr:eq(0)').clone().appendTo('#tabla');
                     $(`#tabla tbody tr.fila-fija:eq(${filas})`).addClass(' dinamico');
                     $(`#tabla tbody .masmenos:eq(${filas})`).addClass('elimina');
-                    $(`#tabla tbody .masmenos:eq(${filas})`).val("elimina");
+                    $(`#tabla tbody .masmenos:eq(${filas})`).val("Quitar intervalo");
             }
 
             if(filas >= numSus){
@@ -429,7 +429,7 @@ $('#agregar').on('click', function() {
     $(`#tabla tbody tr.fila-fija:eq(${num})`).addClass(' dinamico');
 
     $(`#tabla tbody .masmenos:eq(${num})`).addClass('elimina');
-    $(`#tabla tbody .masmenos:eq(${num})`).val("elimina");
+    $(`#tabla tbody .masmenos:eq(${num})`).val("Quitar intervalo");
 
     if(num == numSus) {
         $('#btnagregar').attr('disabled', true);
