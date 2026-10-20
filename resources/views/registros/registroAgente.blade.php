@@ -203,6 +203,7 @@ table.display {
     #modal_registro #tabla td[data-label="Acciones"] .registro-quitar-intervalo {
         display: block;
         margin: 0;
+        transform: translateY(1.15rem);
     }
 
     #modal_registro #tabla td[data-label="Acciones"] .registro-quitar-intervalo[hidden] {
