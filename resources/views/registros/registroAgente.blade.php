@@ -126,36 +126,111 @@ table.display {
     color: #6c757d;
 }
 
-#modal_registro #tabla {
+#modal_registro #tabla,
+#modal_registro #tabla tbody {
+    display: block;
     width: 100%;
-    table-layout: fixed;
     margin-bottom: 0;
 }
 
-#modal_registro #tabla th:nth-child(1),
-#modal_registro #tabla td:nth-child(1),
-#modal_registro #tabla th:nth-child(2),
-#modal_registro #tabla td:nth-child(2) {
-    width: 42%;
+#modal_registro #tabla thead {
+    display: none;
 }
 
-#modal_registro #tabla th:nth-child(3),
-#modal_registro #tabla td:nth-child(3) {
-    width: 16%;
+#modal_registro #tabla tbody {
+    display: grid;
+    gap: .75rem;
 }
 
-#modal_registro #tabla th,
+#modal_registro #tabla tr.fila-fija {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #d8e0e9;
+    border-radius: .5rem;
+    box-shadow: 0 2px 6px rgba(30, 50, 75, .08);
+}
+
 #modal_registro #tabla td {
-    vertical-align: middle;
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
 }
 
-#modal_registro #tabla tbody tr {
-    border-top: 1px solid #dee2e6;
+#modal_registro #tabla td::before {
+    display: block;
+    margin-bottom: .5rem;
+    color: #263b5e;
+    font-weight: 600;
+    content: attr(data-label);
 }
 
-#modal_registro #tabla tbody td {
+#modal_registro #tabla td[data-label="Acciones"] {
+    display: flex;
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: flex-end;
     padding-top: .75rem;
-    padding-bottom: .75rem;
+    border-top: 1px solid #e5eaf0;
+}
+
+#modal_registro #tabla td[data-label="Acciones"] .registro-quitar-intervalo[hidden] {
+    display: none;
+}
+
+#modal_registro #tabla td[data-label="Acciones"]::before {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    #modal_registro #tabla tr.fila-fija {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    }
+
+    #modal_registro #tabla td[data-label="Acciones"] {
+        display: flex;
+        grid-column: 3;
+        align-items: center;
+        justify-content: flex-end;
+        width: auto;
+        padding: 0;
+        border: 0;
+    }
+
+    #modal_registro #tabla td[data-label="Acciones"] .registro-quitar-intervalo {
+        display: block;
+        margin: 0;
+    }
+
+    #modal_registro #tabla td[data-label="Acciones"] .registro-quitar-intervalo[hidden] {
+        display: none;
+    }
+}
+
+#modal_registro .registro-quitar-intervalo {
+    min-height: 40px;
+}
+
+#modal_registro .registro-agregar-intervalo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+    margin-top: .75rem;
+}
+
+#modal_registro .registro-agregar-intervalo .btn {
+    min-height: 44px;
+    padding: .55rem 1rem;
+    font-weight: 600;
+}
+
+#modal_registro .registro-agregar-ayuda {
+    color: #6c757d;
+    font-size: .9rem;
 }
 
 #modal_registro .registro-hora-grupo {
@@ -251,41 +326,18 @@ table.display {
         font-size: 1rem;
     }
 
-    #modal_registro #tabla,
-    #modal_registro #tabla tbody,
-    #modal_registro #tabla tr,
-    #modal_registro #tabla td {
-        display: block;
-        width: 100%;
-    }
-
-    #modal_registro #tabla td:nth-child(1),
-    #modal_registro #tabla td:nth-child(2),
-    #modal_registro #tabla td:nth-child(3) {
-        width: 100%;
-    }
-
-    #modal_registro #tabla thead {
-        display: none;
-    }
-
     #modal_registro #tabla tr.fila-fija {
-        margin-bottom: .75rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: .75rem;
         padding: .75rem;
-        border: 1px solid #dee2e6;
-        border-radius: .375rem;
+    }
+
+    #modal_registro #tabla td[data-label="Acciones"] {
+        justify-content: flex-start;
     }
 
     #modal_registro #tabla td {
-        padding: .5rem 0;
-        border: 0;
-    }
-
-    #modal_registro #tabla td::before {
-        display: block;
-        margin-bottom: .35rem;
-        font-weight: 600;
-        content: attr(data-label);
+        width: 100%;
     }
 
     #modal_registro .registro-hora-grupo {
@@ -301,6 +353,10 @@ table.display {
     #modal_registro #btnagregar {
         width: 100%;
         min-height: 44px;
+    }
+
+    #modal_registro .registro-agregar-intervalo {
+        align-items: stretch;
     }
 
     #modal_registro .registro-campo {
@@ -502,7 +558,7 @@ table.display {
                                 </tr>
                             </thead>
                             <tbody id="fila1">
-                                <tr class="fila-fija" id="fila1">
+                                <tr class="fila-fija border border-secondary rounded shadow-sm">
                                     <td data-label="Inicio del intervalo">
                                         <div class="registro-hora-grupo">
                                             <select name="horaini[]" id="horaini"
@@ -579,13 +635,21 @@ table.display {
 
 
                                     </td>
-                                    <td id="agregar" class="" data-label="Acciones">
-                                        <input type="button" id="btnagregar" class="btn btn-success masmenos entrada"
-                                            value="Agregar intervalo">
+                                    <td data-label="Acciones">
+                                        <button type="button" class="btn btn-outline-danger registro-quitar-intervalo elimina"
+                                            aria-label="Quitar este intervalo" disabled hidden>
+                                            Quitar intervalo
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="registro-agregar-intervalo">
+                            <button type="button" id="btnagregar" class="btn btn-primary">
+                                + Agregar otro intervalo
+                            </button>
+                            <small class="registro-agregar-ayuda">Usa un intervalo por cada periodo trabajado, por ejemplo, antes y después de un descanso.</small>
+                        </div>
                     </section>
 
 
@@ -597,7 +661,7 @@ table.display {
                             <input type="text" class="form-control col-md-9 " required="" name="total_horas"
                                 id="total_horas" aria-describedby="total_horas_help" placeholder="" autocomplete="off"
                                 disabled="true">
-                            <small class="form-text text-muted" id="total_horas_help">Se actualiza al ingresar o modificar los intervalos.</small>
+                            {{-- <small class="form-text text-muted" id="total_horas_help">Se actualiza al ingresar o modificar los intervalos.</small> --}}
                         </div>
 
                         <div class="form-group registro-campo">
@@ -605,21 +669,21 @@ table.display {
                             <input type="number" class="form-control col-md-9 entrada" required="" name="total_citas"
                                 id="total_citas" aria-describedby="total_citas_help" value="" placeholder="Ej. 8" autocomplete="off"
                                 min="0">
-                            <small class="form-text text-muted" id="total_citas_help">Escribe cuántas citas atendiste durante la jornada.</small>
+                            {{-- <small class="form-text text-muted" id="total_citas_help">Escribe cuántas citas atendiste durante la jornada.</small> --}}
                         </div>
 
                         <div class="form-group registro-campo">
                             <label for="comentarios">Comentario de la jornada</label>
                             <input type="text" class="form-control col-md-9 entrada" required="" name="comentarios"
                                 id="comentarios" aria-describedby="comentarios_help" placeholder="Agrega un detalle relevante" autocomplete="off">
-                            <small class="form-text text-muted" id="comentarios_help">Si no hay nada que agregar, indica “Sin comentarios”.</small>
+                            {{-- <small class="form-text text-muted" id="comentarios_help">Si no hay nada que agregar, indica “Sin comentarios”.</small> --}}
                         </div> 
 
                         <div class="form-group registro-campo" id="motivoscoincidencia">
                             <label for="motivoshorario">Motivo de diferencia con el horario asignado</label>
                             <input type="text" class="form-control col-md-9 entrada" required="" name="motivoshorario"
                                 id="motivoshorario" aria-describedby="motivoshorario_help" placeholder="Explica brevemente el motivo" autocomplete="off">
-                            <small class="form-text text-muted" id="motivoshorario_help">Describe por qué las horas registradas no coinciden con tu horario.</small>
+                            {{-- <small class="form-text text-muted" id="motivoshorario_help">Describe por qué las horas registradas no coinciden con tu horario.</small> --}}
                         </div>
 
                     </section>

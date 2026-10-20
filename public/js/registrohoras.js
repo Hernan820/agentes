@@ -47,14 +47,14 @@ function mostrarboton(){
 document.getElementById("registro").addEventListener("click", function () {
         $('.oculto').val('');
         $('#registroHorario').trigger("reset");
+        $('#tabla tbody tr.fila-fija').not(':first').remove();
         $("#CollapseExample1").collapse('hide');
         $("#modal_registro").modal("show");
         $('.entrada').attr('readonly', false)
         $('#motivoscoincidencia').hide();
         $('#motivoshorario').val('');
 
-        $('#btnagregar').attr('disabled', false);
-        $('#tabla tr').slice(2).remove();
+        actualizarBotonesIntervalos();
 });
 
 document.getElementById("guardar_registro").addEventListener("click", function () {
@@ -324,13 +324,12 @@ function editar(id){
 
     axios.post(principalUrl + "registro/editaregistro/"+id)
     .then((respuesta) => {
-        $('#tabla tr').slice(2).remove();
+        $('#tabla tbody tr.fila-fija').not(':first').remove();
 
         if(respuesta.data.comentarios == "Este dia es OFF"){
 
             $("#diaoff").prop("checked", true);
             $('.entrada').attr('readonly', true)
-            $('#btnagregar').attr('disabled', true);
             $("#total_horas").val("00 Horas 00 Minutos")
             $("#total_citas").val("0")
             $("#comentarios").val("Este dia es OFF")
@@ -338,6 +337,7 @@ function editar(id){
             $("#horasfinales").val("0")
             $("#horasiniciales").val("0");
             $('.horas').val('')
+            actualizarBotonesIntervalos();
         }else{
         var horasiniciales = respuesta.data.horasiniciales.split(",");
         var horasfinales = respuesta.data.horasfinales.split(",");
@@ -345,20 +345,12 @@ function editar(id){
         var filas=0;
         horasiniciales.forEach(function (element) {
             if(filas >= 1){
-                    $('#tabla tbody tr:eq(0)').clone().appendTo('#tabla');
-                    $(`#tabla tbody tr.fila-fija:eq(${filas})`).addClass(' dinamico');
-                    $(`#tabla tbody .masmenos:eq(${filas})`).addClass('elimina');
-                    $(`#tabla tbody .masmenos:eq(${filas})`).val("Quitar intervalo");
+                    agregarFilaIntervalo();
             }
 
-            if(filas >= numSus){
-                $('#btnagregar').attr('disabled', true);
-                $("#btnagregar").attr('disabled','disabled');
-            }else{
-                $('#btnagregar').attr('disabled', false);
-            }
             filas=filas+1;
         });
+        actualizarBotonesIntervalos();
 
         var contador =0;
         horasiniciales.forEach(function (element) {
@@ -422,26 +414,39 @@ function editar(id){
 
 //**************NUEVO CODIGO */
 
-$('#agregar').on('click', function() {
-     num = $('#tabla tbody tr.fila-fija').length;
-
-    $('#tabla tbody tr:eq(0)').clone().appendTo('#tabla');
-    $(`#tabla tbody tr.fila-fija:eq(${num})`).addClass(' dinamico');
-
-    $(`#tabla tbody .masmenos:eq(${num})`).addClass('elimina');
-    $(`#tabla tbody .masmenos:eq(${num})`).val("Quitar intervalo");
-
-    if(num == numSus) {
-        $('#btnagregar').attr('disabled', true);
-        $("#btnagregar").attr('disabled','disabled');
-
+function agregarFilaIntervalo() {
+    var filas = $('#tabla tbody tr.fila-fija');
+    if (filas.length >= numSus + 1) {
+        return;
     }
+
+    var nuevaFila = filas.first().clone();
+    nuevaFila.removeAttr('id');
+    nuevaFila.find('[id]').removeAttr('id');
+    nuevaFila.find('input[type="number"]').val('');
+    nuevaFila.find('select').prop('selectedIndex', 0);
+    nuevaFila.appendTo('#tabla tbody');
+    actualizarBotonesIntervalos();
+}
+
+function actualizarBotonesIntervalos() {
+    var cantidadIntervalos = $('#tabla tbody tr.fila-fija').length;
+    var diaLibre = $('#diaoff').is(':checked');
+
+    $('.registro-quitar-intervalo')
+        .prop('hidden', cantidadIntervalos <= 1)
+        .prop('disabled', diaLibre);
+    $('#btnagregar').prop('disabled', diaLibre || cantidadIntervalos > numSus);
+}
+
+$('#btnagregar').on('click', function() {
+    agregarFilaIntervalo();
 });
 
 
 $(document).on('click', '.elimina',function() {
     $(this).closest('tr').remove();
-    $('#btnagregar').attr('disabled', false);
+    actualizarBotonesIntervalos();
     $("#horasiniciales").val("");
     $("#horasfinales").val("");
     hora();
@@ -706,20 +711,20 @@ Swal.fire({
             $("#total_citas").val("0")
             $("#comentarios").val("Este dia es OFF")
            $('.entrada').attr('readonly', true)
-           $('#btnagregar').attr('disabled', true);
             $("#TotaDeHoras").val("00:00:00")
             $("#horasfinales").val("0")
             $("#horasiniciales").val("0");
             $('.horas').val('')
+            actualizarBotonesIntervalos();
         } else {
             $("#diaoff").prop("checked", false);
-
+            actualizarBotonesIntervalos();
         }
     });
     }else if(!$('#diaoff').is(':checked')){
 
         $('.entrada').attr('readonly', false)
-        $('#btnagregar').attr('disabled', false);
+        actualizarBotonesIntervalos();
 
         $("#total_horas").val("")
         $("#total_citas").val("")
