@@ -547,7 +547,7 @@ table.display {
                     <section class="registro-seccion" aria-labelledby="registro_intervalos_titulo">
                         <h6 class="registro-seccion-titulo" id="registro_intervalos_titulo">Horario trabajado</h6>
                         <p class="registro-ayuda" id="modal_registro_help">
-                            Indica la hora de inicio y fin de cada periodo. Si tomaste un descanso, agrega un intervalo por cada periodo trabajado.
+                            Indica la hora de inicio y fin de cada periodo.
                         </p>
 
                         <table class="table table-sm" id="tabla">
@@ -649,7 +649,7 @@ table.display {
                             <button type="button" id="btnagregar" class="btn btn-primary">
                                 + Agregar otro intervalo
                             </button>
-                            <small class="registro-agregar-ayuda">Usa un intervalo por cada periodo trabajado, por ejemplo, antes y después de un descanso.</small>
+                            <small class="registro-agregar-ayuda">Usa un intervalo por cada periodo trabajado.</small>
                         </div>
                     </section>
 
